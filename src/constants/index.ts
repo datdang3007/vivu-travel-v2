@@ -13,3 +13,10 @@ export enum BUTTON_VARIANT {
   TEXT = "text",
   CONTAINED = "contained",
 }
+
+export enum GEOGRAPHY_CATEGORY {
+  REGION = "region",
+  TERRITORY = "territory",
+  PROVINCE = "province",
+  PLACE = "place",
+}

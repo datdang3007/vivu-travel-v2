@@ -1,14 +1,5 @@
-import {
-  AppBar,
-  Box,
-  Container,
-  Grid,
-  IconButton,
-  Toolbar,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import { HeaderMenuNavbar, HeaderMenuOption } from "../../ui";
+import { Box, Container, Grid, useTheme } from "@mui/material";
+import { HeaderMenuNavbar, HeaderMenuOption, HeaderMenuSearch } from "../../ui";
 import {
   BUTTON_VARIANT,
   HEADER_LIST_OPTION,
@@ -16,6 +7,11 @@ import {
 } from "../../constants";
 import { useMemo, useCallback } from "react";
 import { HeaderProps, ListOptionProps } from "../../types";
+import { FormProvider, useForm } from "react-hook-form";
+
+interface searchProps {
+  searchValue: string;
+}
 
 export const Header = (props: HeaderProps) => {
   const theme = useTheme();
@@ -23,6 +19,17 @@ export const Header = (props: HeaderProps) => {
   const testEvent = useCallback(() => {
     console.log("test");
   }, []);
+
+  const defaultValuesLogin = useMemo(() => {
+    let result = {
+      searchValue: "",
+    };
+    return result;
+  }, []);
+
+  const methods = useForm<searchProps>({
+    defaultValues: defaultValuesLogin,
+  });
 
   const ListOption: ListOptionProps = useMemo(
     () => ({
@@ -106,7 +113,9 @@ export const Header = (props: HeaderProps) => {
               listOption={ListOption[HEADER_LIST_OPTION.LEFT]}
             />
           </Grid>
-          <Grid item lg={4}></Grid>
+          <Grid item lg={4}>
+            <HeaderMenuSearch />
+          </Grid>
           <Grid item lg={3.5}>
             <HeaderMenuOption
               position={STYLE_POSITION.RIGHT}
@@ -119,8 +128,10 @@ export const Header = (props: HeaderProps) => {
   }, [ListOption, isMenu, theme.breakpoints]);
 
   return (
-    <Box width={1} position={"fixed"}>
-      {NavbarComponent()}
-    </Box>
+    <FormProvider {...methods}>
+      <Box width={1} position={"fixed"}>
+        {NavbarComponent()}
+      </Box>
+    </FormProvider>
   );
 };
