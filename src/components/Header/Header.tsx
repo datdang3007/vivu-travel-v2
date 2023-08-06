@@ -84,7 +84,15 @@ export const Header = (props: HeaderProps) => {
         <HeaderMenuNavbar />
       </Grid>
     ) : (
-      <Container maxWidth={"xl"} sx={{ padding: "30px 0" }}>
+      <Container
+        maxWidth={"xl"}
+        sx={{
+          padding: "30px 0",
+          [theme.breakpoints.down("xl")]: {
+            padding: "30px",
+          },
+        }}
+      >
         <Grid
           item
           container
@@ -108,7 +116,7 @@ export const Header = (props: HeaderProps) => {
         </Grid>
       </Container>
     );
-  }, [ListOption, isMenu]);
+  }, [ListOption, isMenu, theme.breakpoints]);
 
   return (
     <Box width={1} position={"fixed"}>
