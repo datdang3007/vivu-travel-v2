@@ -3,10 +3,10 @@ export const componentsOverride = {
     styleOverrides: {
       root: {
         label: {
-          color: "#FFF",
+          color: "rgba(0,0,0, .6)",
         },
         input: {
-          color: "#FFF",
+          color: "black",
         },
         div: {
           "&:hover": {

@@ -17,27 +17,6 @@ import { useCallback, useState } from "react";
 import { HeaderSearch } from "../../components/Dialog/HeaderSearch";
 
 const listOption = ["Miền", "Vùng", "Đăng nhập", "Đăng ký"];
-const searchOption = {
-  Miền: {
-    "Miền Bắc": "Miền Bắc",
-    "Miền Trung": "Miền Trung",
-    "Miền Nam": "Miền Nam",
-  },
-  Vùng: {
-    "Vùng ĐB Sông Hồng": "Vùng ĐB Sông Hồng",
-    "Vùng ĐB Sông Cửu Long": "Vùng ĐB Sông Cửu Long",
-  },
-  "Tỉnh / Thành Phố": {
-    "Hải Phòng": "Hải Phòng",
-    "Hải Dương": "Hải Dương",
-    "Bắc Ninh": "Bắc Ninh",
-    "Hà Nội": "Hà Nội",
-  },
-  "Địa Điểm": {
-    "Nhà Hát Lớn HP": "Nhà Hát Lớn HP",
-    "Landmark 81": "Landmark 81",
-  },
-};
 
 export const HeaderMenuNavbar = () => {
   const theme = useTheme();
@@ -63,7 +42,6 @@ export const HeaderMenuNavbar = () => {
         <List>
           {listOption.map((label, idx) => (
             <ListItem button key={idx} onClick={handleClose}>
-              {/* <ListItemIcon></ListItemIcon> */}
               <ListItemText primary={label} />
             </ListItem>
           ))}
@@ -79,10 +57,7 @@ export const HeaderMenuNavbar = () => {
         position="static"
         sx={{ background: "unset", boxShadow: "unset", padding: "0 20px" }}
       >
-        <HeaderSearch
-          open={showSearch}
-          handleShow={handleCloseSearch}
-        />
+        <HeaderSearch open={showSearch} handleShow={handleCloseSearch} />
         <Drawer open={showDrawer} onClose={handleClose}>
           {listOptionComponent()}
         </Drawer>

@@ -14,6 +14,7 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputTextField } from "../Form";
 import { LOGO_BRAND } from "../../constants/img_common";
+import { PATH } from "../../routes/path";
 
 interface InputProfileProps {
   userEmail: string;
@@ -54,7 +55,7 @@ export const InputProfile = ({
   );
 
   const changeDirectionToLoginPage = useCallback(() => {
-    navigate("/login");
+    navigate(PATH.LOGIN);
   }, [navigate]);
 
   return (
@@ -161,7 +162,7 @@ const RegisterButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
   overflow: "hidden",
   "&:hover": {
-    background: theme.palette.primary.light,
+    background: `${theme.palette.primary.light} !important`,
     "&::before": {
       left: "120%",
       transform: "translateY(-50%)",

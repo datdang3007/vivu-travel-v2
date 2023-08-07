@@ -8,13 +8,22 @@ import {
 import { useMemo, useCallback } from "react";
 import { HeaderProps, ListOptionProps, searchProps } from "../../types";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "../../routes/path";
 
 export const Header = (props: HeaderProps) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { isMenu } = props;
-  const testEvent = useCallback(() => {
-    console.log("test");
-  }, []);
+
+  const changeDirection = useCallback(
+    (path: string) => {
+      navigate(path);
+    },
+    [navigate]
+  );
+
+  const testEvent = useCallback(() => {}, []);
 
   const defaultValuesLogin = useMemo(() => {
     let result = {
@@ -33,7 +42,7 @@ export const Header = (props: HeaderProps) => {
         {
           variant: BUTTON_VARIANT.TEXT,
           title: "Miền",
-          event: testEvent,
+          event: () => testEvent(),
           textVariant: "tB18",
           padding: "2px 18px",
           textColor: theme.palette.common.white,
@@ -42,7 +51,7 @@ export const Header = (props: HeaderProps) => {
         {
           variant: BUTTON_VARIANT.TEXT,
           title: "Vùng",
-          event: testEvent,
+          event: () => testEvent(),
           textVariant: "tB18",
           padding: "2px 18px",
           textColor: theme.palette.common.white,
@@ -53,7 +62,7 @@ export const Header = (props: HeaderProps) => {
         {
           variant: BUTTON_VARIANT.TEXT,
           title: "Đăng Ký",
-          event: testEvent,
+          event: () => changeDirection(PATH.REGISTER),
           textVariant: "tB16",
           padding: "2px 18px",
           textColor: theme.palette.common.white,
@@ -62,7 +71,7 @@ export const Header = (props: HeaderProps) => {
         {
           variant: BUTTON_VARIANT.CONTAINED,
           title: "Đăng Nhập",
-          event: testEvent,
+          event: () => changeDirection(PATH.LOGIN),
           textVariant: "tB16",
           borderRadius: "15px",
           padding: "2px 18px",
@@ -74,6 +83,7 @@ export const Header = (props: HeaderProps) => {
       ],
     }),
     [
+      changeDirection,
       testEvent,
       theme.palette.common.white,
       theme.palette.primary.light,

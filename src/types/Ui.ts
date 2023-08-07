@@ -6,7 +6,7 @@ export interface HeaderMenuOptionProps {
 export interface ListOptionItemProps {
   variant: string;
   title: string;
-  event: () => void;
+  event?: () => void;
   color?: string;
   hoverColor?: string;
   textColor?: string;

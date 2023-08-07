@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { InputTextField } from "../Form";
 import { rules } from "../../utils/validation";
 import { LOGO_BRAND } from "../../constants/img_common";
+import { PATH } from "../../routes/path";
 
 interface emailProps {
   user_email: string;
@@ -45,7 +46,7 @@ export const InputEmail = ({ handleEmail }: InputEmailProps) => {
   );
 
   const changeDirectionToLoginPage = useCallback(() => {
-    navigate("/login");
+    navigate(PATH.LOGIN);
   }, [navigate]);
 
   return (
@@ -100,7 +101,7 @@ export const InputEmail = ({ handleEmail }: InputEmailProps) => {
                   <Typography variant="tR14" color={theme.palette.common.white}>
                     Tiếp tục
                   </Typography>
-                  <ArrowRight />
+                  <ArrowRight sx={{ color: theme.palette.common.white }} />
                 </ContinueButton>
               </Grid>
               <Grid
@@ -124,7 +125,7 @@ export const InputEmail = ({ handleEmail }: InputEmailProps) => {
       </Container>
     </FormProvider>
   );
-}
+};
 
 const Body = styled(Box)({
   display: "flex",
@@ -158,7 +159,7 @@ const ContinueButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
   overflow: "hidden",
   "&:hover": {
-    background: theme.palette.primary.light,
+    background: `${theme.palette.primary.light} !important`,
     "&::before": {
       left: "120%",
       transform: "translateY(-50%)",

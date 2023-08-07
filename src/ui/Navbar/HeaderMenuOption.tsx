@@ -22,34 +22,36 @@ export const HeaderMenuOption = (props: HeaderMenuOptionProps) => {
   }, [position]);
 
   const listButtonComponent = useCallback(() => {
-    return listOption.map((val, idx) => (
-      <Button
-        key={idx}
-        variant={val.variant as ButtonTypeMap["props"]["variant"]}
-        onClick={val.event}
-        sx={{
-          borderRadius: val.borderRadius,
-          padding: val.padding,
-          background: val.color,
-          color: val.textColor,
-          "&:hover": {
-            background: `${val.hoverColor} !important`,
-            span: {
-              color: `${val.textColorHover} !important`,
+    return listOption.map((val, idx) => {
+      return (
+        <Button
+          key={idx}
+          variant={val.variant as ButtonTypeMap["props"]["variant"]}
+          onClick={val.event}
+          sx={{
+            borderRadius: val.borderRadius,
+            padding: val.padding,
+            background: val.color,
+            color: val.textColor,
+            "&:hover": {
+              background: `${val.hoverColor} !important`,
+              span: {
+                color: `${val.textColorHover} !important`,
+              },
+              p: {
+                color: `${val.textColorHover} !important`,
+              },
             },
-            p: {
-              color: `${val.textColorHover} !important`,
-            },
-          },
-        }}
-      >
-        <Typography
-          variant={val.textVariant as TypographyTypeMap["props"]["variant"]}
+          }}
         >
-          {val.title}
-        </Typography>
-      </Button>
-    ));
+          <Typography
+            variant={val.textVariant as TypographyTypeMap["props"]["variant"]}
+          >
+            {val.title}
+          </Typography>
+        </Button>
+      );
+    });
   }, [listOption]);
 
   return (

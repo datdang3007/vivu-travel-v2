@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { rules } from "../../utils/validation";
 import { InputTextField } from "../../components/Form";
 import { LOGO_BRAND } from "../../constants/img_common";
+import { PATH } from "../../routes/path";
 
 export interface LoginProps {
   user_email: string;
@@ -54,13 +55,13 @@ export const Login = () => {
     (values: any) => {
       const { user_email, user_password } = values;
       console.log("login", user_email, user_password);
-      navigate("/");
+      navigate(PATH.HOME);
     },
     [navigate]
   );
 
   const changeDirectionToRegisterPage = useCallback(() => {
-    navigate("/register");
+    navigate(PATH.REGISTER);
   }, [navigate]);
 
   const methods = useForm<LoginProps>({

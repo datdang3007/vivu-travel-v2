@@ -95,7 +95,6 @@ export const HeaderMenuSearch = () => {
                 input: {
                   padding: "4px 15px",
                   background: theme.palette.common.white,
-                  color: theme.palette.common.black,
                   borderRadius: "0px !important",
                 },
                 fieldset: {
