@@ -1,8 +1,13 @@
 import {
   AppBar,
   Box,
+  Drawer,
   Grid,
   IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Menu,
   MenuItem,
   Toolbar,
@@ -12,24 +17,70 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useCallback, useState } from "react";
+import { AlertSelect } from "../../utils/alert";
+import { title } from "process";
+
+const listOption = ["Miền", "Vùng", "Đăng nhập", "Đăng ký"];
+const searchOption = {
+  Miền: {
+    "Miền Bắc": "Miền Bắc",
+    "Miền Trung": "Miền Trung",
+    "Miền Nam": "Miền Nam",
+  },
+  Vùng: {
+    "Vùng ĐB Sông Hồng": "Vùng ĐB Sông Hồng",
+    "Vùng ĐB Sông Cửu Long": "Vùng ĐB Sông Cửu Long",
+  },
+  "Tỉnh / Thành Phố": {
+    "Hải Phòng": "Hải Phòng",
+    "Hải Dương": "Hải Dương",
+    "Bắc Ninh": "Bắc Ninh",
+    "Hà Nội": "Hà Nội",
+  },
+  "Địa Điểm": {
+    "Nhà Hát Lớn HP": "Nhà Hát Lớn HP",
+    "Landmark 81": "Landmark 81",
+  },
+};
 
 export const HeaderMenuNavbar = () => {
   const theme = useTheme();
-  const [headerDropdown, setHeaderDropdown] = useState<HTMLElement | null>(
-    null
-  );
-  const open = Boolean(headerDropdown);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setHeaderDropdown(event.currentTarget);
+  const [showDrawer, setShowDrawer] = useState<boolean>(false);
+  const handleClick = () => {
+    setShowDrawer(true);
   };
   const handleClose = () => {
-    setHeaderDropdown(null);
+    setShowDrawer(false);
   };
 
   const searchInput = useCallback(() => {
-    const searchValue = prompt("Tìm kiếm:");
-    console.log(searchValue);
+    AlertSelect({
+      title: "Tìm kiếm",
+      options: searchOption,
+      placeholder: "Tìm kiếm...",
+      showCancelBtn: true,
+    }).then(({ value, isConfirmed }) => {
+      if (isConfirmed) {
+        console.log(value);
+      }
+    });
   }, []);
+
+  const listOptionComponent = useCallback(
+    () => (
+      <div style={{ width: "250px" }}>
+        <List>
+          {listOption.map((label, idx) => (
+            <ListItem button key={idx} onClick={handleClose}>
+              {/* <ListItemIcon></ListItemIcon> */}
+              <ListItemText primary={label} />
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    ),
+    []
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -37,6 +88,9 @@ export const HeaderMenuNavbar = () => {
         position="static"
         sx={{ background: "unset", boxShadow: "unset", padding: "0 20px" }}
       >
+        <Drawer open={showDrawer} onClose={handleClose}>
+          {listOptionComponent()}
+        </Drawer>
         <Toolbar variant="dense">
           <Grid
             item
@@ -48,12 +102,7 @@ export const HeaderMenuNavbar = () => {
             <Grid item container xs={"auto"} alignItems={"center"}>
               <IconButton
                 edge="start"
-                id="header-button"
                 color="inherit"
-                aria-label="menu"
-                aria-controls={open ? "header-dropdown" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
                 sx={{ mr: 2 }}
               >
@@ -63,20 +112,6 @@ export const HeaderMenuNavbar = () => {
                 Menu
               </Typography>
             </Grid>
-            <Menu
-              id="header-dropdown"
-              anchorEl={headerDropdown}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "header-button",
-              }}
-            >
-              <MenuItem onClick={handleClose}>Miền</MenuItem>
-              <MenuItem onClick={handleClose}>Vùng</MenuItem>
-              <MenuItem onClick={handleClose}>Đăng Nhập</MenuItem>
-              <MenuItem onClick={handleClose}>Đăng Ký</MenuItem>
-            </Menu>
             <IconButton
               edge="start"
               sx={{ padding: "5px" }}
