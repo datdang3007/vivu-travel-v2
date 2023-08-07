@@ -6,12 +6,8 @@ import {
   STYLE_POSITION,
 } from "../../constants";
 import { useMemo, useCallback } from "react";
-import { HeaderProps, ListOptionProps } from "../../types";
+import { HeaderProps, ListOptionProps, searchProps } from "../../types";
 import { FormProvider, useForm } from "react-hook-form";
-
-interface searchProps {
-  searchValue: string;
-}
 
 export const Header = (props: HeaderProps) => {
   const theme = useTheme();

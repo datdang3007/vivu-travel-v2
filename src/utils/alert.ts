@@ -1,19 +1,17 @@
 import Swal from "sweetalert2";
-import { AlertSelectProps } from "../types/Alert";
+import { AlertCustomAutoCompleteProps } from "../types/Alert";
+import { createRoot } from "react-dom/client";
 
-export const AlertSelect = async (props: AlertSelectProps) => {
-  const { title, options, placeholder, showCancelBtn } = props;
+export const AlertCustomAutoComplete = async (
+  props: AlertCustomAutoCompleteProps
+) => {
+  const { title, html, showCancelBtn, showConfirmBtn } = props;
+  const swalContainer = document.createElement("div");
+  createRoot(swalContainer).render(html);
   return await Swal.fire({
     title: title,
-    input: "select",
-    inputOptions: options,
-    inputPlaceholder: placeholder,
+    html: swalContainer,
     showCancelButton: showCancelBtn,
-    inputValidator: (value) => {
-      return new Promise((resolve) => {
-        if (!value) resolve("giá trị không được xác định");
-        resolve();
-      });
-    },
+    showConfirmButton: showConfirmBtn,
   });
 };

@@ -71,9 +71,15 @@ export const HeaderMenuSearch = () => {
   }, []);
 
   const listComponentPush = useCallback(
-    (title: string, list: any) => {
+    (title: string, listKey: string, list: any) => {
       return (
-        <Grid className="item-search-list" item xs={12} mt={"15px"}>
+        <Grid
+          key={listKey}
+          className="item-search-list"
+          item
+          xs={12}
+          mt={"15px"}
+        >
           <Grid item xs={12}>
             <Typography variant="tR16">{title}</Typography>
           </Grid>
@@ -130,13 +136,18 @@ export const HeaderMenuSearch = () => {
 
       if (categorizedLists[GEOGRAPHY_CATEGORY.REGION].length > 0)
         listResult.push(
-          listComponentPush("Miền", categorizedLists[GEOGRAPHY_CATEGORY.REGION])
+          listComponentPush(
+            "Miền",
+            GEOGRAPHY_CATEGORY.REGION,
+            categorizedLists[GEOGRAPHY_CATEGORY.REGION]
+          )
         );
 
       if (categorizedLists[GEOGRAPHY_CATEGORY.TERRITORY].length > 0)
         listResult.push(
           listComponentPush(
             "Vùng",
+            GEOGRAPHY_CATEGORY.TERRITORY,
             categorizedLists[GEOGRAPHY_CATEGORY.TERRITORY]
           )
         );
@@ -145,6 +156,7 @@ export const HeaderMenuSearch = () => {
         listResult.push(
           listComponentPush(
             "Tỉnh",
+            GEOGRAPHY_CATEGORY.PROVINCE,
             categorizedLists[GEOGRAPHY_CATEGORY.PROVINCE]
           )
         );
@@ -153,6 +165,7 @@ export const HeaderMenuSearch = () => {
         listResult.push(
           listComponentPush(
             "Địa Điểm",
+            GEOGRAPHY_CATEGORY.PLACE,
             categorizedLists[GEOGRAPHY_CATEGORY.PLACE]
           )
         );
@@ -244,7 +257,7 @@ const Dropdown = styled("div")({
   padding: `15px 0`,
   borderRadius: "15px",
   ".item-search-list": {
-    "&:first-child": {
+    "&:first-of-type": {
       marginTop: "0px",
     },
   },

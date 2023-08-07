@@ -6,10 +6,7 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
-  Menu,
-  MenuItem,
   Toolbar,
   Typography,
   useTheme,
@@ -17,8 +14,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useCallback, useState } from "react";
-import { AlertSelect } from "../../utils/alert";
-import { title } from "process";
+import { HeaderSearch } from "../../components/Dialog/HeaderSearch";
 
 const listOption = ["Miền", "Vùng", "Đăng nhập", "Đăng ký"];
 const searchOption = {
@@ -46,6 +42,7 @@ const searchOption = {
 export const HeaderMenuNavbar = () => {
   const theme = useTheme();
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
+  const [showSearch, setShowSearch] = useState<boolean>(false);
   const handleClick = () => {
     setShowDrawer(true);
   };
@@ -53,18 +50,12 @@ export const HeaderMenuNavbar = () => {
     setShowDrawer(false);
   };
 
-  const searchInput = useCallback(() => {
-    AlertSelect({
-      title: "Tìm kiếm",
-      options: searchOption,
-      placeholder: "Tìm kiếm...",
-      showCancelBtn: true,
-    }).then(({ value, isConfirmed }) => {
-      if (isConfirmed) {
-        console.log(value);
-      }
-    });
-  }, []);
+  const handleClickSearch = () => {
+    setShowSearch(true);
+  };
+  const handleCloseSearch = () => {
+    setShowSearch(false);
+  };
 
   const listOptionComponent = useCallback(
     () => (
@@ -88,6 +79,10 @@ export const HeaderMenuNavbar = () => {
         position="static"
         sx={{ background: "unset", boxShadow: "unset", padding: "0 20px" }}
       >
+        <HeaderSearch
+          open={showSearch}
+          handleShow={handleCloseSearch}
+        />
         <Drawer open={showDrawer} onClose={handleClose}>
           {listOptionComponent()}
         </Drawer>
@@ -115,7 +110,7 @@ export const HeaderMenuNavbar = () => {
             <IconButton
               edge="start"
               sx={{ padding: "5px" }}
-              onClick={searchInput}
+              onClick={handleClickSearch}
             >
               <SearchIcon sx={{ color: theme.palette.common.white }} />
             </IconButton>

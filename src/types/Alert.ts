@@ -1,6 +1,7 @@
-export interface AlertSelectProps {
+export interface AlertCustomAutoCompleteProps {
   title: string;
+  html: any;
   options: any;
-  placeholder?: string;
   showCancelBtn?: boolean;
+  showConfirmBtn?: boolean;
 }

@@ -8,3 +8,7 @@ export interface ListOptionProps {
 export interface HeaderProps {
   isMenu: boolean;
 }
+
+export interface searchProps {
+  searchValue: string;
+}
