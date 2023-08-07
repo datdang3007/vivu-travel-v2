@@ -15,3 +15,10 @@ export interface ListOptionItemProps {
   padding?: string;
   borderRadius?: string;
 }
+
+export interface SearchListProps {
+  id: string | number;
+  img: string;
+  name: string;
+  category: string;
+}
