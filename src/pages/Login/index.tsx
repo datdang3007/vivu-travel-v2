@@ -64,6 +64,10 @@ export const Login = () => {
     navigate(PATH.REGISTER);
   }, [navigate]);
 
+  const changeDirectionToHome = useCallback(() => {
+    navigate(PATH.HOME);
+  }, [navigate]);
+
   const methods = useForm<LoginProps>({
     defaultValues: defaultValuesLogin,
   });
@@ -89,7 +93,7 @@ export const Login = () => {
                 marginTop={"26px"}
               >
                 <Grid item xs={4}>
-                  <BoxLogo>
+                  <BoxLogo onClick={changeDirectionToHome}>
                     <img src={LOGO_BRAND.MAIN} alt="" />
                   </BoxLogo>
                 </Grid>

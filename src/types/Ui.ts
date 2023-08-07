@@ -16,6 +16,11 @@ export interface ListOptionItemProps {
   borderRadius?: string;
 }
 
+export interface listMenuOptionProps {
+  label: string;
+  event: () => void;
+}
+
 export interface SearchListProps {
   id: string | number;
   img: string;

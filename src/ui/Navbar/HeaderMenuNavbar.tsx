@@ -13,13 +13,15 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { HeaderSearch } from "../../components/Dialog/HeaderSearch";
-
-const listOption = ["Miền", "Vùng", "Đăng nhập", "Đăng ký"];
+import { listMenuOptionProps } from "../../types/Ui";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "../../routes/path";
 
 export const HeaderMenuNavbar = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const handleClick = () => {
@@ -36,19 +38,40 @@ export const HeaderMenuNavbar = () => {
     setShowSearch(false);
   };
 
+  const changeDirection = useCallback(
+    (path: string) => {
+      setShowSearch(false);
+      navigate(path);
+    },
+    [navigate]
+  );
+
+  const testEvent = useCallback(() => {}, []);
+
+  const listOption = useMemo(
+    () =>
+      [
+        { label: "Miền", event: () => testEvent() },
+        { label: "Vùng", event: () => testEvent() },
+        { label: "Đăng nhập", event: () => changeDirection(PATH.LOGIN) },
+        { label: "Đăng ký", event: () => changeDirection(PATH.REGISTER) },
+      ] as listMenuOptionProps[],
+    [changeDirection, testEvent]
+  ); 
+
   const listOptionComponent = useCallback(
     () => (
       <div style={{ width: "250px" }}>
         <List>
-          {listOption.map((label, idx) => (
-            <ListItem button key={idx} onClick={handleClose}>
-              <ListItemText primary={label} />
+          {listOption.map((option, idx) => (
+            <ListItem button key={idx} onClick={option.event}>
+              <ListItemText primary={option.label} />
             </ListItem>
           ))}
         </List>
       </div>
     ),
-    []
+    [listOption]
   );
 
   return (

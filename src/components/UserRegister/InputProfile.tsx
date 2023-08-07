@@ -58,6 +58,10 @@ export const InputProfile = ({
     navigate(PATH.LOGIN);
   }, [navigate]);
 
+  const changeDirectionToHome = useCallback(() => {
+    navigate(PATH.HOME);
+  }, [navigate]);
+
   return (
     <FormProvider {...methods}>
       <Container maxWidth="xs" component={"form"} onSubmit={onSubmit}>
@@ -75,7 +79,7 @@ export const InputProfile = ({
                 marginTop={"26px"}
               >
                 <Grid item xs={4}>
-                  <BoxLogo>
+                  <BoxLogo onClick={changeDirectionToHome}>
                     <img src={LOGO_BRAND.MAIN} alt="" />
                   </BoxLogo>
                 </Grid>

@@ -49,6 +49,10 @@ export const InputEmail = ({ handleEmail }: InputEmailProps) => {
     navigate(PATH.LOGIN);
   }, [navigate]);
 
+  const changeDirectionToHome = useCallback(() => {
+    navigate(PATH.HOME);
+  }, [navigate]);
+
   return (
     <FormProvider {...methods}>
       <Container
@@ -70,7 +74,7 @@ export const InputEmail = ({ handleEmail }: InputEmailProps) => {
                 marginTop={"26px"}
               >
                 <Grid item xs={4}>
-                  <BoxLogo>
+                  <BoxLogo onClick={changeDirectionToHome}>
                     <img src={LOGO_BRAND.MAIN} alt="" />
                   </BoxLogo>
                 </Grid>
