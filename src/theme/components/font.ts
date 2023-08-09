@@ -32,6 +32,8 @@ declare module "@mui/material/Typography" {
     tR36: true;
     tB38: true;
     tR38: true;
+    tB40: true;
+    tR40: true;
     tB42: true;
     tR42: true;
     tB44: true;
@@ -76,6 +78,8 @@ export interface ExtendedTypographyOptions extends TypographyOptions {
   tR36: React.CSSProperties;
   tB38: React.CSSProperties;
   tR38: React.CSSProperties;
+  tB40: React.CSSProperties;
+  tR40: React.CSSProperties;
   tB42: React.CSSProperties;
   tR42: React.CSSProperties;
   tB44: React.CSSProperties;
@@ -207,6 +211,14 @@ export const typographyTheme = {
   },
   tR38: {
     fontSize: 38,
+    fontWeight: "normal",
+  },
+  tB40: {
+    fontSize: 40,
+    fontWeight: "bold",
+  },
+  tR40: {
+    fontSize: 40,
     fontWeight: "normal",
   },
   tB42: {

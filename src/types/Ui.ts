@@ -27,3 +27,8 @@ export interface SearchListProps {
   name: string;
   category: string;
 }
+
+export interface BackgroundTextProps {
+  title: string;
+  slogan?: string;
+}
