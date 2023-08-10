@@ -6,7 +6,18 @@ export const CardCountryInfo = (props: CountryInfoProps) => {
   const { title, content, icon } = props;
 
   return (
-    <CardContainer item xs={12} sm={6} xl={3}>
+    <Grid
+      item
+      xs={12}
+      sm={6}
+      xl={2.75}
+      sx={{
+        padding: {
+          xs: "20px",
+          xl: "0",
+        },
+      }}
+    >
       <CardDetail
         item
         container
@@ -30,13 +41,9 @@ export const CardCountryInfo = (props: CountryInfoProps) => {
           <IconImage src={icon} alt="" />
         </Grid>
       </CardDetail>
-    </CardContainer>
+    </Grid>
   );
 };
-
-const CardContainer = styled(Grid)({
-  padding: "20px",
-});
 
 const CardDetail = styled(Grid)({
   borderRadius: 4,

@@ -7,6 +7,8 @@ import IconGDPImg from "../../assets/img/Icon_GDP.png";
 import { CountryInfoProps } from "../../types";
 import { GroupCardCountryInfo } from "./components/GroupCardCountryInfo";
 import { FormTitle } from "../../components/Form/FormTitle";
+import { GroupCardRegion } from "../../components/Region";
+import { GroupCardTerritory } from "../../components/Territory";
 
 const ListCountryInfo = [
   {
@@ -33,7 +35,7 @@ const ListCountryInfo = [
 
 export const Home = () => {
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} mb={100}>
       <BackgroundContent
         height={"80vh"}
         isShowBottomImg
@@ -43,13 +45,19 @@ export const Home = () => {
       />
       <Grid item container justifyContent={"center"} xs={12}>
         <Grid item xs={11} sm={10} md={9.1}>
-          <FormTitle container title="Thống Kê" isTitleCenter mb="15px">
+          <FormTitle
+            container
+            justifyContent={"space-between"}
+            title="Thống Kê"
+            isTitleCenter
+            mb="40px"
+          >
             <GroupCardCountryInfo ListCountryInfo={ListCountryInfo} />
           </FormTitle>
         </Grid>
       </Grid>
       <Grid item container justifyContent={"center"} xs={12}>
-        <Grid item xs={11} sm={10} md={8}>
+        <Grid item xs={11} sm={10} md={9.1}>
           <FormTitle
             container
             title="Miền"
@@ -57,9 +65,24 @@ export const Home = () => {
             titleSpacing="5px"
             isTitleCenter
             mt="80px"
-            mb="15px"
+            mb="40px"
           >
-            test
+            <GroupCardRegion />
+          </FormTitle>
+        </Grid>
+      </Grid>
+      <Grid item container justifyContent={"center"} xs={12}>
+        <Grid item xs={11} sm={10} md={9.1}>
+          <FormTitle
+            container
+            title="Vùng"
+            subtitle="Mỗi vùng có những đặc trưng riêng về địa lý, khí hậu, văn hóa, lịch sử, kinh tế và ẩm thực"
+            titleSpacing="5px"
+            isTitleCenter
+            mt="80px"
+            mb="30px"
+          >
+            <GroupCardTerritory />
           </FormTitle>
         </Grid>
       </Grid>

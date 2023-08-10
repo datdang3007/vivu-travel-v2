@@ -32,3 +32,21 @@ export interface BackgroundTextProps {
   title: string;
   slogan?: string;
 }
+
+export interface BoxImageProps {
+  src: string;
+  alt?: string;
+  borderRadius?: string;
+  isHoverEffect?: boolean;
+  isCursorPointer?: boolean;
+}
+
+export interface CardInfoActionProps {
+  title: string;
+  subTitle?: string;
+  src: string;
+  alt?: string;
+  isHoverEffect?: boolean;
+  isCursorPointer?: boolean;
+  isTitleCenter?: boolean;
+}
