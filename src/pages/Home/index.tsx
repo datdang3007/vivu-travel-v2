@@ -32,6 +32,8 @@ const ListCountryInfo = [
 ] as CountryInfoProps[];
 
 export const Home = () => {
+  // const { isMobile } = useMasterContext();
+
   return (
     <Grid item xs={12}>
       <BackgroundContent
@@ -42,7 +44,7 @@ export const Home = () => {
         backgroundImg={"https://images5.alphacoders.com/864/864641.jpg"}
       />
       <Grid item container justifyContent={"center"} xs={12}>
-        <Grid item xs={11} sm={8}>
+        <Grid item xs={11} sm={10} md={8}>
           <FormTitle
             container
             title="Thống Kê"
@@ -55,7 +57,7 @@ export const Home = () => {
         </Grid>
       </Grid>
       <Grid item container xs={12}>
-        
+
       </Grid>
     </Grid>
   );

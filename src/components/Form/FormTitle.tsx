@@ -3,6 +3,7 @@ import { FormTitleOptions } from "../../types/Form";
 
 export const FormTitle = (props: FormTitleOptions & GridProps) => {
   const { title, children, size, mt, mb, isTitleCenter, ...rest } = props;
+  
   return (
     <Grid item xs={12} mt={mt} {...rest}>
       <Grid

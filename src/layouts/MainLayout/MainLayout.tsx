@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { Header } from "../../components/Header";
-import { useDeviceCheck } from "../../hooks/useCheckDevice";
+import { useMasterContext } from "../../context/MasterContext";
 
 export const MainLayout = () => {
-  const { device } = useDeviceCheck();
+  const { isMobile, isTabletMini } = useMasterContext();
 
   return (
     <Box
@@ -14,7 +14,7 @@ export const MainLayout = () => {
         overflow: "auto",
       }}
     >
-      <Header isMenu={device() === "mobile"} />
+      <Header isMenu={isMobile || isTabletMini} />
       <Box>
         <Outlet />
       </Box>

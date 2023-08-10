@@ -93,7 +93,7 @@ export const Header = (props: HeaderProps) => {
 
   const NavbarComponent = useCallback(() => {
     return isMenu ? (
-      <Grid item xs={12} sx={{ padding: "5px 0 30px" }}>
+      <Grid item xs={12}>
         <HeaderMenuNavbar />
       </Grid>
     ) : (

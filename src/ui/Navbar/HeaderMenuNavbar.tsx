@@ -9,6 +9,7 @@ import {
   ListItemText,
   Toolbar,
   Typography,
+  styled,
   useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -18,6 +19,7 @@ import { HeaderSearch } from "../../components/Dialog/HeaderSearch";
 import { listMenuOptionProps } from "../../types/Ui";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "../../routes/path";
+import { COLOR_PALLETTE } from "../../constants/color";
 
 export const HeaderMenuNavbar = () => {
   const theme = useTheme();
@@ -57,7 +59,7 @@ export const HeaderMenuNavbar = () => {
         { label: "Đăng ký", event: () => changeDirection(PATH.REGISTER) },
       ] as listMenuOptionProps[],
     [changeDirection, testEvent]
-  ); 
+  );
 
   const listOptionComponent = useCallback(
     () => (
@@ -75,7 +77,7 @@ export const HeaderMenuNavbar = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <NavbarContainer sx={{ background: theme.palette.common.white }}>
       <AppBar
         position="static"
         sx={{ background: "unset", boxShadow: "unset", padding: "0 20px" }}
@@ -99,9 +101,14 @@ export const HeaderMenuNavbar = () => {
                 onClick={handleClick}
                 sx={{ mr: 2 }}
               >
-                <MenuIcon />
+                <MenuIcon
+                  sx={{
+                    fontSize: { xs: "1.8rem", sm: "2.3rem" },
+                    color: COLOR_PALLETTE.DIM_GRAY,
+                  }}
+                />
               </IconButton>
-              <Typography variant="tB14" color="inherit" component="div">
+              <Typography variant="tB18" color={COLOR_PALLETTE.BLACK}>
                 Menu
               </Typography>
             </Grid>
@@ -110,11 +117,20 @@ export const HeaderMenuNavbar = () => {
               sx={{ padding: "5px" }}
               onClick={handleClickSearch}
             >
-              <SearchIcon sx={{ color: theme.palette.common.white }} />
+              <SearchIcon
+                sx={{
+                  fontSize: { xs: "1.8rem", sm: "2.3rem" },
+                  color: COLOR_PALLETTE.DIM_GRAY,
+                }}
+              />
             </IconButton>
           </Grid>
         </Toolbar>
       </AppBar>
-    </Box>
+    </NavbarContainer>
   );
 };
+
+const NavbarContainer = styled(Box)({
+  filter: `drop-shadow(0px 0px 16px rgba(0, 0, 0, 0.16))`,
+});

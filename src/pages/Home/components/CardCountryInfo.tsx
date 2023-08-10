@@ -6,7 +6,7 @@ export const CardCountryInfo = (props: CountryInfoProps) => {
   const { title, content, icon } = props;
 
   return (
-    <CardContainer item xs={12} xl={3}>
+    <CardContainer item xs={12} sm={6} xl={3}>
       <CardDetail
         item
         container
