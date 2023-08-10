@@ -12,9 +12,10 @@ export interface AutoCompleteOptions {
 
 export interface FormTitleOptions {
   title: string;
+  subtitle?: string;
   children: ReactNode;
-  size: string;
   mt?: string;
   mb?: string;
+  titleSpacing?: string;
   isTitleCenter?: boolean;
 }
