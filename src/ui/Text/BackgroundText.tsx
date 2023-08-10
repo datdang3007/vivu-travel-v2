@@ -36,7 +36,7 @@ export const BackgroundText = (props: BackgroundTextProps) => {
           <Typography
             sx={{
               fontSize: {
-                xs: 25,
+                xs: 15,
                 md: 30,
                 xl: 30,
               },
@@ -44,7 +44,8 @@ export const BackgroundText = (props: BackgroundTextProps) => {
               color: theme.palette.common.white,
               textAlign: "center",
               mt: {
-                xs: 5,
+                xs: 0,
+                sm: 5,
                 xl: 0,
               },
             }}

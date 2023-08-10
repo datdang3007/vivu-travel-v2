@@ -61,7 +61,14 @@ export const InputEmail = ({ handleEmail }: InputEmailProps) => {
         onSubmit={methods.handleSubmit(handleSubmit)}
       >
         <Body>
-          <CardForm>
+          <CardForm
+            sx={{
+              boxShadow: {
+                xs: "unset",
+                sm: `0 5px 10px 0 rgba(0,0,0,.1)`,
+              },
+            }}
+          >
             <Grid container>
               <Grid item xs={12} textAlign={"center"} marginTop={"20px"}>
                 <Typography variant="tB30">Đăng Ký</Typography>
