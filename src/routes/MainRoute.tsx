@@ -1,14 +1,24 @@
 import { RouteObject } from "react-router-dom";
 import { PATH } from "./path";
-import { Home } from "../pages";
+import { Home, Region } from "../pages";
 import { MainLayout } from "../layouts/MainLayout";
+import ScrollToTop from "../components/ScrollToTop";
 
 const protectedRoute: RouteObject = {
   element: <MainLayout />,
   children: [
     {
-      path: PATH.HOME,
-      element: <Home />,
+      element: <ScrollToTop />,
+      children: [
+        {
+          path: PATH.HOME,
+          element: <Home />,
+        },
+        {
+          path: PATH.REGION,
+          element: <Region />,
+        },
+      ],
     },
   ],
 };

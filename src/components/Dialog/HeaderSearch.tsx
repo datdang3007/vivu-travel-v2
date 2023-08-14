@@ -1,4 +1,4 @@
-import { Box, Dialog, Grid, useTheme } from "@mui/material";
+import { Box, Dialog } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { useMemo } from "react";
 import { searchProps } from "../../types";
@@ -11,7 +11,6 @@ interface HeaderSearchProps {
 
 export const HeaderSearch = (props: HeaderSearchProps) => {
   const { open, handleShow } = props;
-  const theme = useTheme();
   const defaultValuesLogin = useMemo(() => {
     let result = {
       searchValue: "",

@@ -13,14 +13,46 @@ export interface searchProps {
   searchValue: string;
 }
 
+export interface FormTitleSearchProps {
+  formTitleSearchValue: string;
+}
+
 export interface BackgroundContentProps {
   height?: string | number;
-  backgroundImg: string,
+  backgroundImg: string;
   isShowBottomImg?: boolean;
+  isHomePage?: boolean;
   title: string;
   slogan?: string;
 }
 
-export interface IconProps {
-  color?: string;
+export interface CountryInfoProps {
+  title: string;
+  content: string;
+  icon: string;
+}
+
+export interface GroupCardCountryInfoProps {
+  ListCountryInfo: CountryInfoProps[];
+}
+
+export interface GroupCardTerritoryProps {
+  listTerritory: CardTerritoryProps[];
+}
+
+export interface CardTerritoryProps {
+  id: string;
+  title: string;
+  subTitle: string;
+  src: string;
+}
+
+export interface GroupCardProvinceProps {
+  listProvince: CardProvinceProps[];
+}
+
+export interface CardProvinceProps {
+  id: string;
+  title: string;
+  src: string;
 }

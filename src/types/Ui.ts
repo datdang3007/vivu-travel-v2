@@ -1,3 +1,5 @@
+import { SxProps } from "@mui/material";
+
 export interface HeaderMenuOptionProps {
   position: string;
   listOption: ListOptionItemProps[];
@@ -31,6 +33,7 @@ export interface SearchListProps {
 export interface BackgroundTextProps {
   title: string;
   slogan?: string;
+  isHomePage?: boolean;
 }
 
 export interface BoxImageProps {
@@ -49,4 +52,6 @@ export interface CardInfoActionProps {
   isHoverEffect?: boolean;
   isCursorPointer?: boolean;
   isTitleCenter?: boolean;
+  boxSxProp?: SxProps;
+  onClick?: () => void;
 }

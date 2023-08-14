@@ -13,7 +13,19 @@ export interface AutoCompleteOptions {
 export interface FormTitleOptions {
   title: string;
   subtitle?: string;
-  children: ReactNode;
+  titleColor?: string;
+  children?: ReactNode;
+  mt?: string;
+  mb?: string;
+  titleSpacing?: string;
+  isTitleCenter?: boolean;
+}
+
+export interface FormTitleWithSearchOptions {
+  title: string;
+  subtitle?: string;
+  titleColor?: string;
+  children?: ReactNode;
   mt?: string;
   mb?: string;
   titleSpacing?: string;

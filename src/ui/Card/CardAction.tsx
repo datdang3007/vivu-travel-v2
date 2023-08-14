@@ -12,13 +12,21 @@ export const CardInfoAction = (props: CardInfoActionProps & GridProps) => {
     isHoverEffect,
     isCursorPointer,
     isTitleCenter,
+    boxSxProp,
+    onClick,
     ...rest
   } = props;
 
   return (
     <Grid item container {...rest}>
       <Grid item xs={12} overflow={"hidden"} borderRadius={"20px"}>
-        <Box sx={{ height: { xs: "200px", sm: "240px", xl: "300px" } }}>
+        <Box
+          sx={{
+            height: { xs: "200px", sm: "240px", xl: "300px" },
+            ...boxSxProp,
+          }}
+          onClick={onClick}
+        >
           <BoxImage
             src={src}
             alt={alt}
@@ -36,6 +44,7 @@ export const CardInfoAction = (props: CardInfoActionProps & GridProps) => {
           mb={"5px"}
         >
           <Typography
+            onClick={onClick}
             color={COLOR_PALLETTE.ZAMBEZI}
             sx={{
               cursor: isCursorPointer ? "pointer" : undefined,
@@ -51,6 +60,7 @@ export const CardInfoAction = (props: CardInfoActionProps & GridProps) => {
         </Grid>
         <Grid item xs={12} textAlign={isTitleCenter ? "center" : undefined}>
           <Typography
+            onClick={onClick}
             sx={{
               cursor: isCursorPointer ? "pointer" : undefined,
               fontSize: {

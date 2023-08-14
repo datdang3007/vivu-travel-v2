@@ -1,28 +1,39 @@
-import { Grid, Typography, useTheme } from "@mui/material";
+import { Grid, GridProps, Typography, useTheme } from "@mui/material";
 import { BackgroundTextProps } from "../../types/Ui";
 
-export const BackgroundText = (props: BackgroundTextProps) => {
+export const BackgroundText = (props: BackgroundTextProps & GridProps) => {
   const theme = useTheme();
-  const { title, slogan } = props;
+  const { isHomePage, title, slogan } = props;
   return (
     <Grid
       item
       container
-      height={{ xs: "97.5%", sm: "95%" }}
       alignItems={"center"}
       justifyContent={"center"}
       xs={12}
+      height={
+        isHomePage
+          ? { xs: "97.5%", sm: "95%", xl: "87.5%" }
+          : { xs: "97.5%", sm: "95%", xl: "100%" }
+      }
     >
       <Grid item container justifyContent={"center"} xs={12}>
         <Grid item container justifyContent={"center"} xs={11}>
           <Typography
             sx={{
-              fontSize: {
-                xs: 25,
-                sm: 40,
-                md: 45,
-                xl: 50,
-              },
+              fontSize: isHomePage
+                ? {
+                    xs: 30,
+                    sm: 45,
+                    md: 55,
+                    xl: 60,
+                  }
+                : {
+                    xs: 40,
+                    sm: 65,
+                    md: 85,
+                    xl: 90,
+                  },
               fontWeight: "bold",
               fontStyle: "normal",
               color: theme.palette.common.white,

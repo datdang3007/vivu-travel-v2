@@ -9,6 +9,7 @@ type SettingContextProps = {
   isMobile: boolean;
   isTabletMini: boolean;
   isTablet: boolean;
+  isDesktop: boolean;
 };
 
 const MasterContext = createContext<SettingContextProps | null>(null);
@@ -27,14 +28,16 @@ export const MasterProvider = ({ children }: Props) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTabletMini = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const isTablet = useMediaQuery(theme.breakpoints.between("md", "lg"));
+  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
 
   const provideProps = useMemo(
     () => ({
       isMobile,
       isTabletMini,
       isTablet,
+      isDesktop,
     }),
-    [isMobile, isTablet, isTabletMini]
+    [isMobile, isTablet, isTabletMini, isDesktop]
   );
 
   return (
