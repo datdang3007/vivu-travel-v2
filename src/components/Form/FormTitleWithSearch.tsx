@@ -1,17 +1,21 @@
 import {
   Grid,
-  GridProps,
+  IconButton,
+  InputAdornment,
   InputLabelProps,
+  TextField,
   TextFieldProps,
   Typography,
+  styled,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import { FormTitleWithSearchOptions } from "../../types/Form";
-import { InputTextField } from "./InputTextField";
+import { useController } from "react-hook-form";
 import { FieldValues, UseControllerProps } from "react-hook-form";
+import { COLOR_PALLETTE } from "../../constants/color";
 
 export const FormTitleWithSearch = (
   props: FormTitleWithSearchOptions &
-    GridProps &
     InputLabelProps &
     TextFieldProps &
     UseControllerProps<FieldValues>
@@ -29,13 +33,20 @@ export const FormTitleWithSearch = (
     control,
     rules,
     variant,
-    ...InputRest
+    ...rest
   } = props;
+
+  const { field, fieldState } = useController({
+    name,
+    control,
+    rules,
+  });
+  const error = Boolean(fieldState.error);
 
   return (
     <Grid item container xs={12} mt={mt}>
-      <Grid item xs={12} mb={mb}>
-        <Grid item xs={12} md={6}>
+      <Grid item container alignItems={"flex-end"} xs={12} mb={mb}>
+        <Grid item xs={12} lg={6}>
           <Grid
             item
             container
@@ -80,11 +91,61 @@ export const FormTitleWithSearch = (
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <InputTextField name="test" {...InputRest} />
+        <Grid item container justifyContent={"flex-end"} xs={12} lg={6}>
+          <Grid
+            item
+            container
+            flexDirection={"column"}
+            xs={12}
+            lg={6}
+            sx={{
+              mt: {
+                xs: "40px",
+                lg: 0,
+              },
+            }}
+          >
+            <SearchField
+              variant="outlined"
+              {...field}
+              {...rest}
+              error={error}
+              placeholder="Tìm kiếm..."
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => console.log("onClick")}
+                      edge="end"
+                      sx={{
+                        "&:hover": {
+                          color: COLOR_PALLETTE.BLACK,
+                        },
+                      }}
+                    >
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
         </Grid>
       </Grid>
       {children}
     </Grid>
   );
 };
+
+const SearchField = styled(TextField)(({ theme }) => ({
+  margin: "0px",
+  div: {
+    input: {
+      padding: "10px 0px 10px 16px",
+    },
+  },
+  [theme.breakpoints.down("lg")]: {
+    margin: "0px 20px",
+  },
+}));

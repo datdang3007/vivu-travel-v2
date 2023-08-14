@@ -137,13 +137,12 @@ export const Region = () => {
             <Grid item xs={12} component={"form"}>
               <FormTitleWithSearch
                 name="formTitleSearchValue"
-                container
                 title="Tỉnh Thành"
                 subtitle="Mỗi tỉnh thành đều mang trong mình những nét đẹp riêng"
                 titleSpacing="5px"
                 isTitleCenter={!isDesktop}
                 mt="80px"
-                mb="40px"
+                mb="20px"
               >
                 <GroupCardProvince listProvince={listProvince} />
               </FormTitleWithSearch>
