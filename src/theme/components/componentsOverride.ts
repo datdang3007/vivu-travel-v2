@@ -35,6 +35,9 @@ export const componentStyleOverrides = () => {
             background: "unset !important",
             boxShadow: "unset",
           },
+          "&:focus, &:hover": {
+            opacity: 0.7,
+          },
         },
       },
     },
@@ -54,6 +57,5 @@ export const componentStyleOverrides = () => {
         },
       },
     },
-    MuiTypography: {},
   } as Components<Omit<Theme, "components">>;
 };

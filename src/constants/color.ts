@@ -1,6 +1,6 @@
 export enum COLOR_PALLETTE {
   PRIMARY = "#42A5F5",
   DIM_GRAY = "#707070",
-  BLACK = "#323332",
+  BLACK = "#232222",
   ZAMBEZI = "#5B5B5B",
 }

@@ -8,7 +8,7 @@ export const BackgroundText = (props: BackgroundTextProps) => {
     <Grid
       item
       container
-      height={1}
+      height={{ xs: "97.5%", sm: "95%" }}
       alignItems={"center"}
       justifyContent={"center"}
       xs={12}
@@ -37,8 +37,8 @@ export const BackgroundText = (props: BackgroundTextProps) => {
             sx={{
               fontSize: {
                 xs: 15,
+                sm: 20,
                 md: 30,
-                xl: 30,
               },
               fontStyle: "normal",
               color: theme.palette.common.white,

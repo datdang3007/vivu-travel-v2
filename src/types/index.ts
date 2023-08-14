@@ -21,12 +21,6 @@ export interface BackgroundContentProps {
   slogan?: string;
 }
 
-export interface CountryInfoProps {
-  title: string;
-  content: string;
-  icon: string;
-}
-
-export interface GroupCardCountryInfoProps {
-  ListCountryInfo: CountryInfoProps[];
+export interface IconProps {
+  color?: string;
 }

@@ -38,6 +38,7 @@ export const CardInfoAction = (props: CardInfoActionProps & GridProps) => {
           <Typography
             color={COLOR_PALLETTE.ZAMBEZI}
             sx={{
+              cursor: isCursorPointer ? "pointer" : undefined,
               fontSize: {
                 xs: 12,
                 sm: 14,
@@ -51,6 +52,7 @@ export const CardInfoAction = (props: CardInfoActionProps & GridProps) => {
         <Grid item xs={12} textAlign={isTitleCenter ? "center" : undefined}>
           <Typography
             sx={{
+              cursor: isCursorPointer ? "pointer" : undefined,
               fontSize: {
                 xs: 16,
                 sm: 20,
