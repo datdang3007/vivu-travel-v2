@@ -14,8 +14,8 @@ export const BackgroundContent = (props: BackgroundContentProps) => {
       sx={{
         position: "relative",
         zIndex: "-1",
-        background: `url(${backgroundImg}) no-repeat top/cover`,
-        boxShadow: `0px 0px 1000px 500px rgba(0, 0, 0, 0.3) inset`,
+        background: `url(${backgroundImg}) no-repeat center/cover`,
+        boxShadow: `0px 0px 1000px 500px rgba(0, 0, 0, 0.5) inset`,
         overflow: "hidden",
       }}
     >

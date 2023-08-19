@@ -100,7 +100,7 @@ export const Header = (props: HeaderProps) => {
       <Container
         maxWidth={"xl"}
         sx={{
-          padding: "10px 0",
+          padding: "15px 0",
           [theme.breakpoints.down("xl")]: {
             padding: "15px 30px",
           },
@@ -135,14 +135,15 @@ export const Header = (props: HeaderProps) => {
 
   return (
     <FormProvider {...methods}>
-      <HeaderContainer>{NavbarComponent()}</HeaderContainer>
+      <HeaderContainer sx={{ position: isMenu ? "fixed" : "absolute" }}>
+        {NavbarComponent()}
+      </HeaderContainer>
     </FormProvider>
   );
 };
 
 const HeaderContainer = styled(Box)({
   zIndex: 999,
-  position: "absolute",
   width: "100%",
   top: 0,
   left: 0,

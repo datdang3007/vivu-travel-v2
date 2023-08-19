@@ -20,3 +20,9 @@ export enum GEOGRAPHY_CATEGORY {
   PROVINCE = "province",
   PLACE = "place",
 }
+
+export enum COMPONENT_SIZE {
+  DESKTOP_HEADER = "66.5px",
+  TABLET_HEADER = "52.8px",
+  MOBILE_HEADER = "48px",
+}

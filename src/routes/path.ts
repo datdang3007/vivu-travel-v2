@@ -4,4 +4,6 @@ export const PATH = {
   REGISTER: "/register",
   HOME: "/home",
   REGION: "/region",
+  TERRITORY: "/territory",
+  PROVINCE: "/province",
 };

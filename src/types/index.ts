@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { ListOptionItemProps } from "./Ui";
 
 export interface ListOptionProps {
@@ -55,4 +56,29 @@ export interface CardProvinceProps {
   id: string;
   title: string;
   src: string;
+}
+
+export interface BreadCrumbProps {
+  icon?: ReactNode;
+  title: string;
+  onClick?: () => void;
+}
+
+export interface BreadCrumbComponentProps {
+  list: BreadCrumbProps[];
+}
+
+export interface BlogContentProps {
+  HeaderBreadCrumbList: BreadCrumbProps[];
+}
+
+export interface ContentOverviewProps {
+  title: string;
+  image: string;
+  content: string;
+}
+
+export interface ContentDetailProps {
+  image: string;
+  content: string;
 }
