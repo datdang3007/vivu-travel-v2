@@ -70,6 +70,7 @@ export interface BreadCrumbComponentProps {
 
 export interface BlogContentProps {
   HeaderBreadCrumbList: BreadCrumbProps[];
+  children?: ReactNode;
 }
 
 export interface ContentOverviewProps {

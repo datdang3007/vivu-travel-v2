@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
 import { PATH } from "./path";
-import { Home, Province, Region, Territory } from "../pages";
+import { Home, Place, Province, Region, Territory } from "../pages";
 import { MainLayout } from "../layouts/MainLayout";
 import ScrollToTop from "../components/ScrollToTop";
 
@@ -25,6 +25,10 @@ const protectedRoute: RouteObject = {
         {
           path: PATH.PROVINCE,
           element: <Province />,
+        },
+        {
+          path: PATH.PLACE,
+          element: <Place />,
         },
       ],
     },

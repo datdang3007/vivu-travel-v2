@@ -6,4 +6,5 @@ export const PATH = {
   REGION: "/region",
   TERRITORY: "/territory",
   PROVINCE: "/province",
+  PLACE: "/place",
 };
