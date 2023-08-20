@@ -5,4 +5,7 @@ export enum COLOR_PALLETTE {
   ZAMBEZI = "#5B5B5B",
   BG_GRAY = "hsla(0, 0%, 96.7%, 0.7)",
   CULTURED = "#F4F4F4",
+  CHINESE_SILVER = "#CCCCCC",
+  DARK_GRAY = "#AAAAAA",
+  WHITE = "#FFFFFF",
 }

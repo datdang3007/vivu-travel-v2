@@ -17,7 +17,7 @@ export const ContentOverview = (props: ContentOverviewProps) => {
           {title}
         </Typography>
       </Grid>
-      <Grid item xs={12} mt={"30px"}>
+      <Grid item xs={12} mt={{ xs: "20px", lg: "30px" }}>
         <BoxImage src={image}></BoxImage>
       </Grid>
       <Grid item xs={12} mt={"30px"}>

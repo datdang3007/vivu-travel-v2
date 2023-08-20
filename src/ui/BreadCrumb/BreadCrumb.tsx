@@ -1,4 +1,4 @@
-import { Breadcrumbs, Typography, styled } from "@mui/material";
+import { Breadcrumbs, Grid, Typography, styled } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Link } from "react-router-dom";
 import { useCallback } from "react";
@@ -12,7 +12,10 @@ export const BreadCrumb = (props: BreadCrumbComponentProps) => {
     () =>
       list.map((val, index) => (
         <ItemLink key={val.title} to="#" onClick={val.onClick}>
-          <Typography>{val.title}</Typography>
+          <Grid item container xs="auto">
+            {val.icon}
+            <Typography>{val.title}</Typography>
+          </Grid>
         </ItemLink>
       )),
     [list]
@@ -24,7 +27,7 @@ export const BreadCrumb = (props: BreadCrumbComponentProps) => {
         separator={
           <NavigateNextIcon
             fontSize="small"
-            sx={{ color: `${COLOR_PALLETTE.DIM_GRAY} !important` }}
+            sx={{ color: `${COLOR_PALLETTE.DARK_GRAY} !important` }}
           />
         }
         aria-label="breadcrumb"
@@ -37,7 +40,7 @@ export const BreadCrumb = (props: BreadCrumbComponentProps) => {
 
 const ItemLink = styled(Link)({
   textDecoration: "none",
-  color: COLOR_PALLETTE.DIM_GRAY,
+  color: COLOR_PALLETTE.DARK_GRAY,
   fontSize: "14px",
   transition: "0.2s",
   "&:hover": {

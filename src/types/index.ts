@@ -82,3 +82,10 @@ export interface ContentDetailProps {
   image: string;
   content: string;
 }
+
+export interface CardRecommendProps {
+  title: string;
+  rate: number;
+  content: string;
+  image?: string;
+}
