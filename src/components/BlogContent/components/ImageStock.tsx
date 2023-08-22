@@ -30,13 +30,18 @@ export const ImageStock = () => {
         xs={12}
       >
         <Grid item xs>
-          <Typography fontSize={"40px"} fontWeight={"bold"}>
+          <Typography
+            fontSize={{ xs: "28px", sm: "32px", md: "40px" }}
+            fontWeight={"bold"}
+          >
             Kho ảnh
           </Typography>
         </Grid>
         <Grid item xs="auto">
           <ButtonSeeMore variant="outlined">
-            <Typography>Xem tất cả</Typography>
+            <Typography fontSize={{ xs: "12px", sm: "16px" }}>
+              Xem tất cả
+            </Typography>
           </ButtonSeeMore>
         </Grid>
       </Grid>
