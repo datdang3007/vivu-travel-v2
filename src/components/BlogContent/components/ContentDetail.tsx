@@ -10,7 +10,7 @@ export const ContentDetail = (props: ContentDetailProps) => {
         <BoxImage src={image}></BoxImage>
       </Grid>
       <Grid item xs={12} mt={"30px"}>
-        <Typography fontSize={"16px"}>{content}</Typography>
+        <Typography fontSize={{ xs: "16px", md: "18px" }}>{content}</Typography>
       </Grid>
     </Grid>
   );
