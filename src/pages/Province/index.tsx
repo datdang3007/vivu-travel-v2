@@ -103,6 +103,9 @@ export const Province = () => {
   );
 };
 
-const HeaderBackground = styled(Grid)({
+const HeaderBackground = styled(Grid)(({ theme }) => ({
   background: COLOR_PALLETTE.PRIMARY,
-});
+  [theme.breakpoints.down("md")]: {
+    background: COLOR_PALLETTE.WHITE,
+  },
+}));

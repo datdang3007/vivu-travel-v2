@@ -37,7 +37,7 @@ export const MasterProvider = ({ children }: Props) => {
       isTablet,
       isDesktop,
     }),
-    [isMobile, isTablet, isTabletMini, isDesktop]
+    [isMobile, isTablet, isTabletMini, isDesktop, ]
   );
 
   return (

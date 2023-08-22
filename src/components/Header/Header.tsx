@@ -8,13 +8,27 @@ import {
 import { useMemo, useCallback } from "react";
 import { HeaderProps, ListOptionProps, searchProps } from "../../types";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PATH } from "../../routes/path";
+import { COLOR_PALLETTE } from "../../constants/color";
+
+const listTransitionButtonComponent = [PATH.HOME, PATH.REGION, PATH.TERRITORY];
 
 export const Header = (props: HeaderProps) => {
   const theme = useTheme();
+  const location = useLocation();
   const navigate = useNavigate();
   const { isMenu } = props;
+
+  const isTransitionButton = useMemo(
+    () => listTransitionButtonComponent.includes(location.pathname),
+    [location]
+  );
+
+  const transitionTextColor = useMemo(
+    () => (isTransitionButton ? COLOR_PALLETTE.PRIMARY : undefined),
+    [isTransitionButton]
+  );
 
   const changeDirection = useCallback(
     (path: string) => {
@@ -46,7 +60,7 @@ export const Header = (props: HeaderProps) => {
           textVariant: "tB18",
           padding: "2px 18px",
           textColor: theme.palette.common.white,
-          textColorHover: theme.palette.primary.light,
+          textColorHover: transitionTextColor,
         },
         {
           variant: BUTTON_VARIANT.TEXT,
@@ -55,7 +69,7 @@ export const Header = (props: HeaderProps) => {
           textVariant: "tB18",
           padding: "2px 18px",
           textColor: theme.palette.common.white,
-          textColorHover: theme.palette.primary.light,
+          textColorHover: transitionTextColor,
         },
       ],
       [HEADER_LIST_OPTION.RIGHT]: [
@@ -66,7 +80,7 @@ export const Header = (props: HeaderProps) => {
           textVariant: "tB16",
           padding: "2px 18px",
           textColor: theme.palette.common.white,
-          textColorHover: theme.palette.primary.light,
+          textColorHover: transitionTextColor,
         },
         {
           variant: BUTTON_VARIANT.CONTAINED,
@@ -76,67 +90,67 @@ export const Header = (props: HeaderProps) => {
           borderRadius: "15px",
           padding: "2px 18px",
           color: theme.palette.common.white,
-          hoverColor: theme.palette.primary.main,
+          hoverColor: isTransitionButton
+            ? COLOR_PALLETTE.PRIMARY
+            : theme.palette.common.white,
           textColor: "black",
-          textColorHover: theme.palette.common.white,
+          textColorHover: isTransitionButton
+            ? theme.palette.common.white
+            : undefined,
         },
       ],
     }),
     [
       changeDirection,
+      isTransitionButton,
       testEvent,
       theme.palette.common.white,
-      theme.palette.primary.light,
-      theme.palette.primary.main,
+      transitionTextColor,
     ]
   );
-
-  const NavbarComponent = useCallback(() => {
-    return isMenu ? (
-      <Grid item xs={12}>
-        <HeaderMenuNavbar />
-      </Grid>
-    ) : (
-      <Container
-        maxWidth={"xl"}
-        sx={{
-          padding: "15px 0",
-          [theme.breakpoints.down("xl")]: {
-            padding: "15px 30px",
-          },
-        }}
-      >
-        <Grid
-          item
-          container
-          alignItems={"center"}
-          justifyContent={"space-between"}
-          xs={12}
-        >
-          <Grid item lg={3.5}>
-            <HeaderMenuOption
-              position={STYLE_POSITION.LEFT}
-              listOption={ListOption[HEADER_LIST_OPTION.LEFT]}
-            />
-          </Grid>
-          <Grid item lg={4}>
-            <HeaderMenuSearch />
-          </Grid>
-          <Grid item lg={3.5}>
-            <HeaderMenuOption
-              position={STYLE_POSITION.RIGHT}
-              listOption={ListOption[HEADER_LIST_OPTION.RIGHT]}
-            />
-          </Grid>
-        </Grid>
-      </Container>
-    );
-  }, [ListOption, isMenu, theme.breakpoints]);
 
   return (
     <FormProvider {...methods}>
       <HeaderContainer sx={{ position: isMenu ? "fixed" : "absolute" }}>
-        {NavbarComponent()}
+        {isMenu ? (
+          <Grid item xs={12}>
+            <HeaderMenuNavbar />
+          </Grid>
+        ) : (
+          <Container
+            maxWidth={"xl"}
+            sx={{
+              padding: "15px 0",
+              [theme.breakpoints.down("xl")]: {
+                padding: "15px 30px",
+              },
+            }}
+          >
+            <Grid
+              item
+              container
+              alignItems={"center"}
+              justifyContent={"space-between"}
+              xs={12}
+            >
+              <Grid item lg={3.5}>
+                <HeaderMenuOption
+                  position={STYLE_POSITION.LEFT}
+                  listOption={ListOption[HEADER_LIST_OPTION.LEFT]}
+                />
+              </Grid>
+              <Grid item lg={4}>
+                <HeaderMenuSearch />
+              </Grid>
+              <Grid item lg={3.5}>
+                <HeaderMenuOption
+                  position={STYLE_POSITION.RIGHT}
+                  listOption={ListOption[HEADER_LIST_OPTION.RIGHT]}
+                />
+              </Grid>
+            </Grid>
+          </Container>
+        )}
       </HeaderContainer>
     </FormProvider>
   );

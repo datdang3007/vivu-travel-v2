@@ -1,6 +1,15 @@
-import { Avatar, Chip, Grid, Rating, Typography, styled } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Chip,
+  Grid,
+  Rating,
+  Typography,
+  styled,
+} from "@mui/material";
 import { COLOR_PALLETTE } from "../../../constants/color";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ReplyIcon from "@mui/icons-material/Reply";
 
 export const RatingAndComment = () => {
   return (
@@ -84,8 +93,37 @@ export const RatingAndComment = () => {
                 <Comment item xs={12}>
                   <Typography>trả lời bình luận kiểu gì :v</Typography>
                 </Comment>
-                <Grid item xs={12} sx={{ padding: "4px" }}>
-                  <IconLike />
+                <Grid
+                  item
+                  container
+                  alignItems={"flex-end"}
+                  xs={12}
+                  columnGap={"20px"}
+                  sx={{ padding: "4px" }}
+                >
+                  <GridAction
+                    item
+                    container
+                    alignItems={"flex-end"}
+                    columnGap={"3px"}
+                    xs="auto"
+                  >
+                    <Typography fontSize={"14px"}>0</Typography>
+                    <IconLike />
+                  </GridAction>
+                  <GridAction
+                    item
+                    container
+                    alignItems={"flex-end"}
+                    columnGap={"3px"}
+                    xs="auto"
+                  >
+                    <Typography fontSize={"14px"}>Trả lời</Typography>
+                    <IconReply />
+                  </GridAction>
+                  <Grid item container xs="auto">
+                    <Typography fontSize={"14px"}>1 tháng trước</Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
@@ -124,6 +162,27 @@ const Comment = styled(Grid)({
   border: `1px solid ${COLOR_PALLETTE.DIM_GRAY}`,
 });
 
-const IconLike = styled(ThumbUpIcon)({
+const GridAction = styled(Grid)({
+  cursor: "pointer",
+  ".MuiSvgIcon-root": {
+    color: COLOR_PALLETTE.DARK_GRAY,
+  },
+  "&:hover": {
+    ".MuiSvgIcon-root": {
+      color: COLOR_PALLETTE.PRIMARY,
+    },
+  },
+});
 
+const IconLike = styled(ThumbUpIcon)({
+  width: "18px",
+  aspectRatio: "1/1",
+  transition: "0.2s",
+});
+
+const IconReply = styled(ReplyIcon)({
+  cursor: "pointer",
+  width: "22px",
+  aspectRatio: "1/1",
+  transition: "0.2s",
 });
