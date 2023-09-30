@@ -4,6 +4,7 @@ import { ContentDetailProps } from "../../../types";
 
 export const ContentDetail = (props: ContentDetailProps) => {
   const { image, content } = props;
+  
   return (
     <Grid item xs={12}>
       <Grid item xs={12} mt={"30px"}>

@@ -18,7 +18,6 @@ export const GroupCardTerritory = (props: GroupCardTerritoryProps) => {
           xs: "20px",
           xl: "10px",
         }}
-        isHoverEffect
         isCursorPointer
         title={val.title}
         subTitle={val.subTitle}
@@ -28,12 +27,7 @@ export const GroupCardTerritory = (props: GroupCardTerritoryProps) => {
   }, [listTerritory]);
 
   return (
-    <Grid
-      item
-      container
-      alignItems={"center"}
-      xs={12}
-    >
+    <Grid item container alignItems={"center"} xs={12}>
       {renderListCardInfo()}
     </Grid>
   );

@@ -50,7 +50,7 @@ export const FormTitle = (props: FormTitleOptions & GridProps) => {
               textAlign={isTitleCenter ? "center" : undefined}
               sx={{
                 fontSize: {
-                  xs: 15,
+                  xs: 16,
                   sm: 18,
                   md: 20,
                 },

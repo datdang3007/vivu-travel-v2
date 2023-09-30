@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   Container,
+  Divider,
   Grid,
   IconButton,
   InputAdornment,
@@ -14,10 +15,13 @@ import { useCallback, useMemo, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { rules } from "../../utils/validation";
-import { InputTextField } from "../../components/Form";
-import { LOGO_BRAND } from "../../constants/img_common";
-import { PATH } from "../../routes/path";
+import { rules } from "@/utils/validation";
+import { InputTextField } from "@/components/Form";
+import { LOGO_BRAND } from "@/constants/img_common";
+import { PATH } from "@/routes/path";
+import { COLOR_PALLETTE } from "@/constants/color";
+import GoogleLogo from "@/assets/img/google_logo.svg";
+import { BoxImage } from "@/ui";
 
 export interface LoginProps {
   user_email: string;
@@ -172,8 +176,46 @@ export const Login = () => {
                 container
                 xs={12}
                 alignItems={"center"}
+                justifyContent={"space-between"}
+                marginTop={"20px"}
+              >
+                <Grid item xs={4.2}>
+                  <CustomDivider />
+                </Grid>
+                <Grid item container justifyContent={"center"} xs={3.5}>
+                  <Typography
+                    fontSize={"12px"}
+                    color={COLOR_PALLETTE.DARK_GRAY}
+                  >
+                    Hoặc
+                  </Typography>
+                </Grid>
+                <Grid item xs={4.2}>
+                  <CustomDivider />
+                </Grid>
+              </Grid>
+              <Grid
+                item
+                container
+                xs={12}
+                alignItems={"center"}
+                justifyContent={"space-between"}
+                marginTop={"20px"}
+              >
+                <LoginWithGoogleButton variant="outlined" fullWidth>
+                  <IconGoogle>
+                    <BoxImage src={GoogleLogo} />
+                  </IconGoogle>
+                  <Typography variant="tR14">Đăng nhập với Google</Typography>
+                </LoginWithGoogleButton>
+              </Grid>
+              <Grid
+                item
+                container
+                xs={12}
+                alignItems={"center"}
                 justifyContent={"center"}
-                marginTop={"115px"}
+                marginTop={"60px"}
               >
                 <Typography variant="tR12">Bạn chưa có tài khoản?</Typography>
                 <Button onClick={changeDirectionToRegisterPage}>
@@ -205,6 +247,7 @@ const CardForm = styled(Card)({
 });
 
 const BoxLogo = styled(Box)({
+  cursor: "pointer",
   borderRadius: 8,
   overflow: "hidden",
   img: {
@@ -242,3 +285,20 @@ const LoginButton = styled(Button)(({ theme }) => ({
     transition: "0.6s",
   },
 }));
+
+const CustomDivider = styled(Divider)({});
+
+const LoginWithGoogleButton = styled(Button)({
+  position: "relative",
+  height: "50px",
+  borderRadius: "40px",
+  overflow: "hidden",
+  background: COLOR_PALLETTE.WHITE,
+});
+
+const IconGoogle = styled(Box)({
+  position: "absolute",
+  height: "70%",
+  aspectRatio: "1/1",
+  left: "10px",
+});

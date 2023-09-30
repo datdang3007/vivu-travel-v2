@@ -16,6 +16,7 @@ export interface searchProps {
 
 export interface FormTitleSearchProps {
   formTitleSearchValue: string;
+  type?: string;
 }
 
 export interface BackgroundContentProps {

@@ -49,9 +49,14 @@ export interface CardInfoActionProps {
   subTitle?: string;
   src: string;
   alt?: string;
-  isHoverEffect?: boolean;
   isCursorPointer?: boolean;
   isTitleCenter?: boolean;
   boxSxProp?: SxProps;
   onClick?: () => void;
+}
+
+export interface CardTravelTellerProps {
+  name: string;
+  avatar?: string;
+  from: string;
 }

@@ -23,7 +23,6 @@ export const GroupCardRegion = () => {
         title={"Miền Bắc"}
         isTitleCenter
         isCursorPointer
-        isHoverEffect
         onClick={onClick}
         src={
           "https://cdn.discordapp.com/attachments/1085804453246009374/1100330708679004231/image.png"
@@ -40,7 +39,6 @@ export const GroupCardRegion = () => {
         title={"Miền Trung"}
         isTitleCenter
         isCursorPointer
-        isHoverEffect
         onClick={onClick}
         src={
           "https://cdn.discordapp.com/attachments/1089123119668658206/1105063159552815146/daragon-bridge-on-an-opening-day-cE1BAA7u-rE1BB93ng-C491C3A0-nE1BAB5ng-Danang-Discovery-4-famous-bridge-in-danang-Restaurant-near-me-dragon-bridge-history-a-new-iconic-image-of-danang.png"
@@ -57,7 +55,6 @@ export const GroupCardRegion = () => {
         title={"Miền Nam"}
         isTitleCenter
         isCursorPointer
-        isHoverEffect
         onClick={onClick}
         src={
           "https://cdn.discordapp.com/attachments/1091622222453559437/1105878882743242776/du-lich-mien-tay-1.png"

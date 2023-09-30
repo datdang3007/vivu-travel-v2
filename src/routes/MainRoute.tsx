@@ -1,8 +1,18 @@
 import { RouteObject } from "react-router-dom";
 import { PATH } from "./path";
-import { Home, Place, Province, Region, Territory } from "../pages";
-import { MainLayout } from "../layouts/MainLayout";
-import ScrollToTop from "../components/ScrollToTop";
+import {
+  Home,
+  Place,
+  PostDetail,
+  PostDetailPreview,
+  Posts,
+  Province,
+  Region,
+  Territory,
+  UploadPost,
+} from "@/pages";
+import { MainLayout } from "@/layouts/MainLayout";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const protectedRoute: RouteObject = {
   element: <MainLayout />,
@@ -29,6 +39,22 @@ const protectedRoute: RouteObject = {
         {
           path: PATH.PLACE,
           element: <Place />,
+        },
+        {
+          path: PATH.POSTS,
+          element: <Posts />,
+        },
+        {
+          path: PATH.POST_DETAIL,
+          element: <PostDetail />,
+        },
+        {
+          path: PATH.POST_DETAIL_PREVIEW,
+          element: <PostDetailPreview />,
+        },
+        {
+          path: PATH.UPLOAD_POST,
+          element: <UploadPost />,
         },
       ],
     },

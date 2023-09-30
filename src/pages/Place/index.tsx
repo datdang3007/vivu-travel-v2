@@ -12,6 +12,7 @@ import {
 import { useCallback } from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import { BreadCrumbProps } from "../../types";
+import { useMasterContext } from "@/context/MasterContext";
 
 const ContentOverviewValue = {
   title: "Núi Fansipan",
@@ -30,6 +31,8 @@ const ContentDetailValue = {
 };
 
 export const Place = () => {
+  const { isTabletMini } = useMasterContext();
+
   const ChangeNavigate = useCallback(() => {
     console.log("change navigate");
   }, []);
@@ -91,11 +94,24 @@ export const Place = () => {
                 </Grid>
               </BlogContent>
             </Grid>
-            <Grid item xs={12} md={4} xl={4}>
-              <Grid item xs={12} mt={{ xs: "40px", md: "0" }}>
+            <Grid
+              item
+              container={isTabletMini && true}
+              justifyContent={"space-between"}
+              xs={12}
+              md={4}
+              xl={4}
+            >
+              <Grid item xs={12} sm={5.8} md={12} mt={{ xs: "40px", md: "0" }}>
                 <GroupCardRecommend />
               </Grid>
-              <Grid item xs={12} mt={{ xs: "40px", md: "20px" }}>
+              <Grid
+                item
+                xs={12}
+                sm={5.8}
+                md={12}
+                mt={{ xs: "40px", md: "20px" }}
+              >
                 <GroupCardRecommend />
               </Grid>
             </Grid>

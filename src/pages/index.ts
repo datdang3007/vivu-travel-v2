@@ -5,3 +5,7 @@ export * from "./Region";
 export * from "./Territory";
 export * from "./Province";
 export * from "./Place";
+export * from "./Posts";
+export * from "./PostDetail";
+export * from "./PostDetailPreview";
+export * from "./UploadPost";

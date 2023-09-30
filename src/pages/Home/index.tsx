@@ -10,6 +10,8 @@ import { FormTitle } from "../../components/Form/FormTitle";
 import { GroupCardRegion } from "../../components/Region";
 import { GroupCardTerritory } from "../../components/Territory";
 import { COLOR_PALLETTE } from "../../constants/color";
+import { GroupCardTravelTeller } from "./components/GroupCardTravelTeller";
+import { GroupCardPost } from "./components/GroupCardPost";
 
 const ListCountryInfo = [
   {
@@ -33,12 +35,6 @@ const ListCountryInfo = [
     icon: IconGDPImg,
   },
 ] as CountryInfoProps[];
-
-// title="Bắc Trung Bộ"
-// subTitle="Biển Thiên Cầm , Hà Tĩnh"
-// src={
-//   "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png"
-// }
 
 const listTerritory = [
   {
@@ -93,15 +89,15 @@ const listTerritory = [
 
 export const Home = () => {
   return (
-    <Grid item xs={12} mb={100}>
+    <Grid item xs={12}>
       <BackgroundContent
         height={"100vh"}
         isShowBottomImg
-        title="WELCOME TO VIET NAM !"
+        title="VIET NAM"
         slogan="Đích đến của chúng ta không phải là một vùng đất, mà là một cách nhìn mới"
         backgroundImg={"https://images5.alphacoders.com/864/864641.jpg"}
       />
-      <Grid item container justifyContent={"center"} xs={12} mb={60}>
+      <Grid item container justifyContent={"center"} xs={12} paddingBottom={60}>
         <Grid item xs={11} sm={10} md={9.1} xl={9}>
           <FormTitle
             container
@@ -132,14 +128,14 @@ export const Home = () => {
             subtitle="Được phân chia dựa trên địa lý, văn hóa, lịch sử và đặc điểm kinh tế"
             titleSpacing="5px"
             isTitleCenter
-            mt="40px"
+            mt="60px"
             mb="40px"
           >
             <GroupCardRegion />
           </FormTitle>
         </Grid>
       </Grid>
-      <Grid item container justifyContent={"center"} xs={12}>
+      <Grid item container justifyContent={"center"} xs={12} paddingBottom={60}>
         <Grid item xs={11} sm={10} md={9.1}>
           <FormTitle
             container
@@ -147,10 +143,46 @@ export const Home = () => {
             subtitle="Mỗi vùng có những đặc trưng riêng về địa lý, khí hậu, văn hóa, lịch sử, kinh tế và ẩm thực"
             titleSpacing="5px"
             isTitleCenter
-            mt="40px"
+            mt="60px"
             mb="40px"
           >
             <GroupCardTerritory listTerritory={listTerritory} />
+          </FormTitle>
+        </Grid>
+      </Grid>
+      <Grid
+        item
+        container
+        justifyContent={"center"}
+        xs={12}
+        paddingBottom={60}
+        sx={{
+          background: COLOR_PALLETTE.BG_GRAY,
+        }}
+      >
+        <Grid item xs={11} sm={10} md={9.1}>
+          <FormTitle
+            container
+            title="Top Reviewer"
+            isTitleCenter
+            mt="60px"
+            mb="20px"
+          >
+            <GroupCardTravelTeller />
+          </FormTitle>
+        </Grid>
+      </Grid>
+      <Grid item container justifyContent={"center"} xs={12} paddingBottom={60}>
+        <Grid item xs={11} sm={10} md={9.1}>
+          <FormTitle
+            container
+            title="Bài Viết Nổi Bật"
+            titleSpacing="5px"
+            isTitleCenter
+            mt="60px"
+            mb="20px"
+          >
+            <GroupCardPost />
           </FormTitle>
         </Grid>
       </Grid>

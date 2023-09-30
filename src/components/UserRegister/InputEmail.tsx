@@ -153,6 +153,7 @@ const CardForm = styled(Card)({
 });
 
 const BoxLogo = styled(Box)({
+  cursor: "pointer",
   borderRadius: 8,
   overflow: "hidden",
   img: {
