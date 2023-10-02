@@ -1,6 +1,4 @@
 import { Grid, styled } from "@mui/material";
-import { COMPONENT_SIZE } from "../../constants";
-import { COLOR_PALLETTE } from "../../constants/color";
 import {
   BlogContent,
   ContentDetail,
@@ -8,11 +6,13 @@ import {
   GroupCardRecommend,
   ImageStock,
   RatingAndComment,
-} from "../../components/BlogContent";
+} from "src/components/BlogContent";
 import { useCallback } from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import { BreadCrumbProps } from "../../types";
-import { useMasterContext } from "@/context/MasterContext";
+import { BreadCrumbProps } from "src/types";
+import { COMPONENT_SIZE } from "src/constants";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { useMasterContext } from "src/context/MasterContext";
 
 const ContentOverviewValue = {
   title: "Núi Fansipan",
@@ -78,7 +78,7 @@ export const Place = () => {
       >
         <Grid item xs={11} md={11} xl={9}>
           <Grid item container justifyContent={"space-between"} xs={12}>
-            <Grid item xs={12} md={7.5} xl={7.5}>
+            <Grid item xs={12} md={7.5}>
               <BlogContent HeaderBreadCrumbList={HeaderBreadCrumbList}>
                 <Grid item xs={12}>
                   <ContentOverview
@@ -100,7 +100,6 @@ export const Place = () => {
               justifyContent={"space-between"}
               xs={12}
               md={4}
-              xl={4}
             >
               <Grid item xs={12} sm={5.8} md={12} mt={{ xs: "40px", md: "0" }}>
                 <GroupCardRecommend />

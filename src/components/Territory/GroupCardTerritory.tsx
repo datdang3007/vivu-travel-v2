@@ -2,9 +2,16 @@ import { Grid } from "@mui/material";
 import { CardInfoAction } from "../../ui";
 import { GroupCardTerritoryProps } from "../../types";
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "src/routes/path";
 
 export const GroupCardTerritory = (props: GroupCardTerritoryProps) => {
+  const navigate = useNavigate();
   const { listTerritory } = props;
+
+  const onClick = useCallback(() => {
+    navigate(PATH.TERRITORY);
+  }, [navigate]);
 
   const renderListCardInfo = useCallback(() => {
     return listTerritory.map((val, index) => (
@@ -22,9 +29,10 @@ export const GroupCardTerritory = (props: GroupCardTerritoryProps) => {
         title={val.title}
         subTitle={val.subTitle}
         src={val.src}
+        onClick={onClick}
       />
     ));
-  }, [listTerritory]);
+  }, [listTerritory, onClick]);
 
   return (
     <Grid item container alignItems={"center"} xs={12}>

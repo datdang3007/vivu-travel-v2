@@ -90,7 +90,6 @@ export const InputEmail = ({ handleEmail }: InputEmailProps) => {
                 <InputTextField
                   name={"user_email"}
                   label="Email"
-                  type="email"
                   variant="standard"
                   fullWidth
                   InputProps={{

@@ -1,6 +1,6 @@
 import { Grid, Typography, styled } from "@mui/material";
-import { COLOR_PALLETTE } from "../../../constants/color";
-import { CountryInfoProps } from "../../../types";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { CountryInfoProps } from "src/types";
 
 export const CardCountryInfo = (props: CountryInfoProps) => {
   const { title, content, icon } = props;

@@ -8,9 +8,9 @@ import {
 } from "@mui/material";
 import { Title, Add, InsertPhoto, Label, Subject } from "@mui/icons-material";
 import { useCallback, useMemo, useState } from "react";
-import { COLOR_PALLETTE } from "@/constants/color";
-import { POST_CATEGORY_TYPE } from "@/constants";
-import { PostDataProps } from "@/types/Post";
+import { PostDataProps } from "src/types/Post";
+import { POST_CATEGORY_TYPE } from "src/constants";
+import { COLOR_PALLETTE } from "src/constants/color";
 
 type NewBoxProps = {
   data: PostDataProps[];

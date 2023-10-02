@@ -1,8 +1,3 @@
-import { POST_CATEGORY_TYPE } from "@/constants";
-import { COLOR_PALLETTE } from "@/constants/color";
-import { PostDataProps } from "@/types/Post";
-import { BoxImage } from "@/ui";
-import { UploadFileToDiscordWebhook } from "@/utils/common";
 import MenuIcon from "@mui/icons-material/Menu";
 import { DeleteForever, Label, Subject, Title } from "@mui/icons-material";
 import {
@@ -15,6 +10,11 @@ import {
   styled,
 } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { POST_CATEGORY_TYPE } from "src/constants";
+import { PostDataProps } from "src/types/Post";
+import { BoxImage } from "src/ui";
+import { UploadFileToDiscordWebhook } from "src/utils/common";
 
 type Props = {
   id: string | number;
@@ -40,7 +40,7 @@ export const PostImage = (props: Props) => {
     (event: any) => {
       const file = event.target.files[0];
       if (!file) return;
-      UploadFileToDiscordWebhook(file).then((linkUrl) => {
+      UploadFileToDiscordWebhook(file).then((linkUrl: any) => {
         if (!linkUrl) return;
         console.log(linkUrl);
         const currentData = [...data];

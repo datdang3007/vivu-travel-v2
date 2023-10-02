@@ -2,11 +2,12 @@ import { Grid, styled } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormTitleWithSearchAndSelect } from "src/components/Form";
 import { GroupCardPost } from "src/components/Posts";
+import { ProfileUserInfo } from "src/components/Profile";
 import { COMPONENT_SIZE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
 import { FormTitleSearchProps } from "src/types";
 
-export const Posts = () => {
+export const Profile = () => {
   const methods = useForm<FormTitleSearchProps>({
     defaultValues: {
       formTitleSearchValue: "",
@@ -15,7 +16,7 @@ export const Posts = () => {
   });
 
   return (
-    <Grid container>
+    <Grid container mb={"40px"}>
       <HeaderBackground
         item
         xs={12}
@@ -25,13 +26,27 @@ export const Posts = () => {
           md: COMPONENT_SIZE.DESKTOP_HEADER,
         }}
       ></HeaderBackground>
+      <Grid item xs={12} container justifyContent={"center"}>
+        <Grid
+          item
+          xs={12}
+          md={11}
+          xl={6}
+          sx={{
+            padding: { xs: 0, sm: "60px 0" },
+          }}
+        >
+          <ProfileUserInfo />
+        </Grid>
+      </Grid>
       <Grid
         item
-        container
         xs={12}
-        mt={{ xs: "20px", sm: "40px", md: "80px" }}
-        mb={"40px"}
+        container
         justifyContent={"center"}
+        sx={{
+          paddingBottom: "60px",
+        }}
       >
         <Grid item xs={11} xl={9}>
           <FormProvider {...methods}>
@@ -39,9 +54,9 @@ export const Posts = () => {
               <FormTitleWithSearchAndSelect
                 name="formTitleSearchValue"
                 title="Bài Viết"
-                mb="40px"
+                mb={"0"}
               >
-                <Grid item container xs={12}>
+                <Grid item container xs={12} mt={{ xs: "20px", sm: "40px" }}>
                   <Grid item xs={12}>
                     <GroupCardPost />
                   </Grid>

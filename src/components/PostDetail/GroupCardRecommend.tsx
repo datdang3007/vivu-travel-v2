@@ -1,5 +1,3 @@
-import { COLOR_PALLETTE } from "@/constants/color";
-import { BoxImage } from "@/ui";
 import { ArrowForwardIos } from "@mui/icons-material";
 import {
   Avatar,
@@ -11,6 +9,8 @@ import {
   styled,
 } from "@mui/material";
 import { useCallback } from "react";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { BoxImage } from "src/ui";
 
 const dataTemp = [
   {

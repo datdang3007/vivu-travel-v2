@@ -1,9 +1,9 @@
-import { CardTravelTeller } from "@/ui";
 import { Grid } from "@mui/material";
 import { useCallback } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
+import { CardTravelTeller } from "src/ui";
 
 const dataListTravelTellers = [
   {
@@ -41,8 +41,7 @@ export const GroupCardTravelTeller = () => {
     dots: true,
     infinite: true,
     autoplay: true,
-    speed: 1500,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 3000,
     slidesToShow: 3,
     slidesToScroll: 1,
     responsive: [

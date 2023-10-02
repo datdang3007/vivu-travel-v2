@@ -1,5 +1,3 @@
-import { COLOR_PALLETTE } from "@/constants/color";
-import { CardTravelTellerProps } from "@/types/Ui";
 import {
   Avatar,
   Card,
@@ -8,6 +6,8 @@ import {
   Typography,
   styled,
 } from "@mui/material";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { CardTravelTellerProps } from "src/types/Ui";
 
 export const CardTravelTeller = (props: CardTravelTellerProps & CardProps) => {
   const { name, avatar, from, ...rest } = props;

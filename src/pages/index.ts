@@ -9,3 +9,5 @@ export * from "./Posts";
 export * from "./PostDetail";
 export * from "./PostDetailPreview";
 export * from "./UploadPost";
+export * from "./Profile";
+export * from "./Page404";

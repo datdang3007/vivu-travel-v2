@@ -46,11 +46,17 @@ export const BackgroundText = (props: BackgroundTextProps & GridProps) => {
         <Grid item container justifyContent={"center"} xs={11} sm={8} xl={11}>
           <Typography
             sx={{
-              fontSize: {
-                xs: 15,
-                sm: 20,
-                md: 30,
-              },
+              fontSize: isHomePage
+                ? {
+                    xs: 15,
+                    sm: 20,
+                    md: 25,
+                  }
+                : {
+                    xs: 15,
+                    sm: 20,
+                    md: 30,
+                  },
               fontStyle: "normal",
               color: theme.palette.common.white,
               textAlign: "center",

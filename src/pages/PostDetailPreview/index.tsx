@@ -1,10 +1,10 @@
+import { Button, Grid, Typography, styled } from "@mui/material";
 import {
   BackgroundWithText,
   PostContent,
-} from "@/components/PostDetailPreview";
-import { COMPONENT_SIZE, LOCAL_STORAGE_TYPE } from "@/constants";
-import { COLOR_PALLETTE } from "@/constants/color";
-import { Button, Grid, Typography, styled } from "@mui/material";
+} from "src/components/PostDetailPreview";
+import { COMPONENT_SIZE, LOCAL_STORAGE_TYPE } from "src/constants";
+import { COLOR_PALLETTE } from "src/constants/color";
 
 export const PostDetailPreview = () => {
   const data = localStorage.getItem(LOCAL_STORAGE_TYPE.POST_DATA);
@@ -61,9 +61,7 @@ export const PostDetailPreview = () => {
       >
         <Grid item xs={10} sm={5} lg={3}>
           <ButtonSendPost variant="contained" fullWidth>
-            <Typography textTransform={"none"}>
-              Gửi bài viết
-            </Typography>
+            <Typography textTransform={"none"}>Gửi bài viết</Typography>
           </ButtonSendPost>
         </Grid>
       </Grid>

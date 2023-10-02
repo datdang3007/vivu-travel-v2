@@ -1,6 +1,6 @@
-import { COLOR_PALLETTE } from "@/constants/color";
-import { BoxImage } from "@/ui";
 import { Box, Grid, Typography, styled } from "@mui/material";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { BoxImage } from "src/ui";
 
 export const BackgroundWithText = () => {
   return (
@@ -52,7 +52,7 @@ const ImageContainer = styled(Box)(({ theme }) => ({
   overflow: "hidden",
   boxSizing: "border-box",
   width: "100%",
-  height: "500px",
+  height: "550px",
   [theme.breakpoints.down("xl")]: {
     height: "475px",
   },

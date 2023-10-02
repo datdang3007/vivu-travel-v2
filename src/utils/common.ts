@@ -1,4 +1,4 @@
-import { uploadImageToDiscord } from "@/apis/handle_image.api";
+import { uploadImageToDiscord } from "src/apis/handle_image.api";
 
 export const UploadFileToDiscordWebhook = (file: any) => {
   return new Promise((resolve) => {

@@ -1,9 +1,8 @@
-import { POST_CATEGORY_TYPE } from "@/constants";
-import { COLOR_PALLETTE } from "@/constants/color";
-import { CardTravelTeller } from "@/ui";
 import { Grid, Typography, styled } from "@mui/material";
-import { type } from "os";
 import { useCallback } from "react";
+import { POST_CATEGORY_TYPE } from "src/constants";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { CardTravelTeller } from "src/ui";
 
 type Props = {
   data: any[];

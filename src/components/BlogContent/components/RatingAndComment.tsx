@@ -1,15 +1,7 @@
-import {
-  Avatar,
-  Button,
-  Chip,
-  Grid,
-  Rating,
-  Typography,
-  styled,
-} from "@mui/material";
-import { COLOR_PALLETTE } from "../../../constants/color";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ReplyIcon from "@mui/icons-material/Reply";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { Avatar, Chip, Grid, Rating, Typography, styled } from "@mui/material";
+import { COLOR_PALLETTE } from "../../../constants/color";
 
 export const RatingAndComment = () => {
   return (

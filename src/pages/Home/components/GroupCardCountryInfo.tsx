@@ -1,5 +1,6 @@
-import { GroupCardCountryInfoProps, CountryInfoProps } from "../../../types";
+import { CountryInfoProps, GroupCardCountryInfoProps } from "src/types";
 import { CardCountryInfo } from "./CardCountryInfo";
+
 
 export const GroupCardCountryInfo = (props: GroupCardCountryInfoProps) => {
   const { ListCountryInfo } = props;

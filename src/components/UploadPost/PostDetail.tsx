@@ -1,5 +1,3 @@
-import { COLOR_PALLETTE } from "@/constants/color";
-import { PostDataProps } from "@/types/Post";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Title, Label, InsertPhoto, DeleteForever } from "@mui/icons-material";
 import {
@@ -12,7 +10,9 @@ import {
   styled,
 } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
-import { POST_CATEGORY_TYPE } from "@/constants";
+import { POST_CATEGORY_TYPE } from "src/constants";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { PostDataProps } from "src/types/Post";
 
 type Props = {
   id: string | number;

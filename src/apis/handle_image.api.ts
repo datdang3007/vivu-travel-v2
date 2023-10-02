@@ -1,5 +1,4 @@
-import { WEBHOOKS } from "@/constants";
-import { LoadImageProps } from "./requestTypes/handle_image.type";
+import { WEBHOOKS } from "./../constants/index";
 import axios from "axios";
 
 export const uploadImageToDiscord = async (

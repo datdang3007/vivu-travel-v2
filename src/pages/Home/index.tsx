@@ -12,6 +12,8 @@ import { GroupCardTerritory } from "../../components/Territory";
 import { COLOR_PALLETTE } from "../../constants/color";
 import { GroupCardTravelTeller } from "./components/GroupCardTravelTeller";
 import { GroupCardPost } from "./components/GroupCardPost";
+import { MasterProvider, useMasterContext } from "src/context/MasterContext";
+import { useMemo } from "react";
 
 const ListCountryInfo = [
   {
@@ -88,12 +90,25 @@ const listTerritory = [
 ] as CardTerritoryProps[];
 
 export const Home = () => {
+  const { isMobile, isDesktop } = useMasterContext();
+
+  const BackgroundHeight = useMemo(() => {
+    if (isDesktop) {
+      return "65vh";
+    }
+    if (isMobile) {
+      return "50vh";
+    }
+    return "55vh";
+  }, [isDesktop, isMobile]);
+
   return (
     <Grid item xs={12}>
       <BackgroundContent
-        height={"100vh"}
+        isHomePage
+        height={BackgroundHeight}
         isShowBottomImg
-        title="VIET NAM"
+        title="VIỆT NAM"
         slogan="Đích đến của chúng ta không phải là một vùng đất, mà là một cách nhìn mới"
         backgroundImg={"https://images5.alphacoders.com/864/864641.jpg"}
       />

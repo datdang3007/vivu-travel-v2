@@ -1,5 +1,7 @@
 export const PATH = {
   ROOT: "*",
+  DEFAULT: "/",
+  NOT_FOUND: "/not-found",
   LOGIN: "/login",
   REGISTER: "/register",
   HOME: "/home",
@@ -11,4 +13,5 @@ export const PATH = {
   POST_DETAIL: "/post-detail",
   POST_DETAIL_PREVIEW: "/post-detail-preview",
   UPLOAD_POST: "/upload-post",
+  PROFILE: "/profile",
 };

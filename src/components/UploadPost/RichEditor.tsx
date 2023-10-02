@@ -1,17 +1,17 @@
 import { Button, Grid, TextField, Typography, styled } from "@mui/material";
 import { NewBox } from "./NewBox";
 import { useCallback, useMemo, useState } from "react";
-import { LOCAL_STORAGE_TYPE, POST_CATEGORY_TYPE } from "@/constants";
 import { PostTitle } from "./PostTitle";
 import { PostDetail } from "./PostDetail";
 import { PostNote } from "./PostNote";
 import { PostImage } from "./PostImage";
-import { PostDataProps } from "@/types/Post";
-import { AlertError } from "@/utils/alert";
 import { PostBackground } from "./PostBackground";
 import { useNavigate } from "react-router-dom";
-import { PATH } from "@/routes/path";
 import { badWords } from "vn-badwords";
+import { LOCAL_STORAGE_TYPE, POST_CATEGORY_TYPE } from "src/constants";
+import { AlertError } from "src/utils/alert";
+import { PostDataProps } from "src/types/Post";
+import { PATH } from "src/routes/path";
 
 export const RichEditor = () => {
   const navigate = useNavigate();

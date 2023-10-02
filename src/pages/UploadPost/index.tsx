@@ -1,8 +1,8 @@
-import { COMPONENT_SIZE } from "@/constants";
-import { COLOR_PALLETTE } from "@/constants/color";
 import { Grid, styled } from "@mui/material";
-import { FormTitle } from "@/components/Form";
-import { RichEditor } from "@/components/UploadPost";
+import { FormTitle } from "src/components/Form";
+import { RichEditor } from "src/components/UploadPost";
+import { COMPONENT_SIZE } from "src/constants";
+import { COLOR_PALLETTE } from "src/constants/color";
 
 export const UploadPost = () => {
   return (
@@ -44,52 +44,3 @@ const HeaderBackground = styled(Grid)(({ theme }) => ({
     background: COLOR_PALLETTE.WHITE,
   },
 }));
-
-const TiptapContainer = styled(Grid)({
-  button: {
-    padding: "4px 8px",
-  },
-  ">div": {
-    marginTop: "30px",
-  },
-  ".tiptap": {
-    ul: {
-      padding: `0 1rem`,
-    },
-    ol: {
-      padding: `0 1rem`,
-    },
-    "h1,h2,h3,h4,h5,h6": {
-      lineHeight: "1.1",
-    },
-    code: {
-      background: `rgba(#616161, 0.1)`,
-      color: `#616161`,
-    },
-    pre: {
-      background: `#0D0D0D`,
-      color: `#FFF`,
-      padding: `0.75rem 1rem`,
-      borderRadius: `0.5rem`,
-      code: {
-        color: `inherit`,
-        padding: 0,
-        background: "none",
-        fontSize: "0.8rem",
-      },
-    },
-    img: {
-      maxWidth: `100%`,
-      height: `auto`,
-    },
-    blockquote: {
-      paddingLeft: `1rem`,
-      borderLeft: `2px solid rgba(#0D0D0D, 0.1)`,
-    },
-    hr: {
-      border: `none`,
-      borderTop: `2px solid rgba(#0D0D0D, 0.1)`,
-      margin: `2rem 0`,
-    },
-  },
-});

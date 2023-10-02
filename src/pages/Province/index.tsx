@@ -1,16 +1,16 @@
 import { Grid, styled } from "@mui/material";
-import { COMPONENT_SIZE } from "../../constants";
-import { COLOR_PALLETTE } from "../../constants/color";
+import { COMPONENT_SIZE } from "src/constants";
+import { COLOR_PALLETTE } from "src/constants/color";
 import {
   BlogContent,
   ContentOverview,
   GroupCardRecommend,
   ImageStock,
-} from "../../components/BlogContent";
+} from "src/components/BlogContent";
 import { useCallback } from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import { BreadCrumbProps } from "../../types";
-import { useMasterContext } from "@/context/MasterContext";
+import { useMasterContext } from "src/context/MasterContext";
+import { BreadCrumbProps } from "src/types";
 
 const ContentOverviewValue = {
   title: "Phố cổ Hội An",

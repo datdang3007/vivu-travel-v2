@@ -15,13 +15,13 @@ import { useCallback, useMemo, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { rules } from "@/utils/validation";
-import { InputTextField } from "@/components/Form";
-import { LOGO_BRAND } from "@/constants/img_common";
-import { PATH } from "@/routes/path";
-import { COLOR_PALLETTE } from "@/constants/color";
-import GoogleLogo from "@/assets/img/google_logo.svg";
-import { BoxImage } from "@/ui";
+import { InputTextField } from "src/components/Form/index";
+import { LOGO_BRAND } from "src/constants/img_common";
+import { PATH } from "src/routes/path";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { BoxImage } from "src/ui";
+import { rules } from "src/utils/validation";
+import GoogleLogo from "src/assets/img/google_logo.svg";
 
 export interface LoginProps {
   user_email: string;
@@ -113,7 +113,6 @@ export const Login = () => {
                 <InputTextField
                   name={"user_email"}
                   label="Email"
-                  type="email"
                   variant="standard"
                   fullWidth
                   InputProps={{

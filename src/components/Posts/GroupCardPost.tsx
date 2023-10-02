@@ -1,8 +1,8 @@
-import { POST_TAG_TYPE } from "@/constants";
-import { COLOR_PALLETTE, COLOR_POST_TAGS } from "@/constants/color";
-import { BoxImage } from "@/ui";
 import { Avatar, Box, Card, Grid, Typography, styled } from "@mui/material";
 import { useCallback } from "react";
+import { POST_TAG_TYPE } from "src/constants";
+import { COLOR_PALLETTE, COLOR_POST_TAGS } from "src/constants/color";
+import { BoxImage } from "src/ui";
 
 const dataTemp = [
   {

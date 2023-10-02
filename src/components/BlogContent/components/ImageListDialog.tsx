@@ -1,5 +1,5 @@
-import { BoxImage } from "@/ui";
 import { Close } from "@mui/icons-material";
+import { BoxImage } from "../../../ui";
 import {
   AppBar,
   Box,

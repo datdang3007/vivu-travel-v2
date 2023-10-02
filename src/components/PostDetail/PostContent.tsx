@@ -1,6 +1,6 @@
-import { COLOR_PALLETTE } from "@/constants/color";
-import { CardTravelTeller } from "@/ui";
 import { Grid, Typography, styled } from "@mui/material";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { CardTravelTeller } from "src/ui";
 
 const userData = {
   name: "Reviewer 01",
@@ -19,6 +19,10 @@ export const PostContent = () => {
           from={userData.from}
           sx={{
             background: "#FAFAFA",
+            border: "none",
+            boxShadow: "0 0 6px rgba(0,0,0, .16)",
+            borderBottomRightRadius: "0",
+            borderBottomLeftRadius: "0",
             "&:hover": {
               "&:after": { transform: "translateY(4px)" },
             },
@@ -59,6 +63,7 @@ export const PostContent = () => {
 };
 
 const PaperContainer = styled(Grid)({
+  overflow: "hidden",
   background: COLOR_PALLETTE.WHITE,
   boxShadow: `1px 1px 16px 0 rgba(0, 0, 0, 0.08)`,
 });

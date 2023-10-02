@@ -1,7 +1,7 @@
-import { COLOR_PALLETTE } from "@/constants/color";
-import { BoxImage } from "@/ui";
 import { Box, Grid, Typography, styled } from "@mui/material";
 import dayjs from "dayjs";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { BoxImage } from "src/ui";
 
 type Props = {
   image: string;

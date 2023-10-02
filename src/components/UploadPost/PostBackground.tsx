@@ -1,5 +1,3 @@
-import { BoxImage } from "@/ui";
-import { UploadFileToDiscordWebhook } from "@/utils/common";
 import { Image } from "@mui/icons-material";
 import {
   Box,
@@ -10,6 +8,8 @@ import {
   styled,
 } from "@mui/material";
 import { useCallback } from "react";
+import { BoxImage } from "src/ui";
+import { UploadFileToDiscordWebhook } from "src/utils/common";
 
 type Props = {
   link?: string;
@@ -27,7 +27,7 @@ export const PostBackground = (props: Props) => {
     (event: any) => {
       const file = event.target.files[0];
       if (!file) return;
-      UploadFileToDiscordWebhook(file).then((linkUrl) => {
+      UploadFileToDiscordWebhook(file).then((linkUrl: any) => {
         if (!linkUrl) return;
         console.log(linkUrl);
         setLink(linkUrl as string);
