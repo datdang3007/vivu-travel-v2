@@ -2,9 +2,16 @@ import { Grid } from "@mui/material";
 import { CardInfoAction } from "../../ui";
 import { GroupCardProvinceProps } from "../../types";
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "src/routes/path";
 
 export const GroupCardProvince = (props: GroupCardProvinceProps) => {
+  const navigate = useNavigate();
   const { listProvince } = props;
+
+  const onClick = useCallback(() => {
+    navigate(PATH.PROVINCE);
+  }, [navigate]);
 
   const renderListCardInfo = useCallback(() => {
     return listProvince.map((val, index) => (
@@ -22,12 +29,13 @@ export const GroupCardProvince = (props: GroupCardProvinceProps) => {
         boxSxProp={{
           height: { xs: "200px", sm: "240px", md: "200px", lg: "240px" },
         }}
+        onClick={onClick}
         isCursorPointer
         title={val.title}
         src={val.src}
       />
     ));
-  }, [listProvince]);
+  }, [listProvince, onClick]);
 
   return (
     <Grid item container alignItems={"center"} xs={12}>

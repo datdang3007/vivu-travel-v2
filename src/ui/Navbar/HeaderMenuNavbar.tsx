@@ -15,11 +15,11 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useCallback, useMemo, useState } from "react";
-import { HeaderSearch } from "../../components/Dialog/HeaderSearch";
 import { listMenuOptionProps } from "../../types/Ui";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "../../routes/path";
 import { COLOR_PALLETTE } from "../../constants/color";
+import { HeaderSearch } from "src/components/Dialog";
 
 export const HeaderMenuNavbar = () => {
   const theme = useTheme();

@@ -10,6 +10,9 @@ import {
 import { COLOR_PALLETTE } from "../../../constants/color";
 import { BoxImage } from "../../../ui";
 import { CardRecommendProps } from "../../../types";
+import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
+import { PATH } from "src/routes/path";
 
 const CardRecommendValue = {
   title: "Làng tranh Đông Hồ",
@@ -23,7 +26,12 @@ const CardRecommendValue = {
 };
 
 export const CardRecommend = (props: CardRecommendProps) => {
+  const navigate = useNavigate();
   const { title, rate, content, image } = props;
+
+  const onClick = useCallback(() => {
+    navigate(PATH.PLACE);
+  }, [navigate]);
 
   return (
     <CardRecommendContainer item xs={12}>
@@ -37,7 +45,9 @@ export const CardRecommend = (props: CardRecommendProps) => {
       >
         <Grid item xs={3.5} height={1} sx={{ cursor: "pointer" }}>
           {image ? (
-            <BoxImage src={image} />
+            <Button fullWidth sx={{ height: 1, padding: 0 }} onClick={onClick}>
+              <BoxImage src={image} />
+            </Button>
           ) : (
             <Skeleton
               variant="rectangular"
@@ -54,8 +64,15 @@ export const CardRecommend = (props: CardRecommendProps) => {
           sx={{ overflow: "hidden", maxHeight: "122px" }}
         >
           <Grid item xs={12}>
-            <CardRecommendTitle fontSize={"18px"} fontWeight={"bold"}>
-              {title}
+            <CardRecommendTitle>
+              <Typography
+                sx={{
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                }}
+              >
+                {title}
+              </Typography>
             </CardRecommendTitle>
           </Grid>
           <Grid item xs={12} mt={"5px"}>
