@@ -1,7 +1,9 @@
 import { Avatar, Box, Card, Grid, Typography, styled } from "@mui/material";
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { POST_TAG_TYPE } from "src/constants";
 import { COLOR_PALLETTE, COLOR_POST_TAGS } from "src/constants/color";
+import { PATH } from "src/routes/path";
 import { BoxImage } from "src/ui";
 
 const dataTemp = [
@@ -88,13 +90,19 @@ const dataTemp = [
 ];
 
 export const GroupCardPost = () => {
+  const navigate = useNavigate();
+
+  const changeDirectionToPost = useCallback(() => {
+    navigate(PATH.POST_DETAIL);
+  }, [navigate]);
+
   const ListCardComponent = useCallback(
     () =>
       dataTemp.map((val) => {
         const tagColor = COLOR_POST_TAGS[val.type];
         return (
           <Grid key={val.id} item xs={12} sm={6} lg={4} xl={3} padding={"10px"}>
-            <CardContainer>
+            <CardContainer onClick={changeDirectionToPost}>
               <BoxType sx={{ background: tagColor }}>
                 <Typography
                   sx={{
@@ -177,7 +185,7 @@ export const GroupCardPost = () => {
           </Grid>
         );
       }),
-    []
+    [changeDirectionToPost]
   );
 
   return (

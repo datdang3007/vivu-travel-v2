@@ -1,4 +1,3 @@
-
 import { ArrowForwardIos } from "@mui/icons-material";
 import {
   Avatar,
@@ -10,7 +9,9 @@ import {
   styled,
 } from "@mui/material";
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { COLOR_PALLETTE } from "src/constants/color";
+import { PATH } from "src/routes/path";
 import { BoxImage } from "src/ui";
 
 const dataTemp = [
@@ -54,11 +55,21 @@ const dataTemp = [
 ];
 
 export const GroupCardPost = () => {
+  const navigate = useNavigate();
+
+  const changeDirectionToPostList = useCallback(() => {
+    navigate(PATH.POSTS);
+  }, [navigate]);
+
+  const changeDirectionToPost = useCallback(() => {
+    navigate(PATH.POST_DETAIL);
+  }, [navigate]);
+
   const ListCardComponent = useCallback(
     () =>
       dataTemp.map((val) => (
         <Grid key={val.id} item xs={12} sm={6} lg={4} padding={"10px"}>
-          <CardContainer>
+          <CardContainer onClick={changeDirectionToPost}>
             <Grid item xs={12}>
               <Box sx={{ width: "100%", aspectRatio: "3/2" }}>
                 <BoxImage src={val.img} />
@@ -131,7 +142,7 @@ export const GroupCardPost = () => {
           </CardContainer>
         </Grid>
       )),
-    []
+    [changeDirectionToPost]
   );
 
   return (
@@ -139,7 +150,7 @@ export const GroupCardPost = () => {
       {ListCardComponent()}
       <Grid item container justifyContent={"center"} xs={12}>
         <Grid item xs={10} sm={6} xl={4}>
-          <ButtonGoToList fullWidth>
+          <ButtonGoToList fullWidth onClick={changeDirectionToPostList}>
             <Typography
               sx={{
                 textTransform: "none",

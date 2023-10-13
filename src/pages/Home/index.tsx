@@ -1,19 +1,17 @@
 import { Grid } from "@mui/material";
-import { BackgroundContent } from "../../components/Content";
 import IconAcreageImg from "../../assets/img/Icon_Acreage.png";
 import IconBeachLengthImg from "../../assets/img/Icon_Beach_Length.png";
-import IconPopulationImg from "../../assets/img/Icon_Population.png";
 import IconGDPImg from "../../assets/img/Icon_GDP.png";
-import { CardTerritoryProps, CountryInfoProps } from "../../types";
-import { GroupCardCountryInfo } from "./components/GroupCardCountryInfo";
+import IconPopulationImg from "../../assets/img/Icon_Population.png";
+import { BackgroundContent } from "../../components/Content";
 import { FormTitle } from "../../components/Form/FormTitle";
 import { GroupCardRegion } from "../../components/Region";
 import { GroupCardTerritory } from "../../components/Territory";
 import { COLOR_PALLETTE } from "../../constants/color";
-import { GroupCardTravelTeller } from "./components/GroupCardTravelTeller";
+import { CardTerritoryProps, CountryInfoProps } from "../../types";
+import { GroupCardCountryInfo } from "./components/GroupCardCountryInfo";
 import { GroupCardPost } from "./components/GroupCardPost";
-import { MasterProvider, useMasterContext } from "src/context/MasterContext";
-import { useMemo } from "react";
+import { GroupCardTravelTeller } from "./components/GroupCardTravelTeller";
 
 const ListCountryInfo = [
   {
@@ -90,30 +88,18 @@ const listTerritory = [
 ] as CardTerritoryProps[];
 
 export const Home = () => {
-  const { isMobile, isDesktop } = useMasterContext();
-
-  const BackgroundHeight = useMemo(() => {
-    if (isDesktop) {
-      return "65vh";
-    }
-    if (isMobile) {
-      return "50vh";
-    }
-    return "55vh";
-  }, [isDesktop, isMobile]);
-
   return (
     <Grid item xs={12}>
       <BackgroundContent
         isHomePage
-        height={BackgroundHeight}
+        height={"100vh"}
         isShowBottomImg
         title="VIỆT NAM"
         slogan="Đích đến của chúng ta không phải là một vùng đất, mà là một cách nhìn mới"
         backgroundImg={"https://images5.alphacoders.com/864/864641.jpg"}
       />
       <Grid item container justifyContent={"center"} xs={12} paddingBottom={60}>
-        <Grid item xs={11} sm={10} md={9.1} xl={9}>
+        <Grid item xs={12} sm={10} md={9.1} xl={9}>
           <FormTitle
             container
             justifyContent={"space-between"}
@@ -136,7 +122,7 @@ export const Home = () => {
           background: COLOR_PALLETTE.BG_GRAY,
         }}
       >
-        <Grid item xs={11} sm={10} md={9.1}>
+        <Grid item xs={12} sm={10} md={9.1}>
           <FormTitle
             container
             title="Miền"
@@ -151,7 +137,7 @@ export const Home = () => {
         </Grid>
       </Grid>
       <Grid item container justifyContent={"center"} xs={12} paddingBottom={60}>
-        <Grid item xs={11} sm={10} md={9.1}>
+        <Grid item xs={12} sm={10} md={9.1}>
           <FormTitle
             container
             title="Vùng"
@@ -175,7 +161,7 @@ export const Home = () => {
           background: COLOR_PALLETTE.BG_GRAY,
         }}
       >
-        <Grid item xs={11} sm={10} md={9.1}>
+        <Grid item xs={12} sm={10} md={9.1}>
           <FormTitle
             container
             title="Top Reviewer"
@@ -188,7 +174,7 @@ export const Home = () => {
         </Grid>
       </Grid>
       <Grid item container justifyContent={"center"} xs={12} paddingBottom={60}>
-        <Grid item xs={11} sm={10} md={9.1}>
+        <Grid item xs={12} sm={10} md={9.1}>
           <FormTitle
             container
             title="Bài Viết Nổi Bật"

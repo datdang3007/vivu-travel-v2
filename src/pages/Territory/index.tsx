@@ -77,7 +77,7 @@ export const Territory = () => {
         xs={12}
         sx={{ background: COLOR_PALLETTE.CULTURED }}
       >
-        <Grid item xs={11} sm={9.5} md={9} xl={7.5}>
+        <Grid item xs={12} sm={9.5} md={9} xl={7.5}>
           <FormTitle
             container
             title="Tổng Quan"
@@ -91,7 +91,7 @@ export const Territory = () => {
         </Grid>
       </Grid>
       <Grid item container justifyContent={"center"} xs={12}>
-        <Grid item xs={11} sm={10} md={9.1}>
+        <Grid item xs={12} sm={10} md={9.1}>
           <FormProvider {...methods}>
             <Grid item xs={12} component={"form"}>
               <FormTitleWithSearch
