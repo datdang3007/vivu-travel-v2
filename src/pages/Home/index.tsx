@@ -12,6 +12,8 @@ import { CardTerritoryProps, CountryInfoProps } from "../../types";
 import { GroupCardCountryInfo } from "./components/GroupCardCountryInfo";
 import { GroupCardPost } from "./components/GroupCardPost";
 import { GroupCardTravelTeller } from "./components/GroupCardTravelTeller";
+import { useCallApiList } from "src/hooks";
+import { useMemo } from "react";
 
 const ListCountryInfo = [
   {
@@ -36,58 +38,27 @@ const ListCountryInfo = [
   },
 ] as CountryInfoProps[];
 
-const listTerritory = [
-  {
-    id: "1",
-    title: "Bắc Trung Bộ",
-    subTitle: "Biển Thiên Cầm , Hà Tĩnh",
-    src: "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png",
-  },
-  {
-    id: "2",
-    title: "Bắc Trung Bộ",
-    subTitle: "Biển Thiên Cầm , Hà Tĩnh",
-    src: "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png",
-  },
-  {
-    id: "3",
-    title: "Bắc Trung Bộ",
-    subTitle: "Biển Thiên Cầm , Hà Tĩnh",
-    src: "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png",
-  },
-  {
-    id: "4",
-    title: "Bắc Trung Bộ",
-    subTitle: "Biển Thiên Cầm , Hà Tĩnh",
-    src: "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png",
-  },
-  {
-    id: "5",
-    title: "Bắc Trung Bộ",
-    subTitle: "Biển Thiên Cầm , Hà Tĩnh",
-    src: "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png",
-  },
-  {
-    id: "6",
-    title: "Bắc Trung Bộ",
-    subTitle: "Biển Thiên Cầm , Hà Tĩnh",
-    src: "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png",
-  },
-  {
-    id: "7",
-    title: "Bắc Trung Bộ",
-    subTitle: "Biển Thiên Cầm , Hà Tĩnh",
-    src: "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png",
-  },
-  {
-    id: "8",
-    title: "Bắc Trung Bộ",
-    subTitle: "Biển Thiên Cầm , Hà Tĩnh",
-    src: "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png",
-  },
-] as CardTerritoryProps[];
-
 export const Home = () => {
+  const { territoryList } = useCallApiList();
+
+  const convertTerritoryList: CardTerritoryProps[] = useMemo(() => {
+    return territoryList.map((territory) => {
+      const {
+        id,
+        name,
+        image,
+        region: { name: regionName },
+      } = territory;
+
+      return {
+        id,
+        title: name,
+        subTitle: regionName,
+        src: image,
+      };
+    });
+  }, [territoryList]);
+
   return (
     <Grid item xs={12}>
       <BackgroundContent
@@ -98,6 +69,8 @@ export const Home = () => {
         slogan="Đích đến của chúng ta không phải là một vùng đất, mà là một cách nhìn mới"
         backgroundImg={"https://images5.alphacoders.com/864/864641.jpg"}
       />
+
+      {/* CARD INFO */}
       <Grid item container justifyContent={"center"} xs={12} paddingBottom={60}>
         <Grid item xs={12} sm={10} md={9.1} xl={9}>
           <FormTitle
@@ -112,6 +85,8 @@ export const Home = () => {
           </FormTitle>
         </Grid>
       </Grid>
+
+      {/* CARD REGION */}
       <Grid
         item
         container
@@ -136,6 +111,8 @@ export const Home = () => {
           </FormTitle>
         </Grid>
       </Grid>
+
+      {/* CARD TERRITORY */}
       <Grid item container justifyContent={"center"} xs={12} paddingBottom={60}>
         <Grid item xs={12} sm={10} md={9.1}>
           <FormTitle
@@ -147,10 +124,12 @@ export const Home = () => {
             mt="60px"
             mb="40px"
           >
-            <GroupCardTerritory listTerritory={listTerritory} />
+            <GroupCardTerritory listTerritory={convertTerritoryList} />
           </FormTitle>
         </Grid>
       </Grid>
+
+      {/* CARD TRAVEL TELLER */}
       <Grid
         item
         container
@@ -173,6 +152,8 @@ export const Home = () => {
           </FormTitle>
         </Grid>
       </Grid>
+
+      {/* CARD POST */}
       <Grid item container justifyContent={"center"} xs={12} paddingBottom={60}>
         <Grid item xs={12} sm={10} md={9.1}>
           <FormTitle

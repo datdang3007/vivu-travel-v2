@@ -7,52 +7,18 @@ import { useMasterContext } from "../../context/MasterContext";
 import { GroupCardProvince } from "../../components/Province";
 import { FormTitleWithSearch } from "../../components/Form";
 import { FormProvider, useForm } from "react-hook-form";
-
-const listProvince = [
-  {
-    id: "1",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "2",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "3",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "4",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "5",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "6",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "7",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "8",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-] as CardProvinceProps[];
+import { GetIdParams } from "src/utils/common";
+import { useLocation } from "react-router-dom";
+import { useCallAPIFind } from "src/hooks";
+import { useEffect, useMemo, useState } from "react";
+import { ITerritory } from "src/interfaces";
 
 export const Territory = () => {
+  const location = useLocation();
   const { isDesktop } = useMasterContext();
+  const territoryID = GetIdParams(location.pathname);
+  const [data, setData] = useState<ITerritory | null>(null);
+  const { requestFindTerritoryByID } = useCallAPIFind();
 
   const methods = useForm<FormTitleSearchProps>({
     defaultValues: {
@@ -60,15 +26,29 @@ export const Territory = () => {
     },
   });
 
+  const convertProvinceList: CardProvinceProps[] = useMemo(() => {
+    if (!data) return [];
+    return data.provinceList.map((province) => {
+      const { id, name, image } = province;
+      return { id, title: name, src: image };
+    });
+  }, [data]);
+
+  useEffect(() => {
+    requestFindTerritoryByID(territoryID).then((result) => {
+      setData(result);
+    });
+  }, [requestFindTerritoryByID, territoryID]);
+
+  if (!data) return null;
+
   return (
     <Grid item xs={12} mb={100}>
       <BackgroundContent
         height={"100vh"}
-        title="Bắc Trung Bộ"
-        slogan="Nơi hội tụ giữa sông núi và con người tinh hoa"
-        backgroundImg={
-          "https://cdn.discordapp.com/attachments/1085804453246009374/1100340027306811453/Bac_Trung_Bo.png"
-        }
+        title={data.name}
+        slogan={data.slogan}
+        backgroundImg={data.image}
       />
       <Grid
         item
@@ -103,7 +83,7 @@ export const Territory = () => {
                 mt="80px"
                 mb="20px"
               >
-                <GroupCardProvince listProvince={listProvince} />
+                <GroupCardProvince listProvince={convertProvinceList} />
               </FormTitleWithSearch>
             </Grid>
           </FormProvider>

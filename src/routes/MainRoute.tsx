@@ -26,11 +26,11 @@ const protectedRoute: RouteObject = {
           element: <Home />,
         },
         {
-          path: PATH.REGION,
+          path: `${PATH.REGION}/:id`,
           element: <Region />,
         },
         {
-          path: PATH.TERRITORY,
+          path: `${PATH.TERRITORY}/:id`,
           element: <Territory />,
         },
         {

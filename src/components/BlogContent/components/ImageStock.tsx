@@ -1,9 +1,9 @@
-import { Box, Button, Dialog, Grid, Typography, styled } from "@mui/material";
+import { Box, Button, Grid, Typography, styled } from "@mui/material";
+import { useCallback, useState } from "react";
+import { DialogPreviewImage } from "src/components/Dialog";
 import { COLOR_PALLETTE } from "../../../constants/color";
 import { BoxImage } from "../../../ui";
-import { useCallback, useState } from "react";
 import { ImageListDialog } from "./ImageListDialog";
-import { DialogPreviewImage } from "src/components/Dialog";
 
 type Props = {
   isShowName?: boolean;

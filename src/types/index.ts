@@ -43,7 +43,7 @@ export interface GroupCardTerritoryProps {
 }
 
 export interface CardTerritoryProps {
-  id: string;
+  id: string | number;
   title: string;
   subTitle: string;
   src: string;
@@ -54,7 +54,7 @@ export interface GroupCardProvinceProps {
 }
 
 export interface CardProvinceProps {
-  id: string;
+  id: string | number;
   title: string;
   src: string;
 }
@@ -90,4 +90,15 @@ export interface CardRecommendProps {
   rate: number;
   content: string;
   image?: string;
+}
+
+export interface ContentDataProps {
+  id: string | number;
+  type: number;
+  content: string;
+}
+
+export interface PlaceImageStockProps {
+  id: string | number;
+  link: string;
 }

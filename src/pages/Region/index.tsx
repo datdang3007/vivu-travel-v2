@@ -12,73 +12,18 @@ import { useMasterContext } from "../../context/MasterContext";
 import { GroupCardProvince } from "../../components/Province";
 import { FormTitleWithSearch } from "../../components/Form";
 import { FormProvider, useForm } from "react-hook-form";
-
-const listTerritory = [
-  {
-    id: "1",
-    title: "Bắc Trung Bộ",
-    subTitle: "Biển Thiên Cầm , Hà Tĩnh",
-    src: "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png",
-  },
-  {
-    id: "2",
-    title: "Bắc Trung Bộ",
-    subTitle: "Biển Thiên Cầm , Hà Tĩnh",
-    src: "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png",
-  },
-  {
-    id: "3",
-    title: "Bắc Trung Bộ",
-    subTitle: "Biển Thiên Cầm , Hà Tĩnh",
-    src: "https://cdn.discordapp.com/attachments/1085804453246009374/1100720331615907890/16478241753573.png",
-  },
-] as CardTerritoryProps[];
-
-const listProvince = [
-  {
-    id: "1",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "2",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "3",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "4",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "5",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "6",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "7",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-  {
-    id: "8",
-    title: "Lào Cai",
-    src: "https://cdn.discordapp.com/attachments/1091622222453559437/1105876836824666233/du-lich-sa-pa-cam-nang-tu-a-den-z-iVIVU_com-20.png",
-  },
-] as CardProvinceProps[];
+import { useCallAPIFind } from "src/hooks";
+import { useLocation } from "react-router-dom";
+import { GetIdParams } from "src/utils/common";
+import { useEffect, useMemo, useState } from "react";
+import { IRegion } from "src/interfaces";
 
 export const Region = () => {
+  const location = useLocation();
   const { isDesktop } = useMasterContext();
+  const regionID = GetIdParams(location.pathname);
+  const [data, setData] = useState<IRegion | null>(null);
+  const { requestFindRegionByID } = useCallAPIFind();
 
   const methods = useForm<FormTitleSearchProps>({
     defaultValues: {
@@ -86,15 +31,48 @@ export const Region = () => {
     },
   });
 
+  const convertTerritoryList: CardTerritoryProps[] = useMemo(() => {
+    if (!data) return [];
+    return data.territoryList.map((territory) => {
+      const {
+        id,
+        name,
+        image,
+        region: { name: regionName },
+      } = territory;
+
+      return {
+        id,
+        title: name,
+        subTitle: regionName,
+        src: image,
+      };
+    });
+  }, [data]);
+
+  const convertProvinceList: CardProvinceProps[] = useMemo(() => {
+    if (!data) return [];
+    return data.provinceList.map((province) => {
+      const { id, name, image } = province;
+      return { id, title: name, src: image };
+    });
+  }, [data]);
+
+  useEffect(() => {
+    requestFindRegionByID(regionID).then((result) => {
+      setData(result);
+    });
+  }, [regionID, requestFindRegionByID]);
+
+  if (!data) return null;
+
   return (
     <Grid item xs={12} mb={100}>
       <BackgroundContent
         height={"100vh"}
-        title="Miền Bắc"
-        slogan="Nơi hội tụ giữa sông núi và con người tinh hoa"
-        backgroundImg={
-          "https://cdn.discordapp.com/attachments/1085804453246009374/1100330708679004231/image.png"
-        }
+        title={data.name}
+        slogan={data.slogan}
+        backgroundImg={data.image}
       />
       <Grid
         item
@@ -107,7 +85,7 @@ export const Region = () => {
           <FormTitle
             container
             title="Tổng Quan"
-            subtitle="Miền Bắc của Việt Nam là một khu vực đa dạng với núi, đồng bằng, và khu vực ven biển, có diện tích khoảng 180.000 km vuông và dân số trên 30 triệu người. Bao gồm các vùng phụ Miền Tây Bắc, Miền Đông Bắc, và Đồng Bằng Sông Hồng, với thủ đô Hà Nội. Miền Bắc có lịch sử và văn hóa phong phú, nổi tiếng với ẩm thực đặc trưng như phở, bún chả, và bánh cuốn."
+            subtitle={data.overview}
             titleSpacing="5px"
             isTitleCenter
             mt="80px"
@@ -127,7 +105,7 @@ export const Region = () => {
             mt="80px"
             mb="40px"
           >
-            <GroupCardTerritory listTerritory={listTerritory} />
+            <GroupCardTerritory listTerritory={convertTerritoryList} />
           </FormTitle>
         </Grid>
       </Grid>
@@ -144,7 +122,7 @@ export const Region = () => {
                 mt="80px"
                 mb="20px"
               >
-                <GroupCardProvince listProvince={listProvince} />
+                <GroupCardProvince listProvince={convertProvinceList} />
               </FormTitleWithSearch>
             </Grid>
           </FormProvider>

@@ -25,7 +25,7 @@
       // "pages/*": ["src/pages/*"],
       // "components/*": ["src/components/*"],
       // "types/*": ["src/@types/*"],
-      "public/*": ["public/*"]
+      // "public/*": ["public/*"]
     }
   },
   "include": [

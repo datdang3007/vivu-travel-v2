@@ -9,12 +9,15 @@ export const GroupCardTerritory = (props: GroupCardTerritoryProps) => {
   const navigate = useNavigate();
   const { listTerritory } = props;
 
-  const onClick = useCallback(() => {
-    navigate(PATH.TERRITORY);
-  }, [navigate]);
+  const handleChangeToDetailPage = useCallback(
+    (id: string | number) => {
+      navigate(`${PATH.TERRITORY}/${id}`);
+    },
+    [navigate]
+  );
 
   const renderListCardInfo = useCallback(() => {
-    return listTerritory.map((val, index) => (
+    return listTerritory.map((val) => (
       <CardInfoAction
         key={val.id}
         xs={12}
@@ -29,10 +32,10 @@ export const GroupCardTerritory = (props: GroupCardTerritoryProps) => {
         title={val.title}
         subTitle={val.subTitle}
         src={val.src}
-        onClick={onClick}
+        onClick={() => handleChangeToDetailPage(val.id)}
       />
     ));
-  }, [listTerritory, onClick]);
+  }, [handleChangeToDetailPage, listTerritory]);
 
   return (
     <Grid item container alignItems={"center"} xs={12}>
