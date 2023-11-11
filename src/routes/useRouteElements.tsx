@@ -1,15 +1,29 @@
 import { Suspense } from "react";
-import { LoadingModule } from "../components/Loading";
 import { Navigate, Outlet, RouteObject, useRoutes } from "react-router-dom";
-import protectedRoute from "./MainRoute";
+import { Login, Page404, SignUp } from "src/pages";
+import { LoadingModule } from "../components/Loading";
+import { protectedRoute, publicRoute } from "./MainRoute";
 import { PATH } from "./path";
-import { Login, Page404, Register } from "src/pages";
+import { LOCAL_STORAGE } from "src/constants/local_storage";
+
+const PublicRouter = () => {
+  return <Outlet />;
+};
 
 const ProtectRouter = () => {
+  const role = localStorage.getItem(LOCAL_STORAGE.UserRole);
+  console.log(role);
+  if (!role) {
+    return <Navigate to={PATH.NOT_FOUND} />;
+  }
   return <Outlet />;
 };
 
 const userRoutes: RouteObject[] = [
+  {
+    element: <PublicRouter />,
+    children: [{ ...publicRoute }],
+  },
   {
     element: <ProtectRouter />,
     children: [{ ...protectedRoute }],
@@ -32,12 +46,11 @@ const userRoutes: RouteObject[] = [
   },
   {
     path: PATH.REGISTER,
-    element: <Register />,
+    element: <SignUp />,
   },
 ];
 
 export default function useRouteElements() {
   const router = useRoutes(userRoutes);
-
   return <Suspense fallback={<LoadingModule />}>{router}</Suspense>;
 }

@@ -5,14 +5,15 @@ import { ITerritory } from "./territory.interface";
 
 export interface IPlace {
   id: string | number;
-  name?: string;
-  image?: string;
+  name: string;
+  image: string;
+  overview: string;
   contents?: ContentDataProps[];
   image_stock?: PlaceImageStockProps[];
   count_image_stock?: number;
-  region?: IRegion;
-  territory?: ITerritory;
-  province?: IProvince;
+  region: IRegion;
+  territory: ITerritory;
+  province: IProvince;
   created_at?: string;
   updated_at?: string;
   deleted_at?: any;

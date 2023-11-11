@@ -5,7 +5,7 @@ import { useMasterContext } from "../../context/MasterContext";
 import { Footer } from "../../components/Footer";
 
 export const MainLayout = () => {
-  const { isMobile, isTabletMini } = useMasterContext();
+  const { isMobile, isTabletMini, user } = useMasterContext();
 
   return (
     <Box
@@ -15,7 +15,7 @@ export const MainLayout = () => {
         overflow: "auto",
       }}
     >
-      <Header isMenu={isMobile || isTabletMini} />
+      <Header isMenu={isMobile || isTabletMini} user={user} />
       <Box>
         <Outlet />
       </Box>

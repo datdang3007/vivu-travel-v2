@@ -1,57 +1,61 @@
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import { Grid, styled } from "@mui/material";
-import { COMPONENT_SIZE } from "src/constants";
-import { COLOR_PALLETTE } from "src/constants/color";
+import { useCallback, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   BlogContent,
   ContentOverview,
-  GroupCardRecommend,
+  GroupProvinceRecommend,
+  GroupServiceRecommend,
   ImageStock,
 } from "src/components/BlogContent";
-import { useCallback } from "react";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import { COMPONENT_SIZE } from "src/constants";
+import { COLOR_PALLETTE } from "src/constants/color";
 import { useMasterContext } from "src/context/MasterContext";
+import { useCallAPIFind } from "src/hooks";
+import { IProvince } from "src/interfaces";
+import { PATH } from "src/routes/path";
 import { BreadCrumbProps } from "src/types";
-
-const ContentOverviewValue = {
-  title: "Phố cổ Hội An",
-  image:
-    "https://cdn.discordapp.com/attachments/1091622222453559437/1105888087948677221/hoi-an-quang-nam-6.png",
-  content: `
-    Phố cổ Hội An nằm ở tỉnh Quảng Nam, Việt Nam, và là một trong những
-    điểm du lịch nổi tiếng và phổ biến nhất của đất nước. Nó được coi là
-    một di sản văn hóa thế giới bởi UNESCO và thu hút hàng triệu khách du
-    lịch mỗi năm. Phố cổ Hội An có một lịch sử lâu đời và độc đáo. Nó đã
-    từng là một cảng biển quan trọng trong thời kỳ Trung Quốc cổ đại và về
-    sau trở thành một trung tâm thương mại quan trọng của khu vực Đông Nam
-    Á. Từ thế kỷ XVI đến thế kỷ XIX, Hội An đã thu hút nhiều thương nhân
-    nước ngoài, bao gồm người Nhật, người Hà Lan, người Bồ Đào Nha và
-    người Trung Quốc, tạo nên một sự đa dạng văn hóa đặc trưng cho nơi
-    này.
-  `,
-};
+import { GetIdParams } from "src/utils/common";
 
 export const Province = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { isTabletMini } = useMasterContext();
+  const provinceID = GetIdParams(location.pathname);
+  const [data, setData] = useState<IProvince | null>(null);
+  const { requestFindProvinceByID } = useCallAPIFind();
 
-  const ChangeNavigate = useCallback(() => {
-    console.log("change navigate");
-  }, []);
+  const ChangeNavigate = useCallback(
+    (pathname: string) => {
+      navigate(pathname);
+    },
+    [navigate]
+  );
 
   const HeaderBreadCrumbList = [
     {
       icon: <HomeOutlinedIcon sx={{ fontSize: "21px" }} />,
-      title: "Home",
-      onClick: () => ChangeNavigate(),
+      title: "Trang Chủ",
+      onClick: () => ChangeNavigate(PATH.HOME),
     },
     {
-      title: "Region",
-      onClick: () => ChangeNavigate(),
+      title: data?.region.name,
+      onClick: () => ChangeNavigate(`${PATH.REGION}/${data?.region.id}`),
     },
     {
-      title: "Territory",
-      onClick: () => ChangeNavigate(),
+      title: data?.territory.name,
+      onClick: () => ChangeNavigate(`${PATH.TERRITORY}/${data?.territory.id}`),
     },
   ] as BreadCrumbProps[];
+
+  useEffect(() => {
+    requestFindProvinceByID(provinceID).then((result) => {
+      setData(result);
+    });
+  }, [provinceID, requestFindProvinceByID]);
+
+  if (!data) return null;
 
   return (
     <Grid container>
@@ -77,9 +81,9 @@ export const Province = () => {
             <Grid item xs={12} md={7.5} xl={7.5}>
               <BlogContent HeaderBreadCrumbList={HeaderBreadCrumbList}>
                 <ContentOverview
-                  title={ContentOverviewValue.title}
-                  image={ContentOverviewValue.image}
-                  content={ContentOverviewValue.content}
+                  title={data.name}
+                  image={data.image}
+                  content={data.overview}
                 />
               </BlogContent>
             </Grid>
@@ -92,7 +96,7 @@ export const Province = () => {
               xl={4}
             >
               <Grid item xs={12} sm={5.8} md={12} mt={{ xs: "40px", md: "0" }}>
-                <GroupCardRecommend />
+                <GroupProvinceRecommend placeList={data.placeList ?? []} />
               </Grid>
               <Grid
                 item
@@ -101,7 +105,7 @@ export const Province = () => {
                 md={12}
                 mt={{ xs: "40px", md: "20px" }}
               >
-                <GroupCardRecommend />
+                <GroupServiceRecommend />
               </Grid>
             </Grid>
           </Grid>

@@ -1,3 +1,4 @@
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -12,21 +13,19 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { useCallback, useMemo, useState } from "react";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { InputTextField } from "src/components/Form/index";
-import { LOGO_BRAND } from "src/constants/img_common";
-import { PATH } from "src/routes/path";
-import { COLOR_PALLETTE } from "src/constants/color";
-import { BoxImage } from "src/ui";
-import { rules } from "src/utils/validation";
 import GoogleLogo from "src/assets/img/google_logo.svg";
-
-export interface LoginProps {
-  user_email: string;
-  user_password: string;
-}
+import { InputTextField } from "src/components/Form/index";
+import { COLOR_PALLETTE } from "src/constants/color";
+import { LOGO_BRAND } from "src/constants/img_common";
+import { LOCAL_STORAGE } from "src/constants/local_storage";
+import { useCallAPIAuth } from "src/hooks";
+import { IAuth } from "src/interfaces";
+import { PATH } from "src/routes/path";
+import { BoxImage } from "src/ui";
+import { showAlertError } from "src/utils/alert";
+import { rules } from "src/utils/validation";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -34,16 +33,17 @@ export const Login = () => {
   const { validateEmail, validatePassword } = rules;
   const [showPassword, setShowPassword] = useState(false);
 
+  const { requestLogin } = useCallAPIAuth();
+
   const defaultValuesLogin = useMemo(() => {
     let result = {
-      user_email: "",
-      user_password: "",
+      email: "",
+      password: "",
     };
     const keyVal = localStorage.getItem("RegisterInfo");
     if (keyVal) {
-      result = JSON.parse(keyVal) as LoginProps;
+      result = JSON.parse(keyVal) as IAuth;
     }
-    console.log(result);
     return result;
   }, []);
 
@@ -56,12 +56,19 @@ export const Login = () => {
   };
 
   const handleSubmit = useCallback(
-    (values: any) => {
-      const { user_email, user_password } = values;
-      console.log("login", user_email, user_password);
-      navigate(PATH.HOME);
+    (data: any) => {
+      requestLogin(data)
+        .then((res) => {
+          const { access_token } = res;
+          localStorage.setItem(LOCAL_STORAGE.AccessToken, access_token);
+          navigate(PATH.HOME);
+        })
+        .catch((error) => {
+          console.error(error);
+          showAlertError("Lỗi !", "Email hoặc mật khẩu không đúng");
+        });
     },
-    [navigate]
+    [navigate, requestLogin]
   );
 
   const changeDirectionToRegisterPage = useCallback(() => {
@@ -72,7 +79,7 @@ export const Login = () => {
     navigate(PATH.HOME);
   }, [navigate]);
 
-  const methods = useForm<LoginProps>({
+  const methods = useForm<IAuth>({
     defaultValues: defaultValuesLogin,
   });
 
@@ -111,7 +118,7 @@ export const Login = () => {
               </Grid>
               <Grid item xs={12} textAlign={"center"} marginTop={"48px"}>
                 <InputTextField
-                  name={"user_email"}
+                  name={"email"}
                   label="Email"
                   variant="standard"
                   fullWidth
@@ -131,7 +138,7 @@ export const Login = () => {
               </Grid>
               <Grid item xs={12} textAlign={"center"} marginTop={"38px"}>
                 <InputTextField
-                  name={"user_password"}
+                  name={"password"}
                   label="Mật khẩu"
                   variant="standard"
                   fullWidth

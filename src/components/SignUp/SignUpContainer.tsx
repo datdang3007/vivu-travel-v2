@@ -5,65 +5,47 @@ import {
   Container,
   Grid,
   Typography,
-  useTheme,
+  styled,
 } from "@mui/material";
-import { styled } from "@mui/system";
-import { FormProvider, useForm } from "react-hook-form";
-import { useCallback } from "react";
-// import { useNavigateSearch } from "../../../hooks";
-import { useNavigate } from "react-router-dom";
-import { InputTextField } from "../Form";
-import { LOGO_BRAND } from "../../constants/img_common";
-import { PATH } from "../../routes/path";
+import { useCallback, useMemo } from "react";
+import { FormProvider } from "react-hook-form";
+import { FORM_SIGN_UP_TYPE } from "src/constants";
+import { LOGO_BRAND } from "src/constants/img_common";
+import { useAuthSignUpContext } from "src/provider/register.provider";
+import { InputEmail } from "./InputEmail";
+import { InputPassword } from "./InputPassword";
+import { InputProfile } from "./InputProfile";
 
-interface InputProfileProps {
-  userEmail: string;
-  userPassword: string;
-}
+export const SignUpContainer = () => {
+  const {
+    theme,
+    onSubmit,
+    formType,
+    formSignUp,
+    changeDirectionToHome,
+    changeDirectionToLoginPage,
+  } = useAuthSignUpContext();
 
-interface ProfileProps {
-  Image: string;
-  userName: string;
-}
+  const submitLabel = useMemo(() => {
+    if (formType !== FORM_SIGN_UP_TYPE.USERNAME) {
+      return "Tiếp tục";
+    }
+    return "Đăng ký";
+  }, [formType]);
 
-export const InputProfile = ({
-  userEmail,
-  userPassword,
-}: InputProfileProps) => {
-  const theme = useTheme();
-  const navigate = useNavigate();
-  const methods = useForm<ProfileProps>({
-    defaultValues: {
-      Image: "",
-      userName: "",
-    },
-  });
-
-  const onSubmit = methods.handleSubmit(
-    useCallback(
-      (values: any) => {
-        const { Image, user_name } = values;
-        console.log("profile", Image, user_name);
-
-        const data = { user_email: userEmail, user_password: userPassword };
-        const JsonData = JSON.stringify(data);
-        localStorage.setItem("RegisterInfo", JsonData);
-        navigate("/login");
-      },
-      [navigate, userEmail, userPassword]
-    )
-  );
-
-  const changeDirectionToLoginPage = useCallback(() => {
-    navigate(PATH.LOGIN);
-  }, [navigate]);
-
-  const changeDirectionToHome = useCallback(() => {
-    navigate(PATH.HOME);
-  }, [navigate]);
+  const renderFormComponent = useCallback(() => {
+    switch (formType) {
+      case FORM_SIGN_UP_TYPE.EMAIL:
+        return <InputEmail />;
+      case FORM_SIGN_UP_TYPE.PASSWORD:
+        return <InputPassword />;
+      case FORM_SIGN_UP_TYPE.USERNAME:
+        return <InputProfile />;
+    }
+  }, [formType]);
 
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...formSignUp}>
       <Container maxWidth="xs" component={"form"} onSubmit={onSubmit}>
         <Body>
           <CardForm
@@ -76,7 +58,7 @@ export const InputProfile = ({
           >
             <Grid container>
               <Grid item xs={12} textAlign={"center"} marginTop={"20px"}>
-                <Typography variant="tB30">Đăng Ký</Typography>
+                <Typography variant="tB30">Đăng Nhập</Typography>
               </Grid>
               <Grid
                 item
@@ -91,33 +73,15 @@ export const InputProfile = ({
                   </BoxLogo>
                 </Grid>
               </Grid>
-              <Grid item xs={12} textAlign={"center"} marginTop={"48px"}>
-                <InputTextField
-                  name={"user_name"}
-                  label="Tên người dùng"
-                  variant="standard"
-                  fullWidth
-                  InputProps={{
-                    sx: {
-                      padding: "4px 8px",
-                    },
-                  }}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: "Tên người dùng không được để trống",
-                    },
-                  }}
-                />
+              {renderFormComponent()}
+              <Grid item xs={12} textAlign={"center"} marginTop={"50px"}>
+                <LoginButton fullWidth type="submit" variant="contained">
+                  <Typography variant="tR14" color={theme.palette.common.white}>
+                    {submitLabel}
+                  </Typography>
+                </LoginButton>
               </Grid>
 
-              <Grid item xs={12} textAlign={"center"} marginTop={"50px"}>
-                <RegisterButton type="submit" variant="contained" fullWidth>
-                  <Typography variant="tR14" color={theme.palette.common.white}>
-                    Đăng Ký
-                  </Typography>
-                </RegisterButton>
-              </Grid>
               <Grid
                 item
                 container
@@ -167,14 +131,15 @@ const BoxLogo = styled(Box)({
   },
 });
 
-const RegisterButton = styled(Button)(({ theme }) => ({
+const LoginButton = styled(Button)(({ theme }) => ({
+  color: "#FFF",
   position: "relative",
   height: "50px",
   borderRadius: "40px",
   background: theme.palette.primary.main,
   overflow: "hidden",
   "&:hover": {
-    background: `${theme.palette.primary.light} !important`,
+    background: theme.palette.primary.light,
     "&::before": {
       left: "120%",
       transform: "translateY(-50%)",

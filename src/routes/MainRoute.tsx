@@ -15,7 +15,7 @@ import {
 } from "src/pages";
 import ScrollToTop from "src/components/ScrollToTop";
 
-const protectedRoute: RouteObject = {
+export const publicRoute: RouteObject = {
   element: <MainLayout />,
   children: [
     {
@@ -34,11 +34,11 @@ const protectedRoute: RouteObject = {
           element: <Territory />,
         },
         {
-          path: PATH.PROVINCE,
+          path: `${PATH.PROVINCE}/:id`,
           element: <Province />,
         },
         {
-          path: PATH.PLACE,
+          path: `${PATH.PLACE}/:id`,
           element: <Place />,
         },
         {
@@ -49,6 +49,17 @@ const protectedRoute: RouteObject = {
           path: PATH.POST_DETAIL,
           element: <PostDetail />,
         },
+      ],
+    },
+  ],
+};
+
+export const protectedRoute: RouteObject = {
+  element: <MainLayout />,
+  children: [
+    {
+      element: <ScrollToTop />,
+      children: [
         {
           path: PATH.POST_DETAIL_PREVIEW,
           element: <PostDetailPreview />,
@@ -65,5 +76,3 @@ const protectedRoute: RouteObject = {
     },
   ],
 };
-
-export default protectedRoute;

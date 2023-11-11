@@ -2,6 +2,12 @@ import { MenuItem } from "@mui/material";
 import { useCallback, useMemo } from "react";
 import { useMutation, useQuery } from "react-query";
 import {
+  authLogin,
+  authSignUp,
+  checkExistEmail,
+  getUserProfile,
+} from "src/apis/auth.api";
+import {
   getPlaceCategoryList,
   updatePlaceCategory,
 } from "src/apis/place-category.api";
@@ -37,6 +43,45 @@ import {
   getTerritoryList,
   updateTerritory,
 } from "src/apis/territory.api";
+
+// Hook call API auth:
+export const useCallAPIAuth = () => {
+  const { mutateAsync: requestLogin, isLoading: loadingForLogin } = useMutation(
+    {
+      mutationFn: authLogin,
+    }
+  );
+
+  const { mutateAsync: requestSignUp, isLoading: loadingForSignUp } =
+    useMutation({
+      mutationFn: authSignUp,
+    });
+
+  const {
+    mutateAsync: requestCheckExistEmail,
+    isLoading: loadingForCheckExistEmail,
+  } = useMutation({
+    mutationFn: checkExistEmail,
+  });
+
+  const {
+    mutateAsync: requestGetUserProfile,
+    isLoading: loadingForGetUserProfile,
+  } = useMutation({
+    mutationFn: getUserProfile,
+  });
+
+  return {
+    requestLogin,
+    loadingForLogin,
+    requestSignUp,
+    loadingForSignUp,
+    requestCheckExistEmail,
+    loadingForCheckExistEmail,
+    requestGetUserProfile,
+    loadingForGetUserProfile,
+  };
+};
 
 // Hook call API list:
 export const useCallApiList = () => {

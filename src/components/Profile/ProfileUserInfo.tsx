@@ -9,8 +9,13 @@ import {
 } from "@mui/material";
 import { POST_TAG_TYPE } from "src/constants";
 import { COLOR_PALLETTE, COLOR_POST_TAGS } from "src/constants/color";
+import { useMasterContext } from "src/context/MasterContext";
 
 export const ProfileUserInfo = () => {
+  const { user } = useMasterContext();
+
+  if (!user) return null;
+  const { avatar = "", username, description = "", like } = user;
   return (
     <Grid
       item
@@ -31,12 +36,19 @@ export const ProfileUserInfo = () => {
         sm={3.5}
       >
         <Avatar
-          alt={"Felix Rostig"}
-          src={
-            "https://images.unsplash.com/profile-1540579635791-e37072eb85c1?dpr=1&auto=format&fit=crop&w=150&h=150&q=60&crop=faces&bg=fff"
-          }
-          sx={{ width: 150, height: 150 }}
-        />
+          alt={username}
+          src={avatar}
+          sx={{
+            width: 150,
+            height: 150,
+            fontSize: 60,
+            fontWeight: "bold",
+            background: COLOR_PALLETTE.PRIMARY,
+            color: COLOR_PALLETTE.WHITE,
+          }}
+        >
+          {avatar ?? username.split("")[0].toLocaleUpperCase()}
+        </Avatar>
       </Grid>
       <Grid
         item
@@ -52,7 +64,7 @@ export const ProfileUserInfo = () => {
           justifyContent={{ xs: "center", sm: "flex-start" }}
         >
           <Typography fontSize={{ xs: "40px" }} fontWeight={"bold"}>
-            Felix Rostig
+            {username}
           </Typography>
         </Grid>
         <Grid
@@ -66,16 +78,13 @@ export const ProfileUserInfo = () => {
             fontSize={{ xs: "16px" }}
             textAlign={{ xs: "center", sm: "left" }}
           >
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            {description ?? "Mô tả.."}
           </Typography>
         </Grid>
         <Grid item container xs={12} mt={"16px"} rowGap={"10px"}>
           <IconInfo item container xs={12}>
             <Favorite sx={{ mr: "6px", color: "#FF7E9B" }} />
-            <Typography fontSize={{ xs: "16px" }}>2.054</Typography>
+            <Typography fontSize={{ xs: "16px" }}>{like}</Typography>
           </IconInfo>
           <IconInfo item container xs={12}>
             <Place sx={{ mr: "6px", color: "#f35d78" }} />

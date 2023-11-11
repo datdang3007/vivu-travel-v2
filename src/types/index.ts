@@ -1,5 +1,13 @@
 import { ReactNode } from "react";
 import { ListOptionItemProps } from "./Ui";
+import { IAuthUser } from "src/interfaces";
+
+export interface OptionProps {
+  id: number | string;
+  label: string;
+  hasDivider?: boolean;
+  event?: () => void;
+}
 
 export interface ListOptionProps {
   Left: ListOptionItemProps[];
@@ -7,7 +15,12 @@ export interface ListOptionProps {
 }
 
 export interface HeaderProps {
+  user: IAuthUser | null;
   isMenu: boolean;
+}
+
+export interface HeaderUserProfileProps {
+  user: IAuthUser;
 }
 
 export interface searchProps {
@@ -81,11 +94,12 @@ export interface ContentOverviewProps {
 }
 
 export interface ContentDetailProps {
-  image: string;
+  type: number;
   content: string;
 }
 
 export interface CardRecommendProps {
+  id: number | string;
   title: string;
   rate: number;
   content: string;

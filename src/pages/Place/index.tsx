@@ -1,61 +1,74 @@
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import { Grid, styled } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   BlogContent,
   ContentDetail,
   ContentOverview,
-  GroupCardRecommend,
+  GroupPlaceRecommend,
+  GroupServiceRecommend,
   ImageStock,
   RatingAndComment,
 } from "src/components/BlogContent";
-import { useCallback } from "react";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import { BreadCrumbProps } from "src/types";
 import { COMPONENT_SIZE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
 import { useMasterContext } from "src/context/MasterContext";
-
-const ContentOverviewValue = {
-  title: "Núi Fansipan",
-  image: "https://meditours.vn/Uploaded/Users/tuyenlm/images/1709/fansipan.png",
-  content: `
-    Phan Xi Păng là ngọn núi cao nhất Việt Nam, nằm trong dãy Hoàng Liên Sơn ở vùng Tây Bắc của Tổ quốc. Đỉnh của nó nằm ở độ cao ấn tượng 3.143 mét (10.312 feet) so với mực nước biển, khiến nơi đây trở thành điểm đến phổ biến cho những người thích phiêu lưu và đi bộ đường dài.Fansipan thường được mệnh danh là “Nóc nhà Đông Dương” bởi đây là điểm cao nhất không chỉ của Việt Nam mà còn của các nước láng giềng Lào và Campuchia. Ngọn núi được bao quanh bởi những khu rừng tươi tốt và có tầm nhìn ngoạn mục ra những cảnh quan xung quanh.
-  `,
-};
-
-const ContentDetailValue = {
-  image:
-    "https://top-10.vn/wp-content/uploads/2021/07/01-Fansipan-3-1024x576.jpg",
-  content: `
-    Fansipan cũng đã trở thành một điểm đến du lịch nổi tiếng trong những năm gần đây, với sự phát triển của hệ thống cáp treo Fansipan Legend mang đến cho du khách một chuyến đi ngắm cảnh lên đỉnh. Ở trên đỉnh, du khách có thể thưởng thức cảnh quan tuyệt đẹp, khám phá nhiều ngôi đền và đền thờ khác nhau và chụp ảnh tại điểm đánh dấu của đỉnh. Nhìn chung, Fansipan là điểm đến không thể bỏ qua của những người yêu thiên nhiên, ưa mạo hiểm và những ai muốn khám phá vẻ đẹp và sự đa dạng của các danh lam thắng cảnh Việt Nam.
-  `,
-};
+import { useCallAPIFind } from "src/hooks";
+import { IPlace } from "src/interfaces";
+import { PATH } from "src/routes/path";
+import { BreadCrumbProps } from "src/types";
+import { GetIdParams } from "src/utils/common";
 
 export const Place = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { isTabletMini } = useMasterContext();
+  const placeID = GetIdParams(location.pathname);
+  const [data, setData] = useState<IPlace | null>(null);
+  const { requestFindPlaceByID } = useCallAPIFind();
 
-  const ChangeNavigate = useCallback(() => {
-    console.log("change navigate");
-  }, []);
+  const ChangeNavigate = useCallback(
+    (pathname: string) => {
+      navigate(pathname);
+    },
+    [navigate]
+  );
 
   const HeaderBreadCrumbList = [
     {
       icon: <HomeOutlinedIcon sx={{ fontSize: "21px" }} />,
-      title: "Home",
-      onClick: () => ChangeNavigate(),
+      title: "Trang Chủ",
+      onClick: () => ChangeNavigate(PATH.HOME),
     },
     {
-      title: "Region",
-      onClick: () => ChangeNavigate(),
+      title: data?.region.name,
+      onClick: () => ChangeNavigate(`${PATH.REGION}/${data?.region.id}`),
     },
     {
-      title: "Territory",
-      onClick: () => ChangeNavigate(),
+      title: data?.territory.name,
+      onClick: () => ChangeNavigate(`${PATH.TERRITORY}/${data?.territory.id}`),
     },
     {
-      title: "Province",
-      onClick: () => ChangeNavigate(),
+      title: data?.province.name,
+      onClick: () => ChangeNavigate(`${PATH.PROVINCE}/${data?.territory.id}`),
     },
   ] as BreadCrumbProps[];
+
+  const renderContentComponent = useCallback(() => {
+    return data?.contents?.map((val) => {
+      const { id, type, content } = val;
+      return <ContentDetail key={id} type={type} content={content} />;
+    });
+  }, [data]);
+
+  useEffect(() => {
+    requestFindPlaceByID(placeID).then((result) => {
+      setData(result);
+    });
+  }, [placeID, requestFindPlaceByID]);
+
+  if (!data) return null;
 
   return (
     <Grid container>
@@ -82,14 +95,11 @@ export const Place = () => {
               <BlogContent HeaderBreadCrumbList={HeaderBreadCrumbList}>
                 <Grid item xs={12}>
                   <ContentOverview
-                    title={ContentOverviewValue.title}
-                    image={ContentOverviewValue.image}
-                    content={ContentOverviewValue.content}
+                    title={data.name}
+                    image={data.image}
+                    content={data.overview}
                   />
-                  <ContentDetail
-                    image={ContentDetailValue.image}
-                    content={ContentDetailValue.content}
-                  />
+                  {renderContentComponent()}
                   <RatingAndComment />
                 </Grid>
               </BlogContent>
@@ -102,7 +112,7 @@ export const Place = () => {
               md={4}
             >
               <Grid item xs={12} sm={5.8} md={12} mt={{ xs: "40px", md: "0" }}>
-                <GroupCardRecommend />
+                <GroupPlaceRecommend />
               </Grid>
               <Grid
                 item
@@ -111,7 +121,7 @@ export const Place = () => {
                 md={12}
                 mt={{ xs: "40px", md: "20px" }}
               >
-                <GroupCardRecommend />
+                <GroupServiceRecommend />
               </Grid>
             </Grid>
           </Grid>

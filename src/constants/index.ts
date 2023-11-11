@@ -49,3 +49,14 @@ export enum POST_CATEGORY_TYPE {
 export enum LOCAL_STORAGE_TYPE {
   POST_DATA = "post-data",
 }
+
+export enum FORM_SIGN_UP_TYPE {
+  EMAIL = "email",
+  PASSWORD = "password",
+  USERNAME = "username",
+}
+
+export enum PLACE_CONTENT_TYPE {
+  IMAGE = 1,
+  TEXT = 2,
+}

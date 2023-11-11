@@ -9,12 +9,15 @@ export const GroupCardProvince = (props: GroupCardProvinceProps) => {
   const navigate = useNavigate();
   const { listProvince } = props;
 
-  const onClick = useCallback(() => {
-    navigate(PATH.PROVINCE);
-  }, [navigate]);
+  const handleNavigateToDetailPage = useCallback(
+    (id: string | number) => {
+      navigate(`${PATH.PROVINCE}/${id}`);
+    },
+    [navigate]
+  );
 
   const renderListCardInfo = useCallback(() => {
-    return listProvince.map((val, index) => (
+    return listProvince.map((val) => (
       <CardInfoAction
         key={val.id}
         xs={12}
@@ -29,13 +32,13 @@ export const GroupCardProvince = (props: GroupCardProvinceProps) => {
         boxSxProp={{
           height: { xs: "200px", sm: "240px", md: "200px", lg: "240px" },
         }}
-        onClick={onClick}
+        onClick={() => handleNavigateToDetailPage(val.id)}
         isCursorPointer
         title={val.title}
         src={val.src}
       />
     ));
-  }, [listProvince, onClick]);
+  }, [handleNavigateToDetailPage, listProvince]);
 
   return (
     <Grid item container alignItems={"center"} xs={12}>

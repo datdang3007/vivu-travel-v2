@@ -1,6 +1,5 @@
-import { Breadcrumbs, Grid, Typography, styled } from "@mui/material";
+import { Breadcrumbs, Grid, Typography, Link, styled } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { Link } from "react-router-dom";
 import { useCallback } from "react";
 import { BreadCrumbComponentProps } from "../../types";
 import { COLOR_PALLETTE } from "../../constants/color";
@@ -10,8 +9,8 @@ export const BreadCrumb = (props: BreadCrumbComponentProps) => {
 
   const breadCrumbs = useCallback(
     () =>
-      list.map((val, index) => (
-        <ItemLink key={val.title} to="#" onClick={val.onClick}>
+      list.map((val) => (
+        <ItemLink key={val.title} onClick={val.onClick}>
           <Grid item container xs="auto">
             {val.icon}
             <Typography>{val.title}</Typography>
@@ -39,6 +38,7 @@ export const BreadCrumb = (props: BreadCrumbComponentProps) => {
 };
 
 const ItemLink = styled(Link)({
+  cursor: "pointer",
   textDecoration: "none",
   color: COLOR_PALLETTE.DARK_GRAY,
   fontSize: "14px",

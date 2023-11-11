@@ -1,5 +1,10 @@
 import { Box, Container, Grid, styled, useTheme } from "@mui/material";
-import { HeaderMenuNavbar, HeaderMenuOption, HeaderMenuSearch } from "../../ui";
+import {
+  HeaderMenuNavbar,
+  HeaderMenuOption,
+  HeaderMenuSearch,
+  HeaderUserProfile,
+} from "../../ui";
 import {
   BUTTON_VARIANT,
   HEADER_LIST_OPTION,
@@ -18,7 +23,7 @@ export const Header = (props: HeaderProps) => {
   const theme = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
-  const { isMenu } = props;
+  const { isMenu, user } = props;
 
   const isTransitionButton = useMemo(
     () => listTransitionButtonComponent.includes(location.pathname),
@@ -143,10 +148,14 @@ export const Header = (props: HeaderProps) => {
                 <HeaderMenuSearch />
               </Grid>
               <Grid item lg={3.5}>
-                <HeaderMenuOption
-                  position={STYLE_POSITION.RIGHT}
-                  listOption={ListOption[HEADER_LIST_OPTION.RIGHT]}
-                />
+                {user ? (
+                  <HeaderUserProfile user={user} />
+                ) : (
+                  <HeaderMenuOption
+                    position={STYLE_POSITION.RIGHT}
+                    listOption={ListOption[HEADER_LIST_OPTION.RIGHT]}
+                  />
+                )}
               </Grid>
             </Grid>
           </Container>
