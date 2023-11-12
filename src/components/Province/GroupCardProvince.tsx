@@ -17,7 +17,7 @@ export const GroupCardProvince = (props: GroupCardProvinceProps) => {
   );
 
   const renderListCardInfo = useCallback(() => {
-    return listProvince.map((val) => (
+    return listProvince?.map((val) => (
       <CardInfoAction
         key={val.id}
         xs={12}

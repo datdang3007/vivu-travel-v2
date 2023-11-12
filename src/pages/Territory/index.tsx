@@ -28,7 +28,7 @@ export const Territory = () => {
 
   const convertProvinceList: CardProvinceProps[] = useMemo(() => {
     if (!data) return [];
-    return data.provinceList.map((province) => {
+    return data?.provinceList?.map((province) => {
       const { id, name, image } = province;
       return { id, title: name, src: image };
     });

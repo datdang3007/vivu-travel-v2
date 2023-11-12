@@ -33,7 +33,7 @@ export const Region = () => {
 
   const convertTerritoryList: CardTerritoryProps[] = useMemo(() => {
     if (!data) return [];
-    return data.territoryList.map((territory) => {
+    return data?.territoryList?.map((territory) => {
       const {
         id,
         name,
@@ -52,7 +52,7 @@ export const Region = () => {
 
   const convertProvinceList: CardProvinceProps[] = useMemo(() => {
     if (!data) return [];
-    return data.provinceList.map((province) => {
+    return data?.provinceList?.map((province) => {
       const { id, name, image } = province;
       return { id, title: name, src: image };
     });

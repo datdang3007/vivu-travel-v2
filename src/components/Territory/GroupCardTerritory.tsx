@@ -17,7 +17,7 @@ export const GroupCardTerritory = (props: GroupCardTerritoryProps) => {
   );
 
   const renderListCardInfo = useCallback(() => {
-    return listTerritory.map((val) => (
+    return listTerritory?.map((val) => (
       <CardInfoAction
         key={val.id}
         xs={12}
