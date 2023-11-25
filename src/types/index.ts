@@ -53,6 +53,7 @@ export interface GroupCardCountryInfoProps {
 
 export interface GroupCardTerritoryProps {
   listTerritory: CardTerritoryProps[];
+  loading?: boolean;
 }
 
 export interface CardTerritoryProps {

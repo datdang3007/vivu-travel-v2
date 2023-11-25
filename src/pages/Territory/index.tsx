@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import { useCallAPIFind } from "src/hooks";
 import { useEffect, useMemo, useState } from "react";
 import { ITerritory } from "src/interfaces";
+import { BaseSkeleton } from "src/skeleton";
 
 export const Territory = () => {
   const location = useLocation();
@@ -40,8 +41,7 @@ export const Territory = () => {
     });
   }, [requestFindTerritoryByID, territoryID]);
 
-  if (!data) return null;
-
+  if (!data) return <BaseSkeleton />;
   return (
     <Grid item xs={12} mb={100}>
       <BackgroundContent

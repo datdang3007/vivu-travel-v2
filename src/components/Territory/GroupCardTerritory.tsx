@@ -4,10 +4,11 @@ import { GroupCardTerritoryProps } from "../../types";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "src/routes/path";
+import { CardActionSkeleton } from "src/skeleton";
 
 export const GroupCardTerritory = (props: GroupCardTerritoryProps) => {
   const navigate = useNavigate();
-  const { listTerritory } = props;
+  const { listTerritory, loading } = props;
 
   const handleChangeToDetailPage = useCallback(
     (id: string | number) => {
@@ -39,7 +40,56 @@ export const GroupCardTerritory = (props: GroupCardTerritoryProps) => {
 
   return (
     <Grid item container alignItems={"center"} xs={12}>
-      {renderListCardInfo()}
+      {loading ? (
+        <>
+          <CardActionSkeleton
+            hasSubTitle
+            xs={12}
+            sm={6}
+            lg={4}
+            xl={3}
+            padding={{
+              xs: "20px",
+              xl: "10px",
+            }}
+          />
+          <CardActionSkeleton
+            hasSubTitle
+            xs={12}
+            sm={6}
+            lg={4}
+            xl={3}
+            padding={{
+              xs: "20px",
+              xl: "10px",
+            }}
+          />
+          <CardActionSkeleton
+            hasSubTitle
+            xs={12}
+            sm={6}
+            lg={4}
+            xl={3}
+            padding={{
+              xs: "20px",
+              xl: "10px",
+            }}
+          />
+          <CardActionSkeleton
+            hasSubTitle
+            xs={12}
+            sm={6}
+            lg={4}
+            xl={3}
+            padding={{
+              xs: "20px",
+              xl: "10px",
+            }}
+          />
+        </>
+      ) : (
+        renderListCardInfo()
+      )}
     </Grid>
   );
 };

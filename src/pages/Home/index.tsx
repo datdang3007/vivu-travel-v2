@@ -39,7 +39,7 @@ const ListCountryInfo = [
 ] as CountryInfoProps[];
 
 export const Home = () => {
-  const { territoryList } = useCallApiList();
+  const { territoryList, loadingTerritoryList } = useCallApiList();
 
   const convertTerritoryList: CardTerritoryProps[] = useMemo(() => {
     return territoryList.map((territory) => {
@@ -124,7 +124,10 @@ export const Home = () => {
             mt="60px"
             mb="40px"
           >
-            <GroupCardTerritory listTerritory={convertTerritoryList} />
+            <GroupCardTerritory
+              listTerritory={convertTerritoryList}
+              loading={loadingTerritoryList}
+            />
           </FormTitle>
         </Grid>
       </Grid>

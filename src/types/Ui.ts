@@ -55,6 +55,12 @@ export interface CardInfoActionProps {
   onClick?: () => void;
 }
 
+export interface CardInfoActionSkeletonProps {
+  isTitleCenter?: boolean;
+  hasSubTitle?: boolean;
+  boxSxProp?: SxProps;
+}
+
 export interface CardTravelTellerProps {
   name: string;
   avatar?: string;

@@ -17,6 +17,7 @@ import { useLocation } from "react-router-dom";
 import { GetIdParams } from "src/utils/common";
 import { useEffect, useMemo, useState } from "react";
 import { IRegion } from "src/interfaces";
+import { BaseSkeleton } from "src/skeleton";
 
 export const Region = () => {
   const location = useLocation();
@@ -64,8 +65,7 @@ export const Region = () => {
     });
   }, [regionID, requestFindRegionByID]);
 
-  if (!data) return null;
-
+  if (!data) return <BaseSkeleton />;
   return (
     <Grid item xs={12} mb={100}>
       <BackgroundContent

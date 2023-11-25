@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
 import { PATH } from "../../routes/path";
 import { useCallApiList } from "src/hooks";
+import { CardActionSkeleton } from "src/skeleton";
 
 export const GroupCardRegion = () => {
   const navigate = useNavigate();
-  const { regionList } = useCallApiList();
+  const { regionList, loadingRegionList } = useCallApiList();
 
   const handleNavigateToDetailPage = useCallback(
     (id: string | number) => {
@@ -39,7 +40,39 @@ export const GroupCardRegion = () => {
 
   return (
     <Grid item container alignItems={"center"} xs={12}>
-      {renderRegionCardComponent()}
+      {loadingRegionList ? (
+        <>
+          <CardActionSkeleton
+            isTitleCenter
+            xs={12}
+            lg={4}
+            padding={{
+              xs: "20px",
+              xl: "10px",
+            }}
+          />
+          <CardActionSkeleton
+            isTitleCenter
+            xs={12}
+            lg={4}
+            padding={{
+              xs: "20px",
+              xl: "10px",
+            }}
+          />
+          <CardActionSkeleton
+            isTitleCenter
+            xs={12}
+            lg={4}
+            padding={{
+              xs: "20px",
+              xl: "10px",
+            }}
+          />
+        </>
+      ) : (
+        renderRegionCardComponent()
+      )}
     </Grid>
   );
 };
