@@ -15,7 +15,12 @@ export const Posts = () => {
   });
 
   return (
-    <Grid container>
+    <Grid
+      container
+      sx={{
+        minHeight: "calc(100vh - 64px)",
+      }}
+    >
       <HeaderBackground
         item
         xs={12}

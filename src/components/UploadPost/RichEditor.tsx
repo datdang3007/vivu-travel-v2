@@ -1,17 +1,16 @@
 import { Button, Grid, TextField, Typography, styled } from "@mui/material";
-import { NewBox } from "./NewBox";
 import { useCallback, useMemo, useState } from "react";
-import { PostTitle } from "./PostTitle";
-import { PostDetail } from "./PostDetail";
-import { PostNote } from "./PostNote";
-import { PostImage } from "./PostImage";
-import { PostBackground } from "./PostBackground";
 import { useNavigate } from "react-router-dom";
-import { badWords } from "vn-badwords";
 import { LOCAL_STORAGE_TYPE, POST_CATEGORY_TYPE } from "src/constants";
-import { AlertError } from "src/utils/alert";
-import { PostDataProps } from "src/types/Post";
 import { PATH } from "src/routes/path";
+import { PostDataProps, PostProps } from "src/types/Post";
+import { AlertError } from "src/utils/alert";
+import { NewBox } from "./NewBox";
+import { PostBackground } from "./PostBackground";
+import { PostDetail } from "./PostDetail";
+import { PostImage } from "./PostImage";
+import { PostNote } from "./PostNote";
+import { PostTitle } from "./PostTitle";
 
 export const RichEditor = () => {
   const navigate = useNavigate();
@@ -91,23 +90,25 @@ export const RichEditor = () => {
   // Event when click button preview:
   const eventPreview = useCallback(() => {
     const isEmpty = !!postData.filter((val) => val.content === "").length;
-    const isHadBadWords = !!postData.filter((val) =>
-      badWords(val.content, { validate: true })
-    ).length;
+    // const isHadBadWords = !!postData.filter((val) =>
+    //   badWords(val.content, { validate: true })
+    // ).length;
 
     if (isEmpty || !linkBackground || postTitle === "")
       return AlertError({ text: "Các mục không được để trống" });
 
-    if (isHadBadWords || badWords(postTitle, { validate: true }))
-      return AlertError({ text: "Nội dung có từ ngữ không hợp lệ" });
+    // if (isHadBadWords || badWords(postTitle, { validate: true }))
+    //   return AlertError({ text: "Nội dung có từ ngữ không hợp lệ" });
+
+    const dataPost: PostProps = {
+      linkBackground: linkBackground,
+      postTitle,
+      postData,
+    };
 
     localStorage.setItem(
       LOCAL_STORAGE_TYPE.POST_DATA,
-      JSON.stringify({
-        linkBackground: linkBackground,
-        postTitle: postTitle,
-        postData: postData,
-      })
+      JSON.stringify(dataPost)
     );
 
     navigate(PATH.POST_DETAIL_PREVIEW);

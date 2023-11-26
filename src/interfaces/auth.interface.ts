@@ -2,6 +2,7 @@ export interface IUser {
   email: string;
   password: string;
   username: string;
+  avatar?: string;
 }
 
 export interface IAuthUser {

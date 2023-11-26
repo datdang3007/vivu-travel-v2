@@ -10,6 +10,12 @@ import {
 import { getPlaceCategoryList } from "src/apis/place-category.api";
 import { findPlaceImageByPlaceID } from "src/apis/place-image-stock.api";
 import { findPlaceByID, getPlaceList } from "src/apis/place.api";
+import {
+  createPost,
+  findPostByID,
+  findPostByStatus,
+  getPostList,
+} from "src/apis/post.api.";
 import { findProvinceByID, getProvinceList } from "src/apis/province.api";
 import { findRegionByID, getRegionList } from "src/apis/region.api";
 import { findTerritoryByID, getTerritoryList } from "src/apis/territory.api";
@@ -90,6 +96,13 @@ export const useCallApiList = () => {
     isLoading: loadingPlaceCategoryList,
   } = useQuery(["getPlaceCategoryList"], getPlaceCategoryList);
 
+  // Post
+  const {
+    data: postList = [],
+    refetch: refetchPostList,
+    isLoading: loadingPostList,
+  } = useQuery(["getPostList"], getPostList);
+
   return {
     regionList,
     loadingRegionList,
@@ -106,6 +119,9 @@ export const useCallApiList = () => {
     placeCategoryList,
     loadingPlaceCategoryList,
     refetchPlaceCategoryList,
+    postList,
+    refetchPostList,
+    loadingPostList,
   };
 };
 
@@ -147,6 +163,20 @@ export function useCallAPIFind() {
     mutationFn: findPlaceImageByPlaceID,
   });
 
+  // -- Post
+  const { mutateAsync: requestFindPostByID, isLoading: loadingFindPostByID } =
+    useMutation({
+      mutationFn: findPostByID,
+    });
+
+  const {
+    mutateAsync: requestFindPostByStatus,
+    isLoading: loadingFindPostByStatus,
+  } = useMutation({
+    mutationFn: findPostByStatus,
+  });
+  // -- End
+
   return {
     requestFindProvinceByID,
     loadingFindProvince,
@@ -158,8 +188,22 @@ export function useCallAPIFind() {
     loadingFindPlace,
     requestFindPlaceImageStockByPlaceID,
     loadingFindPlaceImageStockByPlaceID,
+    requestFindPostByID,
+    loadingFindPostByID,
+    requestFindPostByStatus,
+    loadingFindPostByStatus,
   };
 }
+
+// Hook call API create:
+export const useCallAPICreate = () => {
+  // Post
+  const { mutateAsync: requestCreatePost, isLoading: loadingCreatePost } =
+    useMutation({
+      mutationFn: createPost,
+    });
+  return { requestCreatePost, loadingCreatePost };
+};
 
 // Hook format select from API data:
 export const useSelectHook = (data: any[], value?: string, label?: string) => {
