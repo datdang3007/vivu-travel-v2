@@ -2,6 +2,11 @@ import { ReactNode } from "react";
 import { ListOptionItemProps } from "./Ui";
 import { IAuthUser } from "src/interfaces";
 
+export interface OptionLeftProps {
+  title: string;
+  event: () => void;
+}
+
 export interface OptionProps {
   id: number | string;
   label: string;

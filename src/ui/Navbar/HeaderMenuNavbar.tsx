@@ -1,3 +1,5 @@
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   AppBar,
   Box,
@@ -12,18 +14,19 @@ import {
   styled,
   useTheme,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import { useCallback, useMemo, useState } from "react";
-import { listMenuOptionProps } from "../../types/Ui";
-import { useNavigate } from "react-router-dom";
-import { PATH } from "../../routes/path";
-import { COLOR_PALLETTE } from "../../constants/color";
 import { HeaderSearch } from "src/components/Dialog";
+import { HEADER_OPTIONS } from "src/constants";
+import { COLOR_PALLETTE } from "../../constants/color";
+import { listMenuOptionProps } from "../../types/Ui";
 
-export const HeaderMenuNavbar = () => {
+type Props = {
+  onClickOption: (option: string) => void;
+};
+
+export const HeaderMenuNavbar = (props: Props) => {
   const theme = useTheme();
-  const navigate = useNavigate();
+  const { onClickOption } = props;
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const handleClick = () => {
@@ -40,25 +43,21 @@ export const HeaderMenuNavbar = () => {
     setShowSearch(false);
   };
 
-  const changeDirection = useCallback(
-    (path: string) => {
-      setShowSearch(false);
-      navigate(path);
-    },
-    [navigate]
-  );
-
-  const testEvent = useCallback(() => {}, []);
-
   const listOption = useMemo(
     () =>
       [
-        { label: "Miền", event: () => testEvent() },
-        { label: "Vùng", event: () => testEvent() },
-        { label: "Đăng nhập", event: () => changeDirection(PATH.LOGIN) },
-        { label: "Đăng ký", event: () => changeDirection(PATH.REGISTER) },
+        { label: "Trang chủ", event: () => onClickOption(HEADER_OPTIONS.HOME) },
+        { label: "Bài viết", event: () => onClickOption(HEADER_OPTIONS.HOME) },
+        {
+          label: "Đăng nhập",
+          event: () => onClickOption(HEADER_OPTIONS.LOGIN),
+        },
+        {
+          label: "Đăng ký",
+          event: () => onClickOption(HEADER_OPTIONS.REGISTER),
+        },
       ] as listMenuOptionProps[],
-    [changeDirection, testEvent]
+    [onClickOption]
   );
 
   const listOptionComponent = useCallback(

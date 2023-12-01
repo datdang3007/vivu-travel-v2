@@ -12,13 +12,14 @@ import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { COLOR_PALLETTE } from "src/constants/color";
 import { LOCAL_STORAGE } from "src/constants/local_storage";
+import { Role } from "src/constants/role";
 import { PATH } from "src/routes/path";
 import { HeaderUserProfileProps, OptionProps } from "src/types";
 
 export const HeaderUserProfile = (props: HeaderUserProfileProps) => {
   const { user } = props;
   const navigate = useNavigate();
-  const { username = "", avatar = "" } = user;
+  const { username = "", avatar = "", role = null } = user;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
 
@@ -38,13 +39,18 @@ export const HeaderUserProfile = (props: HeaderUserProfileProps) => {
   }, [navigate]);
 
   // Handle navigate to profile page:
+  const changeDirectionToUploadPost = useCallback(() => {
+    navigate(PATH.UPLOAD_POST);
+  }, [navigate]);
+
+  // Handle navigate to profile page:
   const changeDirectionToProfile = useCallback(() => {
     navigate(PATH.PROFILE);
   }, [navigate]);
 
   // Define options
   const menuOption: OptionProps[] = useMemo(() => {
-    return [
+    const options = [
       {
         id: 1,
         label: username,
@@ -61,7 +67,15 @@ export const HeaderUserProfile = (props: HeaderUserProfileProps) => {
         event: handleLogout,
       },
     ];
-  }, [changeDirectionToProfile, handleLogout, username]);
+    if (role === Role.Teller) {
+      options.splice(2, 0, {
+        id: 4,
+        label: "Đăng bài",
+        event: changeDirectionToUploadPost,
+      });
+    }
+    return options;
+  }, [changeDirectionToProfile, handleLogout, role, username]);
 
   // Render option component
   const renderMenuOption = useCallback(() => {

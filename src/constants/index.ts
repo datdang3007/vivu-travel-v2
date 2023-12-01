@@ -39,6 +39,16 @@ export enum POST_TAG_TYPE {
   HISTORY = "HISTORY",
 }
 
+export enum HEADER_OPTIONS {
+  SCROLL_TO_POST = "SCROLL_TO_POST",
+  TERRITORY = "TERRITORY",
+  REGION = "REGION",
+  POSTS = "POSTS",
+  HOME = "HOME",
+  LOGIN = "LOGIN",
+  REGISTER = "REGISTER",
+}
+
 export enum POST_CATEGORY_TYPE {
   TITLE = 1,
   DETAIL = 2,

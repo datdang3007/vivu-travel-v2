@@ -97,6 +97,7 @@ export const Home = () => {
           background: COLOR_PALLETTE.BG_GRAY,
         }}
       >
+        <div id="section-region"></div>
         <Grid item xs={12} sm={10} md={9.1}>
           <FormTitle
             container
@@ -114,6 +115,7 @@ export const Home = () => {
 
       {/* CARD TERRITORY */}
       <Grid item container justifyContent={"center"} xs={12} paddingBottom={60}>
+        <div id="section-territory"></div>
         <Grid item xs={12} sm={10} md={9.1}>
           <FormTitle
             container
@@ -158,6 +160,7 @@ export const Home = () => {
 
       {/* CARD POST */}
       <Grid item container justifyContent={"center"} xs={12} paddingBottom={60}>
+        <div id="section-posts"></div>
         <Grid item xs={12} sm={10} md={9.1}>
           <FormTitle
             container
