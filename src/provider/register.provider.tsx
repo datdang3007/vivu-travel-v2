@@ -51,6 +51,7 @@ export const AuthSignUpProvider = ({ children }: Props) => {
   const formSignUp = useForm<IAuthSignUp>({
     defaultValues: {
       email: "",
+      country: "",
       username: "",
       password: "",
       confirm_password: "",

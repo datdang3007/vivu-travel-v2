@@ -8,6 +8,7 @@ import { useCallAPIFind } from "src/hooks";
 import { IPost } from "src/interfaces/post.interface";
 import { PATH } from "src/routes/path";
 import { BoxImage } from "src/ui";
+import { FormatDate } from "src/utils/common";
 
 // const dataTemp = [
 //   {
@@ -97,31 +98,24 @@ export const GroupCardPost = () => {
   const [postData, setPostData] = useState<IPost[]>();
   const { requestFindPostByStatus } = useCallAPIFind();
 
-  const changeDirectionToPost = useCallback(() => {
-    navigate(PATH.POST_DETAIL);
-  }, [navigate]);
+  const changeDirectionToPost = useCallback(
+    (id?: string | number) => {
+      navigate(`${PATH.POST_DETAIL}/${id}`);
+    },
+    [navigate]
+  );
 
   const ListCardComponent = useCallback(() => {
     if (!postData || postData?.length === 0) return null;
     return postData.map((post) => {
       const { id, title, image, created_at, creator, contents } = post;
-      console.log(contents);
       const detail =
         contents?.find((content) => content.type === POST_CATEGORY_TYPE.DETAIL)
           ?.content ?? "";
       // const tagColor = COLOR_POST_TAGS[val.type];
       return (
         <Grid key={id} item xs={12} sm={6} lg={4} xl={3} padding={"10px"}>
-          <CardContainer onClick={changeDirectionToPost}>
-            {/* <BoxType sx={{ background: tagColor }}>
-                <Typography
-                  sx={{
-                    fontSize: "10px",
-                  }}
-                >
-                  {val.type}
-                </Typography>
-              </BoxType> */}
+          <CardContainer onClick={() => changeDirectionToPost(id)}>
             <Grid item xs={12}>
               <Box sx={{ width: "100%", aspectRatio: "3/2" }}>
                 <BoxImage src={image} />
@@ -149,7 +143,7 @@ export const GroupCardPost = () => {
                     sm: "14px",
                   }}
                 >
-                  {created_at}
+                  {FormatDate(created_at)}
                 </Typography>
               </GridOneLine>
               <GridThreeLine item xs={12} mt={"16px"}>
@@ -221,15 +215,6 @@ export const GroupCardPost = () => {
     </Grid>
   );
 };
-
-const BoxType = styled(Box)({
-  position: "absolute",
-  top: "5px",
-  left: "5px",
-  padding: "4px 8px",
-  borderRadius: "4px",
-  color: COLOR_PALLETTE.WHITE,
-});
 
 const CardContainer = styled(Card)({
   cursor: "pointer",

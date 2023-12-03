@@ -1,21 +1,26 @@
-import { Place, School, Favorite, MoreVert } from "@mui/icons-material";
+import { Favorite, MoreVert, Place } from "@mui/icons-material";
 import {
   Avatar,
-  Button,
   Grid,
   IconButton,
+  Tooltip,
   Typography,
   styled,
 } from "@mui/material";
-import { POST_TAG_TYPE } from "src/constants";
-import { COLOR_PALLETTE, COLOR_POST_TAGS } from "src/constants/color";
+import { useCallback, useState } from "react";
+import { COLOR_PALLETTE } from "src/constants/color";
 import { useMasterContext } from "src/context/MasterContext";
+import { DialogEditProfile } from "../Dialog";
 
 export const ProfileUserInfo = () => {
   const { user } = useMasterContext();
+  const [openDialogEdit, setOpenDialogEdit] = useState<boolean>(false);
+  const handleOpenDialogEdit = useCallback(() => setOpenDialogEdit(true), []);
+  const handleCloseDialogEdit = useCallback(() => setOpenDialogEdit(false), []);
 
   if (!user) return null;
-  const { avatar = "", username, description = "", like } = user;
+  const { avatar = "", username, country, description = "", like } = user;
+
   return (
     <Grid
       item
@@ -24,9 +29,11 @@ export const ProfileUserInfo = () => {
       position={"relative"}
       padding={{ xs: "40px 0 60px", sm: 0 }}
     >
-      <ButtonMenu>
-        <MoreVert />
-      </ButtonMenu>
+      <Tooltip title="Chỉnh sửa thông tin">
+        <ButtonMenu onClick={handleOpenDialogEdit}>
+          <MoreVert />
+        </ButtonMenu>
+      </Tooltip>
       <Grid
         item
         container
@@ -88,40 +95,15 @@ export const ProfileUserInfo = () => {
           </IconInfo>
           <IconInfo item container xs={12}>
             <Place sx={{ mr: "6px", color: "#f35d78" }} />
-            <Typography fontSize={{ xs: "16px" }}>Germany</Typography>
+            <Typography fontSize={{ xs: "16px" }}>{country}</Typography>
           </IconInfo>
-          <IconInfo item container xs={12}>
-            <School sx={{ mr: "6px", color: "#44c3e4" }} />
-            <Typography fontSize={{ xs: "16px" }}>
-              Ludwig Maximilian University of Munich
-            </Typography>
-          </IconInfo>
-        </Grid>
-        <Grid
-          item
-          container
-          xs={12}
-          mt={"24px"}
-          columnGap={"8px"}
-          rowGap={"8px"}
-        >
-          <ButtonType
-            sx={{
-              background: `${
-                COLOR_POST_TAGS[POST_TAG_TYPE.DISCOVER]
-              } !important`,
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "10px",
-              }}
-            >
-              {POST_TAG_TYPE.DISCOVER}
-            </Typography>
-          </ButtonType>
         </Grid>
       </Grid>
+      <DialogEditProfile
+        user={user}
+        open={openDialogEdit}
+        onClose={handleCloseDialogEdit}
+      />
     </Grid>
   );
 };
@@ -134,14 +116,4 @@ const ButtonMenu = styled(IconButton)({
 
 const IconInfo = styled(Grid)({
   color: COLOR_PALLETTE.DIM_GRAY,
-});
-
-const ButtonType = styled(Button)({
-  padding: "4px 8px",
-  borderRadius: "4px",
-  color: COLOR_PALLETTE.WHITE,
-  transition: "0.2s",
-  "&:hover": {
-    opacity: "0.7",
-  },
 });

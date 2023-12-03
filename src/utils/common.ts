@@ -1,3 +1,5 @@
+import { getAllCountries } from "./../apis/another.api";
+import dayjs, { Dayjs } from "dayjs";
 import { uploadImageToDiscord } from "src/apis/handle_image.api";
 
 export const UploadFileToDiscordWebhook = (file: any) => {
@@ -22,6 +24,43 @@ export const UploadFileToDiscordWebhook = (file: any) => {
   });
 };
 
+export const OptionsCountries = () => {
+  return new Promise((resolve) => {
+    getAllCountries()
+      .then((res) => {
+        const countryOptions = res.map((country: any) => {
+          const {
+            cca2,
+            name: { common: country_name },
+          } = country;
+          return {
+            code: cca2,
+            country_name,
+          };
+        });
+        resolve(countryOptions);
+      })
+      .catch((err) => {
+        resolve(null);
+      });
+  });
+};
+
+export const CheckIsImageUrl = async (url: string) => {
+  return new Promise((resolve) => {
+    var img = new Image();
+    img.src = url;
+
+    img.onload = function () {
+      resolve(true);
+    };
+
+    img.onerror = function () {
+      resolve(false);
+    };
+  });
+};
+
 // Get Id from param url:
 export const GetIdParams = (path: string) => {
   const splitPath = path.split("/");
@@ -39,4 +78,27 @@ export const WaitForImageToLoad = async (url: string) => {
       resolve(null);
     };
   });
+};
+
+// Hàm có chức năng lấy random <numElements> phần tử trong mảng <array>
+// numElements là số phần tử cần lấy
+export const getRandomElements = <T>(array: T[], numElements: number) => {
+  if (numElements >= array.length) {
+    return array;
+  }
+  const clonedArray = [...array];
+  const randomElements: T[] = [];
+  for (let i = 0; i < numElements; i++) {
+    const randomIndex = Math.floor(Math.random() * clonedArray.length);
+    randomElements.push(clonedArray.splice(randomIndex, 1)[0]);
+  }
+  return randomElements;
+};
+
+export const FormatDate = (date?: string | Dayjs | Date) => {
+  return date ? dayjs(date).format("DD/MM/YYYY") : "";
+};
+
+export const ToDayFormatDate = () => {
+  return dayjs().format("DD/MM/YYYY");
 };

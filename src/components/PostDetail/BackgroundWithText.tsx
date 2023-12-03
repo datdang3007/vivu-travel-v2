@@ -1,8 +1,18 @@
 import { Box, Grid, Typography, styled } from "@mui/material";
+import { Dayjs } from "dayjs";
 import { COLOR_PALLETTE } from "src/constants/color";
 import { BoxImage } from "src/ui";
+import { FormatDate } from "src/utils/common";
 
-export const BackgroundWithText = () => {
+type Props = {
+  image: string;
+  title: string;
+  date?: string | Dayjs | Date;
+};
+
+export const BackgroundWithText = (props: Props) => {
+  const { image, title, date } = props;
+
   return (
     <Grid item xs={12} position={"relative"}>
       <ImageContainer>
@@ -17,7 +27,7 @@ export const BackgroundWithText = () => {
             },
           }}
         >
-          <BoxImage src="https://assets.website-files.com/5ed4430d97a20a41629058ab/5ed463e64b317b48197e2448_annie-spratt-cVEOh_JJmEE-unsplash.jpg" />
+          <BoxImage src={image} />
         </Box>
       </ImageContainer>
       <TitleContainer>
@@ -31,7 +41,7 @@ export const BackgroundWithText = () => {
               lg: "40px",
             }}
           >
-            Lorem 01
+            {title}
           </Typography>
         </Grid>
         <Grid item container justifyContent={"center"}>
@@ -40,7 +50,7 @@ export const BackgroundWithText = () => {
             fontWeight="bold"
             fontSize={"16px"}
           >
-            09/10/2023
+            {FormatDate(date)}
           </Typography>
         </Grid>
       </TitleContainer>

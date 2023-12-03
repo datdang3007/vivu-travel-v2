@@ -1,9 +1,19 @@
 import { Grid } from "@mui/material";
 import { InputTextField } from "../Form";
+import { useSelectCountryHook } from "src/hooks";
 
 export const InputProfile = () => {
+  const { SelectField: CountryOptionsComponent } = useSelectCountryHook();
+
   return (
-    <Grid item xs={12} textAlign={"center"} marginTop={"48px"}>
+    <Grid
+      container
+      item
+      xs={12}
+      textAlign={"center"}
+      marginTop={"48px"}
+      rowGap={"18px"}
+    >
       <InputTextField
         name={"username"}
         label="Tên người dùng"
@@ -21,6 +31,18 @@ export const InputProfile = () => {
           },
         }}
       />
+      <InputTextField
+        name="country"
+        fullWidth
+        select
+        variant="standard"
+        label="Quốc gia"
+        rules={{
+          required: "Quốc gia không được để trống",
+        }}
+      >
+        {CountryOptionsComponent()}
+      </InputTextField>
     </Grid>
   );
 };

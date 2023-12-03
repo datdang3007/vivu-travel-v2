@@ -1,22 +1,55 @@
 import { Grid, Typography, styled } from "@mui/material";
+import { useCallback } from "react";
+import { POST_CATEGORY_TYPE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
+import { IUser } from "src/interfaces";
+import { ContentDataProps } from "src/types";
 import { CardTravelTeller } from "src/ui";
 
-const userData = {
-  name: "Reviewer 01",
-  from: "Ho Chi Minh, Viet Nam",
-  avatar:
-    "https://assets.website-files.com/5ed4430d97a20a41629058ab/5ed47e09c6c9789e41e50f94_brooke-cagle-Nm70URdtf3c-unsplash.jpg",
+type Props = {
+  creator: IUser | undefined;
+  contents: ContentDataProps[] | undefined;
 };
 
-export const PostContent = () => {
+export const PostContent = (props: Props) => {
+  const { creator, contents } = props;
+
+  // Switch case post detail component:
+  const newPostDetailComponent = useCallback(
+    (type: number, content: string) => {
+      switch (type) {
+        case POST_CATEGORY_TYPE.TITLE:
+          return <TitleText>{content}</TitleText>;
+        case POST_CATEGORY_TYPE.DETAIL:
+          return <BasicText>{content}</BasicText>;
+        default:
+          return content;
+      }
+    },
+    []
+  );
+
+  // Render post detail component:
+  const renderPostDetailComponent = useCallback(() => {
+    return contents?.map((val) => {
+      const { id, type, content } = val;
+      const component = newPostDetailComponent(type, content);
+
+      return (
+        <Grid key={id} item xs={12}>
+          {component}
+        </Grid>
+      );
+    });
+  }, [contents, newPostDetailComponent]);
+
   return (
     <PaperContainer item container justifyContent={"center"} xs={10} sm={11}>
       <Grid item xs={12}>
         <CardTravelTeller
-          name={userData.name}
-          avatar={userData.avatar}
-          from={userData.from}
+          name={creator?.username ?? ""}
+          avatar={creator?.avatar}
+          from={""}
           sx={{
             background: "#FAFAFA",
             border: "none",
@@ -30,33 +63,7 @@ export const PostContent = () => {
         />
       </Grid>
       <ContentContainer item xs={12}>
-        <Grid item xs={12}>
-          <TitleText>Iure dolorem cumque quae eius.</TitleText>
-        </Grid>
-        <Grid item xs={12}>
-          <BasicText>
-            Consequatur quae molestias itaque totam optio tenetur. Sint ex sed.
-            Et similique in aut iste quibusdam unde. Laboriosam et fugit natus
-            quaerat libero aspernatur et consequatur. Rem ea a omnis voluptatem
-            est ut.
-          </BasicText>
-        </Grid>
-        <Grid item xs={12}>
-          <TitleText>
-            Alias molestiae non velit quis dignissimos voluptates.
-          </TitleText>
-        </Grid>
-        <Grid item xs={12}>
-          <BasicText>
-            A eum consequuntur quia qui aspernatur quia. Quia corrupti quaerat
-            omnis odio enim voluptatem et ea repudiandae. Officia numquam
-            voluptatem in. Ex natus dolore est hic et dolorem excepturi
-            sapiente. Earum maxime nostrum dolor iure quasi eius dignissimos.
-            Laborum nihil maiores. Ratione omnis officiis sit ut repellendus
-            doloribus quas similique. Earum dolor velit quia dolorum. Beatae
-            maiores dignissimos corrupti eveniet.
-          </BasicText>
-        </Grid>
+        {renderPostDetailComponent()}
       </ContentContainer>
     </PaperContainer>
   );

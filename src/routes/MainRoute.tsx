@@ -46,7 +46,11 @@ export const publicRoute: RouteObject = {
           element: <Posts />,
         },
         {
-          path: PATH.POST_DETAIL,
+          path: `${PATH.PLACE}/:id`,
+          element: <Place />,
+        },
+        {
+          path: `${PATH.POST_DETAIL}/:id`,
           element: <PostDetail />,
         },
       ],

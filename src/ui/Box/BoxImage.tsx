@@ -1,8 +1,7 @@
-import { LazyLoadImage } from "@tjoskar/react-lazyload-img";
-import { BoxImageProps } from "../../types/Ui";
+import { Box, Skeleton, styled } from "@mui/material";
 import { useEffect, useState } from "react";
 import { WaitForImageToLoad } from "src/utils/common";
-import { Box, Skeleton, styled } from "@mui/material";
+import { BoxImageProps } from "../../types/Ui";
 
 export const BoxImage = (props: BoxImageProps) => {
   const [url, setUrl] = useState<string>();

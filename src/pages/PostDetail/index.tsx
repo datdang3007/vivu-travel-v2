@@ -1,10 +1,31 @@
 import { Grid, styled } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { FormTitle } from "src/components/Form";
-import { BackgroundWithText, GroupCardRecommend, PostContent } from "src/components/PostDetail";
+import {
+  BackgroundWithText,
+  GroupCardRecommend,
+  PostContent,
+} from "src/components/PostDetail";
 import { COMPONENT_SIZE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
+import { useCallAPIFind } from "src/hooks";
+import { GetIdParams } from "src/utils/common";
 
 export const PostDetail = () => {
+  const location = useLocation();
+  const postId = GetIdParams(location.pathname);
+  const { requestFindPostByID } = useCallAPIFind();
+  const [postData, setDate] = useState();
+
+  useEffect(() => {
+    requestFindPostByID(postId).then((data) => {
+      setDate(data);
+    });
+  }, [postId, requestFindPostByID]);
+
+  if (!postData) return null;
+  const { title, image, created_at, creator, contents } = postData;
   return (
     <Grid container>
       <HeaderBackground
@@ -15,7 +36,7 @@ export const PostDetail = () => {
           sm: COMPONENT_SIZE.TABLET_HEADER,
           md: COMPONENT_SIZE.DESKTOP_HEADER,
         }}
-      ></HeaderBackground>
+      />
       <Grid
         item
         container
@@ -27,7 +48,7 @@ export const PostDetail = () => {
         justifyContent={"center"}
       >
         <Grid item xs={12} sm={11} xl={10.5}>
-          <BackgroundWithText />
+          <BackgroundWithText image={image} title={title} date={created_at} />
         </Grid>
         <Grid
           item
@@ -37,7 +58,7 @@ export const PostDetail = () => {
           sm={10.5}
           marginTop={"-80px"}
         >
-          <PostContent />
+          <PostContent creator={creator} contents={contents} />
         </Grid>
         <Grid item container justifyContent={"center"} xs={12} sm={10.5}>
           <Grid item xs={10.5} sm={11}>
@@ -47,7 +68,7 @@ export const PostDetail = () => {
               mt="60px"
               mb="20px"
             >
-              <GroupCardRecommend />
+              <GroupCardRecommend postId={postId} />
             </FormTitle>
           </Grid>
         </Grid>

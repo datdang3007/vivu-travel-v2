@@ -75,7 +75,13 @@ export const HeaderUserProfile = (props: HeaderUserProfileProps) => {
       });
     }
     return options;
-  }, [changeDirectionToProfile, handleLogout, role, username]);
+  }, [
+    changeDirectionToProfile,
+    changeDirectionToUploadPost,
+    handleLogout,
+    role,
+    username,
+  ]);
 
   // Render option component
   const renderMenuOption = useCallback(() => {

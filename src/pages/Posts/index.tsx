@@ -1,6 +1,7 @@
 import { Grid, styled } from "@mui/material";
+import { useCallback } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormTitleWithSearchAndSelect } from "src/components/Form";
+import { FormTitleWithSearch } from "src/components/Form";
 import { GroupCardPost } from "src/components/Posts";
 import { COMPONENT_SIZE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
@@ -10,9 +11,14 @@ export const Posts = () => {
   const methods = useForm<FormTitleSearchProps>({
     defaultValues: {
       formTitleSearchValue: "",
-      type: "",
     },
   });
+  const { watch } = methods;
+  const { formTitleSearchValue } = watch();
+
+  const onSearch = useCallback(() => {
+    console.log(formTitleSearchValue);
+  }, [formTitleSearchValue]);
 
   return (
     <Grid
@@ -41,7 +47,8 @@ export const Posts = () => {
         <Grid item xs={11} xl={9}>
           <FormProvider {...methods}>
             <Grid item xs={12} component={"form"}>
-              <FormTitleWithSearchAndSelect
+              <FormTitleWithSearch
+                onSearch={onSearch}
                 name="formTitleSearchValue"
                 title="Bài Viết"
                 mb="40px"
@@ -51,7 +58,7 @@ export const Posts = () => {
                     <GroupCardPost />
                   </Grid>
                 </Grid>
-              </FormTitleWithSearchAndSelect>
+              </FormTitleWithSearch>
             </Grid>
           </FormProvider>
         </Grid>

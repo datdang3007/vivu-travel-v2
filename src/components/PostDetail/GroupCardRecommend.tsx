@@ -8,71 +8,56 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { POST_CATEGORY_TYPE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
+import { PostStatus } from "src/constants/post_status";
+import { useCallAPIFind } from "src/hooks";
+import { IPost } from "src/interfaces/post.interface";
 import { PATH } from "src/routes/path";
 import { BoxImage } from "src/ui";
+import { FormatDate, getRandomElements } from "src/utils/common";
 
-const dataTemp = [
-  {
-    id: 1,
-    title: "Lorem 01",
-    createAt: "09/10/2023",
-    username: "Reviewer 01",
-    avatar:
-      "https://assets.website-files.com/5ed4430d97a20a41629058ab/5ed47e09c6c9789e41e50f94_brooke-cagle-Nm70URdtf3c-unsplash.jpg",
-    img: "https://assets.website-files.com/5ed4430d97a20a41629058ab/5ed463e64b317b48197e2448_annie-spratt-cVEOh_JJmEE-unsplash.jpg",
-    content: `
-        This impressive paella is a perfect party.`,
-  },
-  {
-    id: 2,
-    title: "Lorem 02",
-    createAt: "09/10/2023",
-    username: "Reviewer 01",
-    avatar:
-      "https://assets.website-files.com/5ed4430d97a20a41629058ab/5ed47e09c6c9789e41e50f94_brooke-cagle-Nm70URdtf3c-unsplash.jpg",
-    img: "https://assets.website-files.com/5ed4430d97a20a41629058ab/5ed4643dec5df2a40dfcf30b_c-rayban-CIXoFys3gsw-unsplash.jpg",
-    content: `
-        This impressive paella is a perfect party dish and a fun meal to cook
-        together with your guests. Add 1 cup of frozen peas along with the
-        mussels, if you like.`,
-  },
-  {
-    id: 3,
-    title: "Lorem 03",
-    createAt: "09/10/2023",
-    username: "Reviewer 01",
-    avatar:
-      "https://assets.website-files.com/5ed4430d97a20a41629058ab/5ed47e09c6c9789e41e50f94_brooke-cagle-Nm70URdtf3c-unsplash.jpg",
-    img: "https://assets.website-files.com/5ed4430d97a20a41629058ab/5ed46653412d2b6239b5779d_sorasak-_UIN-pFfJ7c-unsplash.jpg",
-    content: `
-        This impressive paella is a perfect party dish and a fun meal to cook
-        together with your guests. Add 1 cup of frozen peas along with the
-        mussels, if you like.`,
-  },
-];
+type Props = {
+  postId: string;
+};
 
-export const GroupCardRecommend = () => {
+export const GroupCardRecommend = (props: Props) => {
+  const { postId } = props;
   const navigate = useNavigate();
+  const { requestFindPostByStatus } = useCallAPIFind();
+  const [postData, setPostData] = useState<IPost[]>();
 
   const changeDirectionToPostList = useCallback(() => {
     navigate(PATH.POSTS);
   }, [navigate]);
 
-  const changeDirectionToPost = useCallback(() => {
-    navigate(PATH.POST_DETAIL);
-  }, [navigate]);
+  const changeDirectionToPost = useCallback(
+    (id?: string | number) => {
+      navigate(`${PATH.POST_DETAIL}/${id}`);
+    },
+    [navigate]
+  );
 
-  const ListCardComponent = useCallback(
-    () =>
-      dataTemp.map((val) => (
-        <Grid key={val.id} item xs={12} sm={6} lg={4} padding={"10px"}>
-          <CardContainer onClick={changeDirectionToPost}>
+  const ListCardComponent = useCallback(() => {
+    if (!postData || postData?.length === 0) return null;
+    const postDateRecommend = postData.filter(
+      (val) => Number(val.id) !== Number(postId)
+    );
+    const randomPosts: IPost[] = getRandomElements(postDateRecommend, 4);
+    return randomPosts.map((post) => {
+      const { id, title, image, created_at, creator, contents } = post;
+      const detail =
+        contents?.find((content) => content.type === POST_CATEGORY_TYPE.DETAIL)
+          ?.content ?? "";
+
+      return (
+        <Grid key={id} item xs={12} sm={6} lg={3} padding={"10px"}>
+          <CardContainer onClick={() => changeDirectionToPost(id)}>
             <Grid item xs={12}>
               <Box sx={{ width: "100%", aspectRatio: "3/2" }}>
-                <BoxImage src={val.img} />
+                <BoxImage src={image} />
               </Box>
             </Grid>
             <Grid item xs={12} padding={"16px"}>
@@ -87,7 +72,7 @@ export const GroupCardRecommend = () => {
                     },
                   }}
                 >
-                  {val.title}
+                  {title}
                 </Typography>
               </GridOneLine>
               <GridOneLine item xs={12}>
@@ -97,7 +82,7 @@ export const GroupCardRecommend = () => {
                     sm: "14px",
                   }}
                 >
-                  {val.createAt}
+                  {FormatDate(created_at)}
                 </Typography>
               </GridOneLine>
               <GridThreeLine item xs={12} mt={"16px"}>
@@ -110,7 +95,7 @@ export const GroupCardRecommend = () => {
                     },
                   }}
                 >
-                  {val.content}
+                  {detail}
                 </Typography>
               </GridThreeLine>
               <Grid
@@ -122,7 +107,18 @@ export const GroupCardRecommend = () => {
                 mt={"20px"}
               >
                 <Grid item xs={"auto"}>
-                  <Avatar src={val.avatar}></Avatar>
+                  <Avatar
+                    alt={creator?.username}
+                    src={creator?.avatar}
+                    sx={{
+                      fontWeight: "bold",
+                      background: COLOR_PALLETTE.PRIMARY,
+                      color: COLOR_PALLETTE.WHITE,
+                    }}
+                  >
+                    {creator?.avatar ??
+                      creator?.username.split("")[0].toLocaleUpperCase()}
+                  </Avatar>
                 </Grid>
                 <Grid item xs>
                   <Typography
@@ -134,16 +130,22 @@ export const GroupCardRecommend = () => {
                       },
                     }}
                   >
-                    {val.username}
+                    {creator?.username}
                   </Typography>
                 </Grid>
               </Grid>
             </Grid>
           </CardContainer>
         </Grid>
-      )),
-    [changeDirectionToPost]
-  );
+      );
+    });
+  }, [changeDirectionToPost, postData, postId]);
+
+  useEffect(() => {
+    requestFindPostByStatus(PostStatus.Approved).then((data) => {
+      setPostData(data);
+    });
+  }, [requestFindPostByStatus]);
 
   return (
     <Grid item container xs={12}>

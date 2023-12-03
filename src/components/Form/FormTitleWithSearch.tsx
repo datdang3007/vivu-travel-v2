@@ -14,12 +14,14 @@ import { useController } from "react-hook-form";
 import { FieldValues, UseControllerProps } from "react-hook-form";
 import { COLOR_PALLETTE } from "../../constants/color";
 
-export const FormTitleWithSearch = (
-  props: FormTitleWithSearchOptions &
-    InputLabelProps &
-    TextFieldProps &
-    UseControllerProps<FieldValues>
-) => {
+type Props = FormTitleWithSearchOptions &
+  InputLabelProps &
+  TextFieldProps &
+  UseControllerProps<FieldValues> & {
+    onSearch?: () => void;
+  };
+
+export const FormTitleWithSearch = (props: Props) => {
   const {
     title,
     subtitle,
@@ -33,15 +35,15 @@ export const FormTitleWithSearch = (
     control,
     rules,
     variant,
+    onSearch,
     ...rest
   } = props;
 
-  const { field, fieldState } = useController({
+  const { field } = useController({
     name,
     control,
     rules,
   });
-  const error = Boolean(fieldState.error);
 
   return (
     <Grid item container xs={12} mt={mt}>
@@ -109,14 +111,18 @@ export const FormTitleWithSearch = (
               variant="outlined"
               {...field}
               {...rest}
-              error={error}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  onSearch?.();
+                  e.preventDefault();
+                }
+              }}
               placeholder="Tìm kiếm..."
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={() => console.log("onClick")}
+                      onClick={onSearch}
                       edge="end"
                       sx={{
                         "&:hover": {

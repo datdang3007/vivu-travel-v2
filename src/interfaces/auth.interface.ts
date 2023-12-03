@@ -5,12 +5,22 @@ export interface IUser {
   avatar?: string;
 }
 
+export interface IAuthEditUser {
+  username: string;
+  avatar: string;
+  country: string;
+  description: string;
+  id: string | number;
+  email: string;
+}
+
 export interface IAuthUser {
-  id: number;
+  id: number | string;
   email: string;
   username: string;
   like: number;
   role: number;
+  country: string;
   description?: string;
   avatar?: string;
   iat: number;
@@ -23,6 +33,7 @@ export interface IAuth {
 
 export interface IAuthSignUp {
   email: string;
+  country: string;
   username: string;
   password: string;
   confirm_password: string;

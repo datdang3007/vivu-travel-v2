@@ -1,6 +1,6 @@
 import http from "src/config/http";
 import { LOCAL_STORAGE } from "src/constants/local_storage";
-import { IAuth, IAuthUser, IUser } from "src/interfaces";
+import { IAuth, IAuthEditUser, IAuthUser, IUser } from "src/interfaces";
 
 export interface UpdatePlaceProps {
   id: string;
@@ -33,5 +33,26 @@ export const getUserProfile = async (): Promise<IAuthUser | null> => {
       Authorization: `Bearer ${token}`,
     },
   });
+  return res.data;
+};
+
+export const editUserProfile = async (data: IAuthEditUser) => {
+  const token = localStorage.getItem(LOCAL_STORAGE.AccessToken);
+  if (!token) {
+    return null;
+  }
+
+  const res = await http.patch(
+    `auth/${data.id}`,
+    {
+      ...data,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
   return res.data;
 };

@@ -46,8 +46,20 @@ export const HeaderMenuNavbar = (props: Props) => {
   const listOption = useMemo(
     () =>
       [
-        { label: "Trang chủ", event: () => onClickOption(HEADER_OPTIONS.HOME) },
-        { label: "Bài viết", event: () => onClickOption(HEADER_OPTIONS.HOME) },
+        {
+          label: "Trang chủ",
+          event: () => {
+            setShowDrawer(false);
+            onClickOption(HEADER_OPTIONS.HOME);
+          },
+        },
+        {
+          label: "Bài viết",
+          event: () => {
+            setShowDrawer(false);
+            onClickOption(HEADER_OPTIONS.POSTS);
+          },
+        },
         {
           label: "Đăng nhập",
           event: () => onClickOption(HEADER_OPTIONS.LOGIN),

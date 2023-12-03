@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, styled } from "@mui/material";
-import dayjs from "dayjs";
 import { COLOR_PALLETTE } from "src/constants/color";
 import { BoxImage } from "src/ui";
+import { ToDayFormatDate } from "src/utils/common";
 
 type Props = {
   image: string;
@@ -10,8 +10,6 @@ type Props = {
 
 export const BackgroundWithText = (props: Props) => {
   const { image, title } = props;
-
-  const date = dayjs().format("DD/MM/YYYY");
 
   return (
     <Grid item xs={12} position={"relative"}>
@@ -50,7 +48,7 @@ export const BackgroundWithText = (props: Props) => {
             fontWeight="bold"
             fontSize={"16px"}
           >
-            {date}
+            {ToDayFormatDate()}
           </Typography>
         </Grid>
       </TitleContainer>

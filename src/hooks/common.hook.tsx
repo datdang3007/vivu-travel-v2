@@ -1,10 +1,12 @@
-import { MenuItem } from "@mui/material";
-import { useCallback, useMemo } from "react";
+import { Grid, MenuItem, Typography } from "@mui/material";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import ReactCountryFlag from "react-country-flag";
 import { useMutation, useQuery } from "react-query";
 import {
   authLogin,
   authSignUp,
   checkExistEmail,
+  editUserProfile,
   getUserProfile,
 } from "src/apis/auth.api";
 import { getPlaceCategoryList } from "src/apis/place-category.api";
@@ -19,6 +21,7 @@ import {
 import { findProvinceByID, getProvinceList } from "src/apis/province.api";
 import { findRegionByID, getRegionList } from "src/apis/region.api";
 import { findTerritoryByID, getTerritoryList } from "src/apis/territory.api";
+import { OptionsCountries } from "src/utils/common";
 
 // Hook call API auth:
 export const useCallAPIAuth = () => {
@@ -47,6 +50,13 @@ export const useCallAPIAuth = () => {
     mutationFn: getUserProfile,
   });
 
+  const {
+    mutateAsync: requestEditUserProfile,
+    isLoading: loadingForEditUserProfile,
+  } = useMutation({
+    mutationFn: editUserProfile,
+  });
+
   return {
     requestLogin,
     loadingForLogin,
@@ -56,6 +66,8 @@ export const useCallAPIAuth = () => {
     loadingForCheckExistEmail,
     requestGetUserProfile,
     loadingForGetUserProfile,
+    requestEditUserProfile,
+    loadingForEditUserProfile,
   };
 };
 
@@ -236,4 +248,43 @@ export const useSelectHook = (data: any[], value?: string, label?: string) => {
   }, [options]);
 
   return { options, autocompleteOptions, SelectField };
+};
+
+// Hook format select from API data:
+export const useSelectCountryHook = () => {
+  const [data, setData] = useState<any>();
+
+  const options = useMemo(() => {
+    return (
+      data?.map((val: any) => ({
+        value: `${val["country_name"]} (${val["code"]})`,
+        code: val["code"],
+        label: val["country_name"],
+      })) ?? []
+    );
+  }, [data]);
+
+  // Function render select field:
+  const SelectField = useCallback(() => {
+    const convertOptions = [...options];
+    return convertOptions?.map((val) => {
+      const { value, code, label } = val;
+      return (
+        <MenuItem key={value} value={value}>
+          <Grid container alignItems="center" columnGap="12px">
+            <ReactCountryFlag countryCode={code} svg />
+            <Typography>{label}</Typography>
+          </Grid>
+        </MenuItem>
+      );
+    });
+  }, [options]);
+
+  useEffect(() => {
+    OptionsCountries().then((res) => {
+      setData(res);
+    });
+  }, []);
+
+  return { options, SelectField };
 };
