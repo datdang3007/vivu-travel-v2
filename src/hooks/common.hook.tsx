@@ -11,11 +11,17 @@ import {
 } from "src/apis/auth.api";
 import { getPlaceCategoryList } from "src/apis/place-category.api";
 import { findPlaceImageByPlaceID } from "src/apis/place-image-stock.api";
-import { findPlaceByID, getPlaceList } from "src/apis/place.api";
+import {
+  filterPlaceRecommend,
+  findPlaceByID,
+  findPlaceByListID,
+  getPlaceList,
+} from "src/apis/place.api";
 import {
   createPost,
   findPostByID,
   findPostByStatus,
+  findPostByUser,
   getPostList,
 } from "src/apis/post.api.";
 import { findProvinceByID, getProvinceList } from "src/apis/province.api";
@@ -161,11 +167,26 @@ export function useCallAPIFind() {
     mutationFn: findProvinceByID,
   });
 
-  // Place
+  // -- Place
   const { mutateAsync: requestFindPlaceByID, isLoading: loadingFindPlace } =
     useMutation({
       mutationFn: findPlaceByID,
     });
+
+  const {
+    mutateAsync: requestFindPlaceByListID,
+    isLoading: loadingFindPlaceByListID,
+  } = useMutation({
+    mutationFn: findPlaceByListID,
+  });
+
+  const {
+    mutateAsync: requestFilterPlaceRecommend,
+    isLoading: loadingFilterPlaceRecommend,
+  } = useMutation({
+    mutationFn: filterPlaceRecommend,
+  });
+  // -- End
 
   // Place Image
   const {
@@ -187,6 +208,13 @@ export function useCallAPIFind() {
   } = useMutation({
     mutationFn: findPostByStatus,
   });
+
+  const {
+    mutateAsync: requestFindPostByUser,
+    isLoading: loadingFindPostByUser,
+  } = useMutation({
+    mutationFn: findPostByUser,
+  });
   // -- End
 
   return {
@@ -204,6 +232,12 @@ export function useCallAPIFind() {
     loadingFindPostByID,
     requestFindPostByStatus,
     loadingFindPostByStatus,
+    requestFindPostByUser,
+    loadingFindPostByUser,
+    requestFindPlaceByListID,
+    loadingFindPlaceByListID,
+    requestFilterPlaceRecommend,
+    loadingFilterPlaceRecommend,
   };
 }
 

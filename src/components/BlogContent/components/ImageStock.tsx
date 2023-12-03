@@ -1,17 +1,26 @@
 import { Box, Button, Grid, Typography, styled } from "@mui/material";
-import { useCallback, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import { DialogPreviewImage } from "src/components/Dialog";
 import { COLOR_PALLETTE } from "../../../constants/color";
 import { BoxImage } from "../../../ui";
 import { ImageListDialog } from "./ImageListDialog";
+import { IPlace } from "src/interfaces";
 
-type Props = {
+interface PlaceItemProps {
+  id: string | number;
+  name: string;
+  link: string;
+}
+
+type ImageStockItemProps = {
   isShowName?: boolean;
+  data: PlaceItemProps;
 };
 
-export const ImageStockItem = (props: Props) => {
+export const ImageStockItem = (props: ImageStockItemProps) => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const { isShowName } = props;
+  const { isShowName, data } = props;
+  const { id, name, link } = data;
 
   const handleOpenDialog = useCallback(() => {
     setOpenDialog(true);
@@ -21,7 +30,7 @@ export const ImageStockItem = (props: Props) => {
   }, []);
 
   return (
-    <>
+    <Fragment key={id}>
       <Grid item xs={6} sm={4} md={3} xl={12 / 5} padding={"20px 10px"}>
         <Grid item xs={12}>
           <Box width={1} sx={{ aspectRatio: "1/1" }}>
@@ -30,7 +39,7 @@ export const ImageStockItem = (props: Props) => {
               sx={{ cursor: "zoom-in", height: 1, padding: 0 }}
               onClick={handleOpenDialog}
             >
-              <BoxImage src="https://cdn.discordapp.com/attachments/1089123119668658206/1112782725687029942/lang-tranh-dong-ho-ivivu.png" />
+              <BoxImage src={link} />
             </Button>
           </Box>
         </Grid>
@@ -40,7 +49,7 @@ export const ImageStockItem = (props: Props) => {
               fontSize={{ xs: "16px", sm: "20px" }}
               fontWeight={"bold"}
             >
-              Làng tranh Đông Hồ
+              {name}
             </Typography>
           </GridOneLine>
         )}
@@ -48,22 +57,36 @@ export const ImageStockItem = (props: Props) => {
       <DialogPreviewImage
         open={openDialog}
         onClose={handleCloseDialog}
-        url={
-          "https://cdn.discordapp.com/attachments/1085804453246009374/1100340027306811453/Bac_Trung_Bo.png"
-        }
+        url={link}
       />
-    </>
+    </Fragment>
   );
 };
 
-export const ImageStock = (props: Props) => {
-  const { isShowName } = props;
+type ImageStockProps = {
+  isShowName?: boolean;
+  data?: IPlace[] | null;
+};
+
+export const ImageStock = (props: ImageStockProps) => {
+  const { isShowName, data } = props;
   const [showImageListDialog, setShowImageListDialog] =
     useState<boolean>(false);
 
   const eventToggleDialog = useCallback(() => {
     setShowImageListDialog((pre) => !pre);
   }, []);
+
+  const renderImageStockItems = useCallback(() => {
+    return data?.map((place) => {
+      const { name, image_stock } = place;
+      return image_stock?.map((imageStock) => {
+        const { id, link } = imageStock;
+        const dataImageStock: PlaceItemProps = { id, name, link };
+        return <ImageStockItem isShowName={isShowName} data={dataImageStock} />;
+      });
+    });
+  }, [data, isShowName]);
 
   return (
     <Grid item xs={12}>
@@ -95,11 +118,7 @@ export const ImageStock = (props: Props) => {
         </Grid>
       </Grid>
       <Grid item container xs={12} mt={{ lg: "40px" }}>
-        <ImageStockItem isShowName={isShowName} />
-        <ImageStockItem isShowName={isShowName} />
-        <ImageStockItem isShowName={isShowName} />
-        <ImageStockItem isShowName={isShowName} />
-        <ImageStockItem isShowName={isShowName} />
+        {renderImageStockItems()}
       </Grid>
     </Grid>
   );

@@ -9,11 +9,15 @@ import {
 } from "@mui/material";
 import { useCallback, useState } from "react";
 import { COLOR_PALLETTE } from "src/constants/color";
-import { useMasterContext } from "src/context/MasterContext";
+import { IAuthUser } from "src/interfaces";
 import { DialogEditProfile } from "../Dialog";
 
-export const ProfileUserInfo = () => {
-  const { user } = useMasterContext();
+type Props = {
+  user: IAuthUser | null;
+};
+
+export const ProfileUserInfo = (props: Props) => {
+  const { user } = props;
   const [openDialogEdit, setOpenDialogEdit] = useState<boolean>(false);
   const handleOpenDialogEdit = useCallback(() => setOpenDialogEdit(true), []);
   const handleCloseDialogEdit = useCallback(() => setOpenDialogEdit(false), []);

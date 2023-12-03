@@ -134,7 +134,7 @@ export const GroupCardPost = () => {
   }, [changeDirectionToPost, postData]);
 
   useEffect(() => {
-    requestFindPostByStatus(PostStatus.Approved).then((data) => {
+    requestFindPostByStatus(`${PostStatus.Approved}`).then((data) => {
       setPostData(data);
     });
   }, [requestFindPostByStatus]);

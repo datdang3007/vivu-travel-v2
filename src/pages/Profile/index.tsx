@@ -2,13 +2,14 @@ import { Grid, styled } from "@mui/material";
 import { useCallback } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormTitleWithSearch } from "src/components/Form";
-import { GroupCardPost } from "src/components/Posts";
-import { ProfileUserInfo } from "src/components/Profile";
+import { GroupUserCardPost, ProfileUserInfo } from "src/components/Profile";
 import { COMPONENT_SIZE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
+import { useMasterContext } from "src/context/MasterContext";
 import { FormTitleSearchProps } from "src/types";
 
 export const Profile = () => {
+  const { user } = useMasterContext();
   const methods = useForm<FormTitleSearchProps>({
     defaultValues: {
       formTitleSearchValue: "",
@@ -42,7 +43,7 @@ export const Profile = () => {
             padding: { xs: 0, sm: "60px 0" },
           }}
         >
-          <ProfileUserInfo />
+          <ProfileUserInfo user={user} />
         </Grid>
       </Grid>
       <Grid
@@ -52,6 +53,7 @@ export const Profile = () => {
         justifyContent={"center"}
         sx={{
           paddingBottom: "60px",
+          minHeight: "calc(100vh - 351.5px)",
         }}
       >
         <Grid item xs={11} xl={9}>
@@ -65,7 +67,7 @@ export const Profile = () => {
               >
                 <Grid item container xs={12} mt={{ xs: "20px", sm: "40px" }}>
                   <Grid item xs={12}>
-                    <GroupCardPost />
+                    <GroupUserCardPost user={user} />
                   </Grid>
                 </Grid>
               </FormTitleWithSearch>

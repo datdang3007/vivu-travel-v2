@@ -90,15 +90,9 @@ export const RichEditor = () => {
   // Event when click button preview:
   const eventPreview = useCallback(() => {
     const isEmpty = !!postData.filter((val) => val.content === "").length;
-    // const isHadBadWords = !!postData.filter((val) =>
-    //   badWords(val.content, { validate: true })
-    // ).length;
 
     if (isEmpty || !linkBackground || postTitle === "")
       return AlertError({ text: "Các mục không được để trống" });
-
-    // if (isHadBadWords || badWords(postTitle, { validate: true }))
-    //   return AlertError({ text: "Nội dung có từ ngữ không hợp lệ" });
 
     const dataPost: PostProps = {
       linkBackground: linkBackground,

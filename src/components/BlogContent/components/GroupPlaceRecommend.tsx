@@ -1,7 +1,33 @@
 import { Box, Button, Grid, Typography, styled } from "@mui/material";
 import { COLOR_PALLETTE } from "../../../constants/color";
+import { CardPlaceRecommend } from "./CardPlaceRecommend";
+import { IPlace } from "src/interfaces";
+import { useCallback } from "react";
 
-export const GroupPlaceRecommend = () => {
+type Props = {
+  places: IPlace[];
+};
+
+const maxItems = 5;
+export const GroupPlaceRecommend = (props: Props) => {
+  const { places } = props;
+
+  const renderCardRecommend = useCallback(() => {
+    return places.map((place, index) => {
+      const { id, image, name = "", overview = "" } = place;
+      if (index >= maxItems) return null;
+      return (
+        <CardPlaceRecommend
+          id={id}
+          title={name}
+          content={overview}
+          image={image}
+          rate={0}
+        />
+      );
+    });
+  }, [places]);
+
   return (
     <Grid item xs={12}>
       <Grid item container justifyContent={"space-between"} xs={12}>
@@ -22,24 +48,7 @@ export const GroupPlaceRecommend = () => {
         <BottomBorder />
       </Grid>
       <Grid item xs={12}>
-        {/* <CardRecommend
-          title={CardRecommendValue.title}
-          content={CardRecommendValue.content}
-          image={CardRecommendValue.image}
-          rate={CardRecommendValue.rate}
-        />
-        <CardRecommend
-          title={CardRecommendValue.title}
-          content={CardRecommendValue.content}
-          image={CardRecommendValue.image}
-          rate={CardRecommendValue.rate}
-        />
-        <CardRecommend
-          title={CardRecommendValue.title}
-          content={CardRecommendValue.content}
-          image={CardRecommendValue.image}
-          rate={CardRecommendValue.rate}
-        /> */}
+        {renderCardRecommend()}
       </Grid>
     </Grid>
   );

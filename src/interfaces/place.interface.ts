@@ -2,6 +2,7 @@ import { ContentDataProps, PlaceImageStockProps } from "src/types";
 import { IProvince } from "./province.interface";
 import { IRegion } from "./region.interface";
 import { ITerritory } from "./territory.interface";
+import { IPlaceCategory } from "./place-category.interface";
 
 export interface IPlace {
   id: string | number;
@@ -10,6 +11,7 @@ export interface IPlace {
   overview: string;
   contents?: ContentDataProps[];
   image_stock?: PlaceImageStockProps[];
+  category?: IPlaceCategory[];
   count_image_stock?: number;
   region: IRegion;
   territory: ITerritory;

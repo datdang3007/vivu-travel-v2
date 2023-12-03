@@ -1,6 +1,11 @@
 import http from "src/config/http";
 import { LOCAL_STORAGE } from "src/constants/local_storage";
-import { IPost } from "src/interfaces/post.interface";
+import { IPost, IPostCreate } from "src/interfaces/post.interface";
+
+type IFindPostByUser = {
+  id: number;
+  status: string;
+};
 
 const url = "post";
 export const getPostList = async (): Promise<IPost[]> => {
@@ -8,8 +13,18 @@ export const getPostList = async (): Promise<IPost[]> => {
   return res.data;
 };
 
-export const findPostByStatus = async (status: number) => {
+export const findPostByStatus = async (status: string) => {
   const res = await http.get(`${url}/findByStatus/${status}`);
+  return res.data;
+};
+
+export const findPostByUser = async ({ id, status }: IFindPostByUser) => {
+  const res = await http.get(`${url}/findByUser`, {
+    params: {
+      user_id: id,
+      status: status,
+    },
+  });
   return res.data;
 };
 
@@ -18,7 +33,7 @@ export const findPostByID = async (id: string) => {
   return res.data;
 };
 
-export const createPost = async (data: IPost) => {
+export const createPost = async (data: IPostCreate) => {
   const token = localStorage.getItem(LOCAL_STORAGE.AccessToken);
   if (!token) {
     return null;

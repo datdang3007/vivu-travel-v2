@@ -142,7 +142,7 @@ export const GroupCardRecommend = (props: Props) => {
   }, [changeDirectionToPost, postData, postId]);
 
   useEffect(() => {
-    requestFindPostByStatus(PostStatus.Approved).then((data) => {
+    requestFindPostByStatus(`${PostStatus.Approved}`).then((data) => {
       setPostData(data);
     });
   }, [requestFindPostByStatus]);

@@ -1,10 +1,9 @@
 import { Box, Dialog } from "@mui/material";
-import { COLOR_PALLETTE } from "src/constants/color";
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  url?: string;
+  url?: string | null;
 };
 
 export const DialogPreviewImage = (props: Props) => {
@@ -13,12 +12,14 @@ export const DialogPreviewImage = (props: Props) => {
   return (
     <Dialog
       open={open ?? false}
-      maxWidth="lg"
       onClose={onClose}
+      maxWidth={"lg"}
       sx={{
         ".MuiPaper-root": {
           margin: { xs: 0, sm: "10px" },
-          width: "95%",
+          boxShadow: "none",
+          background: "none",
+          overflow: "unset",
         },
       }}
     >
@@ -26,12 +27,10 @@ export const DialogPreviewImage = (props: Props) => {
         width={1}
         maxHeight={"calc(100vh - 63px)"}
         sx={{
-          overflow: "hidden",
           position: "relative",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: COLOR_PALLETTE.WHITE,
           img: {
             maxWidth: "100%",
             maxHeight: "100%",
@@ -39,7 +38,17 @@ export const DialogPreviewImage = (props: Props) => {
           },
         }}
       >
-        <img src={url} alt="" />
+        <img
+          src={url ?? ""}
+          alt=""
+          style={{
+            boxShadow: `
+              0px 11px 15px -7px rgba(0,0,0,0.2),
+              0px 24px 38px 3px rgba(0,0,0,0.14), 
+              0px 9px 46px 8px rgba(0,0,0,0.12)
+            `,
+          }}
+        />
       </Box>
     </Dialog>
   );

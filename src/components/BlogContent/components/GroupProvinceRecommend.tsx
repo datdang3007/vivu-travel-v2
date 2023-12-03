@@ -8,12 +8,14 @@ type Props = {
   placeList: IPlace[];
 };
 
+const maxItems = 5;
 export const GroupProvinceRecommend = (props: Props) => {
   const { placeList } = props;
 
   const renderCardRecommend = useCallback(() => {
-    return placeList.map((place) => {
+    return placeList.map((place, index) => {
       const { id, image, name = "", overview = "" } = place;
+      if (index >= maxItems) return null;
       return (
         <CardPlaceRecommend
           id={id}

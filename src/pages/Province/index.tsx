@@ -1,6 +1,6 @@
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import { Grid, styled } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   BlogContent,
@@ -13,7 +13,7 @@ import { COMPONENT_SIZE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
 import { useMasterContext } from "src/context/MasterContext";
 import { useCallAPIFind } from "src/hooks";
-import { IProvince } from "src/interfaces";
+import { IPlace, IProvince } from "src/interfaces";
 import { PATH } from "src/routes/path";
 import { BreadCrumbProps } from "src/types";
 import { GetIdParams } from "src/utils/common";
@@ -24,7 +24,9 @@ export const Province = () => {
   const { isTabletMini } = useMasterContext();
   const provinceID = GetIdParams(location.pathname);
   const [data, setData] = useState<IProvince | null>(null);
-  const { requestFindProvinceByID } = useCallAPIFind();
+  const [dataImageStock, setDataImageStock] = useState<IPlace[] | null>(null);
+  const { requestFindProvinceByID, requestFindPlaceByListID } =
+    useCallAPIFind();
 
   const ChangeNavigate = useCallback(
     (pathname: string) => {
@@ -49,11 +51,23 @@ export const Province = () => {
     },
   ] as BreadCrumbProps[];
 
+  const listPlaceId = useMemo(() => {
+    return data?.placeList.map((place) => place.id).join(",");
+  }, [data]);
+
   useEffect(() => {
     requestFindProvinceByID(provinceID).then((result) => {
       setData(result);
     });
   }, [provinceID, requestFindProvinceByID]);
+
+  useEffect(() => {
+    if (listPlaceId) {
+      requestFindPlaceByListID(listPlaceId).then((result) => {
+        setDataImageStock(result);
+      });
+    }
+  }, [listPlaceId, requestFindPlaceByListID]);
 
   if (!data) return null;
 
@@ -115,7 +129,7 @@ export const Province = () => {
             mt={{ xs: "40px", md: "60px", lg: "80px" }}
             mb={{ xs: "0px", lg: "40px" }}
           >
-            <ImageStock isShowName />
+            <ImageStock isShowName data={dataImageStock} />
           </Grid>
         </Grid>
       </Grid>

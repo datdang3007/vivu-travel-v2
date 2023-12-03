@@ -2,18 +2,24 @@ import { Avatar, Box, Card, Grid, Typography, styled } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { POST_CATEGORY_TYPE } from "src/constants";
-import { COLOR_PALLETTE } from "src/constants/color";
+import { COLOR_PALLETTE, COLOR_POST_STATUS } from "src/constants/color";
 import { PostStatus } from "src/constants/post_status";
 import { useCallAPIFind } from "src/hooks";
+import { IAuthUser } from "src/interfaces";
 import { IPost } from "src/interfaces/post.interface";
 import { PATH } from "src/routes/path";
 import { BoxImage } from "src/ui";
 import { FormatDate } from "src/utils/common";
 
-export const GroupCardPost = () => {
+type Props = {
+  user?: IAuthUser | null;
+};
+
+export const GroupUserCardPost = (props: Props) => {
+  const { user } = props;
   const navigate = useNavigate();
   const [postData, setPostData] = useState<IPost[]>();
-  const { requestFindPostByStatus } = useCallAPIFind();
+  const { requestFindPostByUser } = useCallAPIFind();
 
   const changeDirectionToPost = useCallback(
     (id?: string | number) => {
@@ -25,14 +31,36 @@ export const GroupCardPost = () => {
   const ListCardComponent = useCallback(() => {
     if (!postData || postData?.length === 0) return null;
     return postData.map((post) => {
-      const { id, title, image, created_at, creator, contents } = post;
+      const { id, title, image, status, created_at, creator, contents } = post;
       const detail =
         contents?.find((content) => content.type === POST_CATEGORY_TYPE.DETAIL)
           ?.content ?? "";
-      // const tagColor = COLOR_POST_TAGS[val.type];
+      const labelStatus =
+        status === PostStatus.New ? "Đang chờ duyệt" : "Đã duyệt";
+
       return (
         <Grid key={id} item xs={12} sm={6} lg={4} xl={3} padding={"10px"}>
           <CardContainer onClick={() => changeDirectionToPost(id)}>
+            <BoxStatus
+              sx={{
+                background:
+                  status === PostStatus.New
+                    ? COLOR_POST_STATUS.NEW
+                    : COLOR_POST_STATUS.APPROVED,
+              }}
+            >
+              <Typography
+                sx={{
+                  color: COLOR_PALLETTE.WHITE,
+                  fontSize: {
+                    xs: "12px",
+                    md: "14px",
+                  },
+                }}
+              >
+                {labelStatus}
+              </Typography>
+            </BoxStatus>
             <Grid item xs={12}>
               <Box sx={{ width: "100%", aspectRatio: "3/2" }}>
                 <BoxImage src={image} />
@@ -120,11 +148,17 @@ export const GroupCardPost = () => {
   }, [changeDirectionToPost, postData]);
 
   useEffect(() => {
-    requestFindPostByStatus(`${PostStatus.Approved}`).then((data) => {
-      setPostData(data);
-    });
+    if (user?.id) {
+      const dataQuery = {
+        id: Number(user?.id),
+        status: `${PostStatus.New},${PostStatus.Approved}`,
+      };
+      requestFindPostByUser(dataQuery).then((data) => {
+        setPostData(data);
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   return (
     <Grid item container xs={12}>
@@ -168,6 +202,13 @@ const GridOneLine = styled(Grid)({
   textOverflow: "ellipsis !important",
   WebkitBoxOrient: "vertical",
   WebkitLineClamp: 1,
+});
+
+const BoxStatus = styled(Box)({
+  position: "absolute",
+  top: "5px",
+  left: "5px",
+  padding: "2px 6px",
 });
 
 const GridThreeLine = styled(Grid)(({ theme }) => ({

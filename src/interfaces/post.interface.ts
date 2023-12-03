@@ -12,3 +12,11 @@ export interface IPost {
   updated_at?: string;
   deleted_at?: any;
 }
+
+export interface IPostCreate {
+  title: string;
+  image: string;
+  contents?: ContentDataProps[];
+  creator: string;
+  status: number;
+}

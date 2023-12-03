@@ -15,7 +15,7 @@ import { COMPONENT_SIZE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
 import { useMasterContext } from "src/context/MasterContext";
 import { useCallAPIFind } from "src/hooks";
-import { IPlace } from "src/interfaces";
+import { IPlace, IPlaceCategory } from "src/interfaces";
 import { PATH } from "src/routes/path";
 import { BreadCrumbProps } from "src/types";
 import { GetIdParams } from "src/utils/common";
@@ -26,7 +26,13 @@ export const Place = () => {
   const { isTabletMini } = useMasterContext();
   const placeID = GetIdParams(location.pathname);
   const [data, setData] = useState<IPlace | null>(null);
-  const { requestFindPlaceByID } = useCallAPIFind();
+  const [dataImageStock, setDataImageStock] = useState<IPlace[] | null>(null);
+  const {
+    requestFindPlaceByID,
+    requestFindPlaceByListID,
+    requestFilterPlaceRecommend,
+  } = useCallAPIFind();
+  const [dataPlaceRecommend, setDataPlaceRecommend] = useState<IPlace[]>([]);
 
   const ChangeNavigate = useCallback(
     (pathname: string) => {
@@ -67,6 +73,35 @@ export const Place = () => {
       setData(result);
     });
   }, [placeID, requestFindPlaceByID]);
+
+  useEffect(() => {
+    requestFindPlaceByListID(placeID).then((result) => {
+      setDataImageStock(result);
+    });
+  }, [placeID, requestFindPlaceByListID]);
+
+  useEffect(() => {
+    if (data) {
+      const {
+        id: placeId,
+        region: { id: regionId },
+        territory: { id: territoryId },
+        province: { id: provinceId },
+        category,
+      } = data;
+      const categoryIds = category?.map((ct: IPlaceCategory) => ct.id) ?? [];
+      const dataFilter = {
+        placeId: Number(placeId),
+        regionId,
+        territoryId,
+        provinceId,
+        categoryIds,
+      };
+      requestFilterPlaceRecommend(dataFilter).then((res) => {
+        setDataPlaceRecommend(res);
+      });
+    }
+  }, [data, requestFilterPlaceRecommend]);
 
   if (!data) return null;
 
@@ -112,7 +147,7 @@ export const Place = () => {
               md={4}
             >
               <Grid item xs={12} sm={5.8} md={12} mt={{ xs: "40px", md: "0" }}>
-                <GroupPlaceRecommend />
+                <GroupPlaceRecommend places={dataPlaceRecommend} />
               </Grid>
               <Grid
                 item
@@ -131,7 +166,7 @@ export const Place = () => {
             mt={{ xs: "40px", md: "60px", lg: "80px" }}
             mb={{ xs: "0px", lg: "40px" }}
           >
-            <ImageStock />
+            <ImageStock data={dataImageStock} />
           </Grid>
         </Grid>
       </Grid>
