@@ -10,6 +10,10 @@ import {
   getUserProfile,
 } from "src/apis/auth.api";
 import { getPlaceCategoryList } from "src/apis/place-category.api";
+import {
+  createPlaceComment,
+  findPlaceCommentByPlaceId,
+} from "src/apis/place-comment.api";
 import { findPlaceImageByPlaceID } from "src/apis/place-image-stock.api";
 import {
   filterPlaceRecommend,
@@ -27,6 +31,7 @@ import {
 import { findProvinceByID, getProvinceList } from "src/apis/province.api";
 import { findRegionByID, getRegionList } from "src/apis/region.api";
 import { findTerritoryByID, getTerritoryList } from "src/apis/territory.api";
+import { getUserByRoles } from "src/apis/user.api";
 import { OptionsCountries } from "src/utils/common";
 
 // Hook call API auth:
@@ -196,6 +201,14 @@ export function useCallAPIFind() {
     mutationFn: findPlaceImageByPlaceID,
   });
 
+  // Place Comment
+  const {
+    mutateAsync: requestFindPlaceCommentByPlaceID,
+    isLoading: loadingFindPlaceCommentByPlaceID,
+  } = useMutation({
+    mutationFn: findPlaceCommentByPlaceId,
+  });
+
   // -- Post
   const { mutateAsync: requestFindPostByID, isLoading: loadingFindPostByID } =
     useMutation({
@@ -216,6 +229,14 @@ export function useCallAPIFind() {
     mutationFn: findPostByUser,
   });
   // -- End
+
+  // User
+  const {
+    mutateAsync: requestFindUserByRoles,
+    isLoading: loadingFindUserByRoles,
+  } = useMutation({
+    mutationFn: getUserByRoles,
+  });
 
   return {
     requestFindProvinceByID,
@@ -238,6 +259,10 @@ export function useCallAPIFind() {
     loadingFindPlaceByListID,
     requestFilterPlaceRecommend,
     loadingFilterPlaceRecommend,
+    requestFindPlaceCommentByPlaceID,
+    loadingFindPlaceCommentByPlaceID,
+    requestFindUserByRoles,
+    loadingFindUserByRoles,
   };
 }
 
@@ -248,7 +273,21 @@ export const useCallAPICreate = () => {
     useMutation({
       mutationFn: createPost,
     });
-  return { requestCreatePost, loadingCreatePost };
+
+  // Place Comment
+  const {
+    mutateAsync: requestCreatePlaceComment,
+    isLoading: loadingCreatePlaceComment,
+  } = useMutation({
+    mutationFn: createPlaceComment,
+  });
+
+  return {
+    requestCreatePost,
+    loadingCreatePost,
+    requestCreatePlaceComment,
+    loadingCreatePlaceComment,
+  };
 };
 
 // Hook format select from API data:

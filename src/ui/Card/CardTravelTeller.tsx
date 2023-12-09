@@ -16,7 +16,20 @@ export const CardTravelTeller = (props: CardTravelTellerProps & CardProps) => {
     <CardContainer {...rest}>
       <Grid container>
         <Grid item container justifyContent={"center"} xs={12}>
-          <Avatar alt={name} src={avatar} sx={{ width: 80, height: 80 }} />
+          <Avatar
+            alt={name}
+            src={avatar}
+            sx={{
+              width: "80px",
+              height: "80px",
+              fontSize: "34px",
+              fontWeight: "bold",
+              background: COLOR_PALLETTE.PRIMARY,
+              color: COLOR_PALLETTE.WHITE,
+            }}
+          >
+            {avatar ?? name.split("")[0].toLocaleUpperCase()}
+          </Avatar>
         </Grid>
         <Grid item container justifyContent={"center"} xs={12} mt={"15px"}>
           <Typography

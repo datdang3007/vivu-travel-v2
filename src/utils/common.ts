@@ -95,8 +95,39 @@ export const getRandomElements = <T>(array: T[], numElements: number) => {
   return randomElements;
 };
 
-export const FormatDate = (date?: string | Dayjs | Date) => {
-  return date ? dayjs(date).format("DD/MM/YYYY") : "";
+export const compareDateTime = (dateTime: string | number | Date) => {
+  // Chuyển đổi chuỗi thời gian nhập vào thành đối tượng Date
+  const inputDate = new Date(dateTime).getTime();
+
+  // Lấy thời gian hiện tại
+  const currentDate = new Date().getTime();
+
+  // Tính thời gian chênh lệch
+  const timeDifference = currentDate - inputDate;
+
+  const milliseconds = timeDifference;
+  const seconds = Math.floor(milliseconds / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const months = Math.floor(days / 30);
+  const years = Math.floor(days / 365);
+
+  if (years > 0) {
+    return years + " năm";
+  } else if (months > 0) {
+    return months + " tháng";
+  } else if (days > 0) {
+    return days + " ngày";
+  } else if (hours > 0) {
+    return hours + " giờ";
+  } else {
+    return minutes < 1 ? "ít hơn 1 phút" : minutes + " phút";
+  }
+};
+
+export const FormatDate = (date?: string | Dayjs | Date, format?: string) => {
+  return date ? dayjs(date).format(format ?? "DD/MM/YYYY") : "";
 };
 
 export const ToDayFormatDate = () => {

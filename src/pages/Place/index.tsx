@@ -135,7 +135,7 @@ export const Place = () => {
                     content={data.overview}
                   />
                   {renderContentComponent()}
-                  <RatingAndComment />
+                  <RatingAndComment placeId={placeID} />
                 </Grid>
               </BlogContent>
             </Grid>

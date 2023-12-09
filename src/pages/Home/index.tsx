@@ -148,7 +148,7 @@ export const Home = () => {
         <Grid item xs={12} sm={10} md={9.1}>
           <FormTitle
             container
-            title="Top Reviewer"
+            title="Top Người Viết Bài"
             isTitleCenter
             mt="60px"
             mb="20px"
