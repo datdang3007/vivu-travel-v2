@@ -9,6 +9,7 @@ import {
   editUserProfile,
   getUserProfile,
 } from "src/apis/auth.api";
+import { filterAll } from "src/apis/filter.api";
 import { getPlaceCategoryList } from "src/apis/place-category.api";
 import {
   createPlaceComment,
@@ -79,6 +80,20 @@ export const useCallAPIAuth = () => {
     loadingForGetUserProfile,
     requestEditUserProfile,
     loadingForEditUserProfile,
+  };
+};
+
+// Hook call API filter:
+export const useCallAPIFilter = () => {
+  // Filter All:
+  const { mutateAsync: requestFilterAll, isLoading: loadingForFilterAll } =
+    useMutation({
+      mutationFn: filterAll,
+    });
+
+  return {
+    requestFilterAll,
+    loadingForFilterAll,
   };
 };
 

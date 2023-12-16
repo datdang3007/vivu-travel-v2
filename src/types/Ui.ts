@@ -25,7 +25,7 @@ export interface listMenuOptionProps {
 
 export interface SearchListProps {
   id: string | number;
-  img: string;
+  image: string;
   name: string;
   category: string;
 }

@@ -1,74 +1,61 @@
+import styled from "@emotion/styled";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   ClickAwayListener,
   Grid,
   InputAdornment,
+  TextField,
+  debounce,
   useTheme,
 } from "@mui/material";
-import { InputTextField } from "../../components/Form";
-import SearchIcon from "@mui/icons-material/Search";
-import { useCallback, useState } from "react";
-import styled from "@emotion/styled";
+import { useCallback, useEffect, useState } from "react";
+import { useCallAPIFilter } from "src/hooks";
 import { SearchListProps } from "../../types/Ui";
 import { SearchListComponent } from "./components/SearchListComponent";
 
-export const HeaderMenuSearch = () => {
+type Props = {
+  options: any[];
+  methods: any;
+};
+
+export const HeaderMenuSearch = (props: Props) => {
   const theme = useTheme();
+  const { options, methods } = props;
   const [searchList, setSearchList] = useState<SearchListProps[]>();
   const [openSearchList, setOpenSearchList] = useState(false);
+  const { loadingForFilterAll } = useCallAPIFilter();
 
   const handleClickAway = useCallback(() => {
     setOpenSearchList(false);
-    setSearchList(undefined);
   }, []);
 
   const handleFocusSearch = useCallback(() => {
     setOpenSearchList(true);
-    setTimeout(() => {
-      //   setSearchList([]);
-      setSearchList([
-        {
-          id: "1",
-          img: "https://picsum.photos/500/500",
-          name: "test1",
-          category: "region",
-        },
-        {
-          id: "2",
-          img: "https://picsum.photos/500/500",
-          name: "test2",
-          category: "territory",
-        },
-        {
-          id: "3",
-          img: "https://picsum.photos/500/500",
-          name: "test3",
-          category: "province",
-        },
-        {
-          id: "4",
-          img: "https://picsum.photos/500/500",
-          name: "test4",
-          category: "province",
-        },
-        {
-          id: "5",
-          img: "https://picsum.photos/500/500",
-          name: "test5",
-          category: "place",
-        },
-      ]);
-    }, 2000);
   }, []);
+
+  const debouncedSearch = debounce((value: string) => {
+    methods.setValue("searchValue", value);
+  }, 1000);
+
+  useEffect(() => {
+    if (!openSearchList) {
+      setSearchList(undefined);
+    }
+
+    if (openSearchList && !loadingForFilterAll) {
+      setSearchList(options);
+    }
+  }, [loadingForFilterAll, openSearchList, options]);
 
   return (
     <Grid item xs={12} sx={{ position: "relative" }}>
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
-          <InputTextField
-            name={"searchValue"}
+          <TextField
             variant="outlined"
             autoComplete="off"
             onFocus={handleFocusSearch}
+            onChange={(e) => debouncedSearch(e.target.value)}
             fullWidth
             placeholder="Tìm kiếm..."
             InputProps={{
@@ -123,6 +110,7 @@ const Dropdown = styled("div")({
   width: "100%",
   padding: `15px 0`,
   borderRadius: "15px",
+  boxShadow: "0 6px 6px 2px rgba(0,0,0, .16)",
   ".item-search-list": {
     "&:first-of-type": {
       marginTop: "0px",

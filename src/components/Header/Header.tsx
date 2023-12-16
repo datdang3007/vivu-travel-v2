@@ -1,33 +1,36 @@
 import { Box, Container, Grid, styled, useTheme } from "@mui/material";
-import {
-  HeaderMenuNavbar,
-  HeaderMenuOption,
-  HeaderMenuSearch,
-  HeaderUserProfile,
-} from "../../ui";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useCallAPIFilter } from "src/hooks";
 import {
   BUTTON_VARIANT,
   HEADER_LIST_OPTION,
   HEADER_OPTIONS,
   STYLE_POSITION,
 } from "../../constants";
-import { useMemo, useCallback } from "react";
+import { COLOR_PALLETTE } from "../../constants/color";
+import { PATH } from "../../routes/path";
 import {
   HeaderProps,
   ListOptionProps,
   OptionLeftProps,
   searchProps,
 } from "../../types";
-import { FormProvider, useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
-import { PATH } from "../../routes/path";
-import { COLOR_PALLETTE } from "../../constants/color";
+import {
+  HeaderMenuNavbar,
+  HeaderMenuOption,
+  HeaderMenuSearch,
+  HeaderUserProfile,
+} from "../../ui";
 
 const listTransitionButtonComponent = [PATH.HOME, PATH.REGION, PATH.TERRITORY];
 export const Header = (props: HeaderProps) => {
   const theme = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
+  const { requestFilterAll } = useCallAPIFilter();
+  const [resultFilter, setResultFilter] = useState([]);
   const { isMenu, user } = props;
 
   const isTransitionButton = useMemo(
@@ -47,16 +50,12 @@ export const Header = (props: HeaderProps) => {
     [navigate]
   );
 
-  const defaultValuesLogin = useMemo(() => {
-    let result = {
-      searchValue: "",
-    };
-    return result;
-  }, []);
-
   const methods = useForm<searchProps>({
-    defaultValues: defaultValuesLogin,
+    defaultValues: { searchValue: "" },
   });
+
+  const { watch } = methods;
+  const { searchValue: search } = watch();
 
   const onClickOption = useCallback(
     (option: string) => {
@@ -174,53 +173,62 @@ export const Header = (props: HeaderProps) => {
     transitionTextColor,
   ]);
 
+  useEffect(() => {
+    requestFilterAll(search).then((res) => setResultFilter(res));
+  }, [requestFilterAll, search]);
+
   return (
     <FormProvider {...methods}>
-      <HeaderContainer sx={{ position: isMenu ? "fixed" : "absolute" }}>
-        {isMenu ? (
-          <Grid item xs={12}>
-            <HeaderMenuNavbar onClickOption={onClickOption} />
-          </Grid>
-        ) : (
-          <Container
-            maxWidth={"xl"}
-            sx={{
-              padding: "15px 0",
-              [theme.breakpoints.down("xl")]: {
-                padding: "15px 30px",
-              },
-            }}
-          >
-            <Grid
-              item
-              container
-              alignItems={"center"}
-              justifyContent={"space-between"}
-              xs={12}
-            >
-              <Grid item lg={3.5}>
-                <HeaderMenuOption
-                  position={STYLE_POSITION.LEFT}
-                  listOption={ListOption[HEADER_LIST_OPTION.LEFT]}
-                />
-              </Grid>
-              <Grid item lg={4}>
-                <HeaderMenuSearch />
-              </Grid>
-              <Grid item lg={3.5}>
-                {user ? (
-                  <HeaderUserProfile user={user} />
-                ) : (
-                  <HeaderMenuOption
-                    position={STYLE_POSITION.RIGHT}
-                    listOption={ListOption[HEADER_LIST_OPTION.RIGHT]}
-                  />
-                )}
-              </Grid>
+      <Grid component={"form"}>
+        <HeaderContainer sx={{ position: isMenu ? "fixed" : "absolute" }}>
+          {isMenu ? (
+            <Grid item xs={12}>
+              <HeaderMenuNavbar
+                onClickOption={onClickOption}
+                options={resultFilter}
+              />
             </Grid>
-          </Container>
-        )}
-      </HeaderContainer>
+          ) : (
+            <Container
+              maxWidth={"xl"}
+              sx={{
+                padding: "15px 0",
+                [theme.breakpoints.down("xl")]: {
+                  padding: "15px 30px",
+                },
+              }}
+            >
+              <Grid
+                item
+                container
+                alignItems={"center"}
+                justifyContent={"space-between"}
+                xs={12}
+              >
+                <Grid item lg={3.5}>
+                  <HeaderMenuOption
+                    position={STYLE_POSITION.LEFT}
+                    listOption={ListOption[HEADER_LIST_OPTION.LEFT]}
+                  />
+                </Grid>
+                <Grid item lg={4}>
+                  <HeaderMenuSearch options={resultFilter} methods={methods} />
+                </Grid>
+                <Grid item lg={3.5}>
+                  {user ? (
+                    <HeaderUserProfile user={user} />
+                  ) : (
+                    <HeaderMenuOption
+                      position={STYLE_POSITION.RIGHT}
+                      listOption={ListOption[HEADER_LIST_OPTION.RIGHT]}
+                    />
+                  )}
+                </Grid>
+              </Grid>
+            </Container>
+          )}
+        </HeaderContainer>
+      </Grid>
     </FormProvider>
   );
 };

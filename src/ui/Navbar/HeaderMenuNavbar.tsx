@@ -22,11 +22,12 @@ import { listMenuOptionProps } from "../../types/Ui";
 
 type Props = {
   onClickOption: (option: string) => void;
+  options: any[];
 };
 
 export const HeaderMenuNavbar = (props: Props) => {
   const theme = useTheme();
-  const { onClickOption } = props;
+  const { onClickOption, options } = props;
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const handleClick = () => {
@@ -93,7 +94,11 @@ export const HeaderMenuNavbar = (props: Props) => {
         position="static"
         sx={{ background: "unset", boxShadow: "unset", padding: "0 20px" }}
       >
-        <HeaderSearch open={showSearch} handleShow={handleCloseSearch} />
+        <HeaderSearch
+          open={showSearch}
+          handleShow={handleCloseSearch}
+          options={options}
+        />
         <Drawer open={showDrawer} onClose={handleClose}>
           {listOptionComponent()}
         </Drawer>

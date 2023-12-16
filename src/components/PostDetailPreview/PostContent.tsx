@@ -2,21 +2,16 @@ import { Grid, Typography, styled } from "@mui/material";
 import { useCallback } from "react";
 import { POST_CATEGORY_TYPE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
+import { useMasterContext } from "src/context/MasterContext";
 import { CardTravelTeller } from "src/ui";
 
 type Props = {
   data: any[];
 };
 
-const userData = {
-  name: "Reviewer 01",
-  from: "Ho Chi Minh, Viet Nam",
-  avatar:
-    "https://assets.website-files.com/5ed4430d97a20a41629058ab/5ed47e09c6c9789e41e50f94_brooke-cagle-Nm70URdtf3c-unsplash.jpg",
-};
-
 export const PostContent = (props: Props) => {
   const { data } = props;
+  const { user } = useMasterContext();
 
   // Switch case post detail component:
   const newPostDetailComponent = useCallback(
@@ -49,13 +44,15 @@ export const PostContent = (props: Props) => {
     });
   }, [data, newPostDetailComponent]);
 
+  if (!user) return null;
+
   return (
     <PaperContainer item container justifyContent={"center"} xs={10} sm={11}>
       <Grid item xs={12}>
         <CardTravelTeller
-          name={userData.name}
-          avatar={userData.avatar}
-          from={userData.from}
+          name={user.username}
+          avatar={user.avatar}
+          from={user.country}
           sx={{
             background: "#FAFAFA",
             "&:hover": {

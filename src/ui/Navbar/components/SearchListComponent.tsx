@@ -1,7 +1,7 @@
-import { SearchListProps } from "../../../types/Ui";
-import { GEOGRAPHY_CATEGORY } from "../../../constants";
-import { ItemSearchListComponent } from "./ItemSearchListComponent";
 import { Box, CircularProgress, Grid, Typography, styled } from "@mui/material";
+import { FILTER_CODE } from "../../../constants";
+import { SearchListProps } from "../../../types/Ui";
+import { ItemSearchListComponent } from "./ItemSearchListComponent";
 
 interface SearchListComponentProps {
   searchList?: SearchListProps[];
@@ -14,50 +14,60 @@ export const SearchListComponent = (props: SearchListComponentProps) => {
   if (searchList) {
     const categorizedLists = searchList.reduce(
       (result, val) => {
-        result[val.category as GEOGRAPHY_CATEGORY].push(val);
+        result[val.category as FILTER_CODE]?.push(val);
         return result;
       },
       {
-        [GEOGRAPHY_CATEGORY.REGION]: [] as SearchListProps[],
-        [GEOGRAPHY_CATEGORY.TERRITORY]: [] as SearchListProps[],
-        [GEOGRAPHY_CATEGORY.PROVINCE]: [] as SearchListProps[],
-        [GEOGRAPHY_CATEGORY.PLACE]: [] as SearchListProps[],
+        [FILTER_CODE.REGION]: [] as SearchListProps[],
+        [FILTER_CODE.TERRITORY]: [] as SearchListProps[],
+        [FILTER_CODE.PROVINCE]: [] as SearchListProps[],
+        [FILTER_CODE.PLACE]: [] as SearchListProps[],
+        [FILTER_CODE.POST]: [] as SearchListProps[],
       }
     );
 
-    if (categorizedLists[GEOGRAPHY_CATEGORY.REGION].length > 0)
-      listResult.push(
+    if (categorizedLists[FILTER_CODE.REGION].length > 0)
+      listResult?.push(
         <ItemSearchListComponent
           title="Miền"
-          key={GEOGRAPHY_CATEGORY.REGION}
-          list={categorizedLists[GEOGRAPHY_CATEGORY.REGION]}
+          category={FILTER_CODE.REGION}
+          list={categorizedLists[FILTER_CODE.REGION]}
         />
       );
 
-    if (categorizedLists[GEOGRAPHY_CATEGORY.TERRITORY].length > 0)
-      listResult.push(
+    if (categorizedLists[FILTER_CODE.TERRITORY].length > 0)
+      listResult?.push(
         <ItemSearchListComponent
           title="Vùng"
-          key={GEOGRAPHY_CATEGORY.TERRITORY}
-          list={categorizedLists[GEOGRAPHY_CATEGORY.TERRITORY]}
+          category={FILTER_CODE.TERRITORY}
+          list={categorizedLists[FILTER_CODE.TERRITORY]}
         />
       );
 
-    if (categorizedLists[GEOGRAPHY_CATEGORY.PROVINCE].length > 0)
-      listResult.push(
+    if (categorizedLists[FILTER_CODE.PROVINCE].length > 0)
+      listResult?.push(
         <ItemSearchListComponent
           title="Tỉnh"
-          key={GEOGRAPHY_CATEGORY.PROVINCE}
-          list={categorizedLists[GEOGRAPHY_CATEGORY.PROVINCE]}
+          category={FILTER_CODE.PROVINCE}
+          list={categorizedLists[FILTER_CODE.PROVINCE]}
         />
       );
 
-    if (categorizedLists[GEOGRAPHY_CATEGORY.PLACE].length > 0)
-      listResult.push(
+    if (categorizedLists[FILTER_CODE.PLACE].length > 0)
+      listResult?.push(
         <ItemSearchListComponent
           title="Địa Điểm"
-          key={GEOGRAPHY_CATEGORY.PLACE}
-          list={categorizedLists[GEOGRAPHY_CATEGORY.PLACE]}
+          category={FILTER_CODE.PLACE}
+          list={categorizedLists[FILTER_CODE.PLACE]}
+        />
+      );
+
+    if (categorizedLists[FILTER_CODE.POST].length > 0)
+      listResult?.push(
+        <ItemSearchListComponent
+          title="Bài Viết"
+          category={FILTER_CODE.POST}
+          list={categorizedLists[FILTER_CODE.POST]}
         />
       );
   }
@@ -80,7 +90,7 @@ export const SearchListComponent = (props: SearchListComponentProps) => {
         {listResult.length > 0 ? (
           listResult
         ) : (
-          <Typography variant="tR14">Empty</Typography>
+          <Typography variant="tR14">không có dữ liệu</Typography>
         )}
       </ListSearchResult>
     </Grid>

@@ -18,11 +18,12 @@ export enum BUTTON_VARIANT {
   CONTAINED = "contained",
 }
 
-export enum GEOGRAPHY_CATEGORY {
+export enum FILTER_CODE {
   REGION = "region",
   TERRITORY = "territory",
   PROVINCE = "province",
   PLACE = "place",
+  POST = "post",
 }
 
 export enum COMPONENT_SIZE {

@@ -1,25 +1,21 @@
 import { Box, Dialog } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
-import { useMemo } from "react";
 import { searchProps } from "../../types";
 import { HeaderMenuSearch } from "../../ui";
 
 interface HeaderSearchProps {
   open: boolean;
   handleShow: () => void;
+  options: any[];
 }
 
 export const HeaderSearch = (props: HeaderSearchProps) => {
-  const { open, handleShow } = props;
-  const defaultValuesLogin = useMemo(() => {
-    let result = {
-      searchValue: "",
-    };
-    return result;
-  }, []);
+  const { open, handleShow, options } = props;
 
   const methods = useForm<searchProps>({
-    defaultValues: defaultValuesLogin,
+    defaultValues: {
+      searchValue: "",
+    },
   });
 
   return (
@@ -48,7 +44,7 @@ export const HeaderSearch = (props: HeaderSearchProps) => {
             height={"auto"}
             sx={{ position: "absolute", top: 0, left: 0 }}
           >
-            <HeaderMenuSearch />
+            <HeaderMenuSearch options={options} methods={methods} />
           </Box>
         </Box>
       </Dialog>
