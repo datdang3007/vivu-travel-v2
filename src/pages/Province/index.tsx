@@ -129,7 +129,7 @@ export const Province = () => {
             mt={{ xs: "40px", md: "60px", lg: "80px" }}
             mb={{ xs: "0px", lg: "40px" }}
           >
-            <ImageStock isShowName data={dataImageStock} />
+            <ImageStock data={dataImageStock} />
           </Grid>
         </Grid>
       </Grid>

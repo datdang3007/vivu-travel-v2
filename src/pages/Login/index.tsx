@@ -22,6 +22,7 @@ import { LOGO_BRAND } from "src/constants/img_common";
 import { LOCAL_STORAGE } from "src/constants/local_storage";
 import { useCallAPIAuth } from "src/hooks";
 import { IAuth } from "src/interfaces";
+import { useLoadingContext } from "src/provider/loading.provider";
 import { PATH } from "src/routes/path";
 import { BoxImage } from "src/ui";
 import { showAlertError } from "src/utils/alert";
@@ -30,6 +31,7 @@ import { rules } from "src/utils/validation";
 export const Login = () => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const { setIsLoading } = useLoadingContext();
   const { validateEmail, validatePassword } = rules;
   const [showPassword, setShowPassword] = useState(false);
 
@@ -57,6 +59,7 @@ export const Login = () => {
 
   const handleSubmit = useCallback(
     (data: any) => {
+      setIsLoading(true);
       requestLogin(data)
         .then((res) => {
           const { access_token } = res;
@@ -66,9 +69,10 @@ export const Login = () => {
         .catch((error) => {
           console.error(error);
           showAlertError("Lỗi !", "Email hoặc mật khẩu không đúng");
-        });
+        })
+        .finally(() => setIsLoading(false));
     },
-    [navigate, requestLogin]
+    [navigate, requestLogin, setIsLoading]
   );
 
   const changeDirectionToRegisterPage = useCallback(() => {

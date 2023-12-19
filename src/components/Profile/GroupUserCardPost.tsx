@@ -13,10 +13,11 @@ import { FormatDate } from "src/utils/common";
 
 type Props = {
   user?: IAuthUser | null;
+  isOwner: boolean;
 };
 
 export const GroupUserCardPost = (props: Props) => {
-  const { user } = props;
+  const { user, isOwner } = props;
   const navigate = useNavigate();
   const [postData, setPostData] = useState<IPost[]>();
   const { requestFindPostByUser } = useCallAPIFind();
@@ -41,26 +42,28 @@ export const GroupUserCardPost = (props: Props) => {
       return (
         <Grid key={id} item xs={12} sm={6} lg={4} xl={3} padding={"10px"}>
           <CardContainer onClick={() => changeDirectionToPost(id)}>
-            <BoxStatus
-              sx={{
-                background:
-                  status === PostStatus.New
-                    ? COLOR_POST_STATUS.NEW
-                    : COLOR_POST_STATUS.APPROVED,
-              }}
-            >
-              <Typography
+            {isOwner && (
+              <BoxStatus
                 sx={{
-                  color: COLOR_PALLETTE.WHITE,
-                  fontSize: {
-                    xs: "12px",
-                    md: "14px",
-                  },
+                  background:
+                    status === PostStatus.New
+                      ? COLOR_POST_STATUS.NEW
+                      : COLOR_POST_STATUS.APPROVED,
                 }}
               >
-                {labelStatus}
-              </Typography>
-            </BoxStatus>
+                <Typography
+                  sx={{
+                    color: COLOR_PALLETTE.WHITE,
+                    fontSize: {
+                      xs: "12px",
+                      md: "14px",
+                    },
+                  }}
+                >
+                  {labelStatus}
+                </Typography>
+              </BoxStatus>
+            )}
             <Grid item xs={12}>
               <Box sx={{ width: "100%", aspectRatio: "3/2" }}>
                 <BoxImage src={image} />
@@ -145,13 +148,15 @@ export const GroupUserCardPost = (props: Props) => {
         </Grid>
       );
     });
-  }, [changeDirectionToPost, postData]);
+  }, [changeDirectionToPost, isOwner, postData]);
 
   useEffect(() => {
     if (user?.id) {
       const dataQuery = {
         id: Number(user?.id),
-        status: `${PostStatus.New},${PostStatus.Approved}`,
+        status: isOwner
+          ? `${PostStatus.New},${PostStatus.Approved}`
+          : `${PostStatus.Approved}`,
       };
       requestFindPostByUser(dataQuery).then((data) => {
         setPostData(data);

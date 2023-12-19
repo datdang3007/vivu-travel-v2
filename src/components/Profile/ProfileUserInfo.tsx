@@ -14,10 +14,11 @@ import { DialogEditProfile } from "../Dialog";
 
 type Props = {
   user: IAuthUser | null;
+  isOwner: boolean;
 };
 
 export const ProfileUserInfo = (props: Props) => {
-  const { user } = props;
+  const { user, isOwner } = props;
   const [openDialogEdit, setOpenDialogEdit] = useState<boolean>(false);
   const handleOpenDialogEdit = useCallback(() => setOpenDialogEdit(true), []);
   const handleCloseDialogEdit = useCallback(() => setOpenDialogEdit(false), []);
@@ -33,11 +34,13 @@ export const ProfileUserInfo = (props: Props) => {
       position={"relative"}
       padding={{ xs: "40px 0 60px", sm: 0 }}
     >
-      <Tooltip title="Chỉnh sửa thông tin">
-        <ButtonMenu onClick={handleOpenDialogEdit}>
-          <MoreVert />
-        </ButtonMenu>
-      </Tooltip>
+      {isOwner && (
+        <Tooltip title="Chỉnh sửa thông tin">
+          <ButtonMenu onClick={handleOpenDialogEdit}>
+            <MoreVert />
+          </ButtonMenu>
+        </Tooltip>
+      )}
       <Grid
         item
         container

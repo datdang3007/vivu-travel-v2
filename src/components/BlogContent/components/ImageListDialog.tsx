@@ -1,78 +1,27 @@
 import { Close } from "@mui/icons-material";
-import { BoxImage } from "../../../ui";
 import {
   AppBar,
   Box,
+  Button,
   Dialog,
   Grid,
   IconButton,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
   Slide,
   Toolbar,
+  Tooltip,
   Typography,
   styled,
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { forwardRef, useCallback } from "react";
-
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-    author: "@bkristastucchio",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-    author: "@rollelflex_graphy726",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
-    author: "@helloimnik",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-    author: "@nolanissac",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-    author: "@hjrc33",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
-    author: "@arwinneil",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
-    author: "@tjdragotta",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-    author: "@katie_wasserman",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "Mushrooms",
-    author: "@silverdalex",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    title: "Tomato basil",
-    author: "@shelleypauls",
-  },
-];
+import { forwardRef, useCallback, useState } from "react";
+import { DialogPreviewImage } from "src/components/Dialog";
+import { BoxImage } from "../../../ui";
+import { PlaceItemProps } from "./ImageStock";
 
 type Props = {
   open: boolean;
   eventToggle: () => void;
+  images: PlaceItemProps[];
 };
 
 const Transition = forwardRef(function Transition(
@@ -85,22 +34,38 @@ const Transition = forwardRef(function Transition(
 });
 
 export const ImageListDialog = (props: Props) => {
-  const { open, eventToggle } = props;
+  const { open, eventToggle, images } = props;
+  const [link, setLink] = useState<string>("");
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  const handleOpenDialog = useCallback((url: string) => {
+    setLink(url);
+    setOpenDialog(true);
+  }, []);
+
+  const handleCloseDialog = useCallback(() => {
+    setOpenDialog(false);
+  }, []);
 
   const ImageListComponent = useCallback(() => {
-    return itemData.map((item) => (
-      <ImageListItem key={item.img}>
-        <Box width={1} height={1} sx={{ overflow: "hidden" }}>
-          <BoxImage isCursorPointer src={item.img} alt={item.title} />
-        </Box>
-        <ImageListItemBar
-          title={item.title}
-          subtitle={<span>by: {item.author}</span>}
-          position="below"
-        />
-      </ImageListItem>
-    ));
-  }, []);
+    return images.map((item) => {
+      return (
+        <Grid key={item.link} xs={12} sm={4} md={3} xl={2} padding={"10px"}>
+          <Box width={1} sx={{ overflow: "hidden", aspectRatio: "1/1" }}>
+            <Tooltip title={item.name}>
+              <Button
+                fullWidth
+                onClick={() => handleOpenDialog(item.link)}
+                sx={{ cursor: "zoom-in", height: 1, padding: 0 }}
+              >
+                <BoxImage isCursorPointer src={item.link} alt={item.name} />
+              </Button>
+            </Tooltip>
+          </Box>
+        </Grid>
+      );
+    });
+  }, [handleOpenDialog, images]);
 
   return (
     <Dialog
@@ -129,18 +94,21 @@ export const ImageListDialog = (props: Props) => {
         </Toolbar>
       </AppBar>
       <ImageListContainer item container justifyContent={"center"} xs={12}>
-        <Grid item xs={12}>
-          <ImageList cols={5} sx={{ width: "100%", height: "100%" }}>
-            {ImageListComponent()}
-          </ImageList>
+        <Grid container height={"fit-content"}>
+          {ImageListComponent()}
         </Grid>
       </ImageListContainer>
+      <DialogPreviewImage
+        open={openDialog}
+        onClose={handleCloseDialog}
+        url={link}
+      />
     </Dialog>
   );
 };
 
 const ImageListContainer = styled(Grid)({
   padding: "30px",
-  height: "calc(100vh - 64px)",
+  maxHeight: "calc(100vh - 64px)",
   overflowY: "auto",
 });

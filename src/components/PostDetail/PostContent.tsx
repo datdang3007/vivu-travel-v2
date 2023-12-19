@@ -4,7 +4,7 @@ import { POST_CATEGORY_TYPE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
 import { IUser } from "src/interfaces";
 import { ContentDataProps } from "src/types";
-import { CardTravelTeller } from "src/ui";
+import { BoxImage, CardTravelTeller } from "src/ui";
 
 type Props = {
   creator: IUser | undefined;
@@ -22,6 +22,8 @@ export const PostContent = (props: Props) => {
           return <TitleText>{content}</TitleText>;
         case POST_CATEGORY_TYPE.DETAIL:
           return <BasicText>{content}</BasicText>;
+        case POST_CATEGORY_TYPE.IMAGE:
+          return <BoxImage src={content} />;
         default:
           return content;
       }

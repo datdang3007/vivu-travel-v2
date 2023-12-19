@@ -14,6 +14,7 @@ import {
   Profile,
 } from "src/pages";
 import ScrollToTop from "src/components/ScrollToTop";
+import { ProfileUser } from "src/pages/ProfileUser";
 
 export const publicRoute: RouteObject = {
   element: <MainLayout />,
@@ -52,6 +53,10 @@ export const publicRoute: RouteObject = {
         {
           path: `${PATH.POST_DETAIL}/:id`,
           element: <PostDetail />,
+        },
+        {
+          path: `${PATH.PROFILE_USER}/:id`,
+          element: <ProfileUser />,
         },
       ],
     },

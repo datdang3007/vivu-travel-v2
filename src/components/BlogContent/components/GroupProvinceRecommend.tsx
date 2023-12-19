@@ -18,6 +18,7 @@ export const GroupProvinceRecommend = (props: Props) => {
       if (index >= maxItems) return null;
       return (
         <CardPlaceRecommend
+          key={`${id} - ${name}`}
           id={id}
           title={name}
           content={overview}

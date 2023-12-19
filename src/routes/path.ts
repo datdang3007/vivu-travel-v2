@@ -14,4 +14,5 @@ export const PATH = {
   POST_DETAIL_PREVIEW: "/post-detail-preview",
   UPLOAD_POST: "/upload-post",
   PROFILE: "/profile",
+  PROFILE_USER: "/profile/user",
 };

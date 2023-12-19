@@ -38,10 +38,15 @@ export const GroupCardTravelTeller = () => {
 
   const renderListReviewer = useCallback(() => {
     return dataTeller.map((val) => {
-      const { username, avatar, country } = val;
+      const { id, username, avatar, country } = val;
       return (
-        <Grid key={val.id} item xs={12} padding={"10px"}>
-          <CardTravelTeller name={username} avatar={avatar} from={country} />
+        <Grid key={id} item xs={12} padding={"10px"}>
+          <CardTravelTeller
+            id={id}
+            name={username}
+            avatar={avatar}
+            from={country}
+          />
         </Grid>
       );
     });

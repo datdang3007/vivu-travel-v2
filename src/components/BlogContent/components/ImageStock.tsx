@@ -1,75 +1,26 @@
-import { Box, Button, Grid, Typography, styled } from "@mui/material";
-import { Fragment, useCallback, useState } from "react";
-import { DialogPreviewImage } from "src/components/Dialog";
-import { COLOR_PALLETTE } from "../../../constants/color";
-import { BoxImage } from "../../../ui";
-import { ImageListDialog } from "./ImageListDialog";
+import { Button, Grid, Typography, styled } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
 import { IPlace } from "src/interfaces";
+import { COLOR_PALLETTE } from "../../../constants/color";
+import { ImageListDialog } from "./ImageListDialog";
+import { ImageStockItem } from "./ImageStockItem";
+import { ImageStockShowMore } from "./ImageStockShowMore";
 
-interface PlaceItemProps {
+export interface PlaceItemProps {
   id: string | number;
   name: string;
   link: string;
 }
-
-type ImageStockItemProps = {
-  isShowName?: boolean;
-  data: PlaceItemProps;
-};
-
-export const ImageStockItem = (props: ImageStockItemProps) => {
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const { isShowName, data } = props;
-  const { id, name, link } = data;
-
-  const handleOpenDialog = useCallback(() => {
-    setOpenDialog(true);
-  }, []);
-  const handleCloseDialog = useCallback(() => {
-    setOpenDialog(false);
-  }, []);
-
-  return (
-    <Fragment key={id}>
-      <Grid item xs={6} sm={4} md={3} xl={12 / 5} padding={"20px 10px"}>
-        <Grid item xs={12}>
-          <Box width={1} sx={{ aspectRatio: "1/1" }}>
-            <Button
-              fullWidth
-              sx={{ cursor: "zoom-in", height: 1, padding: 0 }}
-              onClick={handleOpenDialog}
-            >
-              <BoxImage src={link} />
-            </Button>
-          </Box>
-        </Grid>
-        {isShowName && (
-          <GridOneLine item xs={12} mt={"10px"}>
-            <Typography
-              fontSize={{ xs: "16px", sm: "20px" }}
-              fontWeight={"bold"}
-            >
-              {name}
-            </Typography>
-          </GridOneLine>
-        )}
-      </Grid>
-      <DialogPreviewImage
-        open={openDialog}
-        onClose={handleCloseDialog}
-        url={link}
-      />
-    </Fragment>
-  );
-};
 
 type ImageStockProps = {
   isShowName?: boolean;
   data?: IPlace[] | null;
 };
 
+const limitShortImages = 5;
 export const ImageStock = (props: ImageStockProps) => {
   const { isShowName, data } = props;
+  const [images, setImages] = useState<PlaceItemProps[]>([]);
   const [showImageListDialog, setShowImageListDialog] =
     useState<boolean>(false);
 
@@ -78,15 +29,41 @@ export const ImageStock = (props: ImageStockProps) => {
   }, []);
 
   const renderImageStockItems = useCallback(() => {
-    return data?.map((place) => {
+    const defineShortImages = [...images].splice(0, limitShortImages);
+    return defineShortImages.map((image, index) => {
+      if (index === limitShortImages - 1) {
+        return (
+          <ImageStockShowMore
+            key={`${image.id} - ${image.name}`}
+            data={image}
+            isShowName={isShowName}
+            onOpenDialog={eventToggleDialog}
+          />
+        );
+      }
+      return (
+        <ImageStockItem
+          key={`${image.id} - ${image.name}`}
+          data={image}
+          isShowName={isShowName}
+        />
+      );
+    });
+  }, [eventToggleDialog, images, isShowName]);
+
+  useEffect(() => {
+    if (!data) return;
+    const listImages: PlaceItemProps[] = [];
+    data.forEach((place) => {
       const { name, image_stock } = place;
-      return image_stock?.map((imageStock) => {
+      image_stock?.forEach((imageStock) => {
         const { id, link } = imageStock;
-        const dataImageStock: PlaceItemProps = { id, name, link };
-        return <ImageStockItem isShowName={isShowName} data={dataImageStock} />;
+        listImages.push({ id, name, link });
       });
     });
-  }, [data, isShowName]);
+
+    setImages(listImages);
+  }, [data]);
 
   return (
     <Grid item xs={12}>
@@ -98,6 +75,7 @@ export const ImageStock = (props: ImageStockProps) => {
         xs={12}
       >
         <ImageListDialog
+          images={images}
           open={showImageListDialog}
           eventToggle={eventToggleDialog}
         />
@@ -137,12 +115,4 @@ const ButtonSeeMore = styled(Button)({
       color: COLOR_PALLETTE.WHITE,
     },
   },
-});
-
-const GridOneLine = styled(Grid)({
-  display: "-webkit-box",
-  overflow: "hidden !important",
-  textOverflow: "ellipsis !important",
-  WebkitBoxOrient: "vertical",
-  WebkitLineClamp: 1,
 });

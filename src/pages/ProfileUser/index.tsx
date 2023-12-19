@@ -1,15 +1,25 @@
 import { Grid, styled } from "@mui/material";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FormTitleWithSearch } from "src/components/Form";
 import { GroupUserCardPost, ProfileUserInfo } from "src/components/Profile";
 import { COMPONENT_SIZE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
 import { useMasterContext } from "src/context/MasterContext";
+import { useCallAPIFind } from "src/hooks";
+import { IAuthUser } from "src/interfaces";
+import { PATH } from "src/routes/path";
 import { FormTitleSearchProps } from "src/types";
+import { GetIdParams } from "src/utils/common";
 
-export const Profile = () => {
-  const { user } = useMasterContext();
+export const ProfileUser = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user: currentUser } = useMasterContext();
+  const userId = GetIdParams(location.pathname);
+  const [user, setUser] = useState<IAuthUser | null>(null);
+  const { requestFindUserById } = useCallAPIFind();
   const methods = useForm<FormTitleSearchProps>({
     defaultValues: {
       formTitleSearchValue: "",
@@ -21,6 +31,21 @@ export const Profile = () => {
   const onSearch = useCallback(() => {
     console.log(formTitleSearchValue);
   }, [formTitleSearchValue]);
+
+  useEffect(() => {
+    if (!!currentUser && currentUser.id === userId) {
+      navigate(`${PATH.PROFILE}`);
+      return;
+    }
+
+    if (userId) {
+      requestFindUserById(Number(userId)).then((data: IAuthUser | null) => {
+        setUser(data);
+      });
+    }
+  }, [currentUser, navigate, requestFindUserById, userId]);
+
+  if (!user) return null;
 
   return (
     <Grid container mb={"40px"}>
@@ -43,7 +68,7 @@ export const Profile = () => {
             padding: { xs: 0, sm: "60px 0" },
           }}
         >
-          <ProfileUserInfo user={user} isOwner={true} />
+          <ProfileUserInfo user={user} isOwner={false} />
         </Grid>
       </Grid>
       <Grid
@@ -67,7 +92,7 @@ export const Profile = () => {
               >
                 <Grid item container xs={12} mt={{ xs: "20px", sm: "40px" }}>
                   <Grid item xs={12}>
-                    <GroupUserCardPost user={user} isOwner={true} />
+                    <GroupUserCardPost user={user} isOwner={false} />
                   </Grid>
                 </Grid>
               </FormTitleWithSearch>

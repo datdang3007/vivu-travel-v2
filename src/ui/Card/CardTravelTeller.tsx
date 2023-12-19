@@ -6,14 +6,22 @@ import {
   Typography,
   styled,
 } from "@mui/material";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { COLOR_PALLETTE } from "src/constants/color";
+import { PATH } from "src/routes/path";
 import { CardTravelTellerProps } from "src/types/Ui";
 
 export const CardTravelTeller = (props: CardTravelTellerProps & CardProps) => {
-  const { name, avatar, from, ...rest } = props;
+  const navigate = useNavigate();
+  const { id, name, avatar, from, ...rest } = props;
+
+  const navigateToProfileTeller = useCallback(() => {
+    if (id) navigate(`${PATH.PROFILE_USER}/${id}`);
+  }, [id, navigate]);
 
   return (
-    <CardContainer {...rest}>
+    <CardContainer {...rest} onClick={navigateToProfileTeller}>
       <Grid container>
         <Grid item container justifyContent={"center"} xs={12}>
           <Avatar

@@ -62,6 +62,7 @@ export interface CardInfoActionSkeletonProps {
 }
 
 export interface CardTravelTellerProps {
+  id?: string | number;
   name: string;
   avatar?: string;
   from: string;

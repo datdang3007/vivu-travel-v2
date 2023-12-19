@@ -26,6 +26,7 @@ export const PostDetailPreview = () => {
       if (!user || user.role !== Role.Teller) {
         return;
       }
+
       const { email: creator } = user;
       const {
         linkBackground: image,

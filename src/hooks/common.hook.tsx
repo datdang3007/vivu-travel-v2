@@ -32,7 +32,7 @@ import {
 import { findProvinceByID, getProvinceList } from "src/apis/province.api";
 import { findRegionByID, getRegionList } from "src/apis/region.api";
 import { findTerritoryByID, getTerritoryList } from "src/apis/territory.api";
-import { getUserByRoles } from "src/apis/user.api";
+import { getUserById, getUserByRoles } from "src/apis/user.api";
 import { OptionsCountries } from "src/utils/common";
 
 // Hook call API auth:
@@ -253,6 +253,11 @@ export function useCallAPIFind() {
     mutationFn: getUserByRoles,
   });
 
+  const { mutateAsync: requestFindUserById, isLoading: loadingFindUserById } =
+    useMutation({
+      mutationFn: getUserById,
+    });
+
   return {
     requestFindProvinceByID,
     loadingFindProvince,
@@ -278,6 +283,8 @@ export function useCallAPIFind() {
     loadingFindPlaceCommentByPlaceID,
     requestFindUserByRoles,
     loadingFindUserByRoles,
+    requestFindUserById,
+    loadingFindUserById,
   };
 }
 

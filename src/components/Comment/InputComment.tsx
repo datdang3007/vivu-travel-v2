@@ -8,7 +8,8 @@ export const InputComment = () => {
   const SubmitRef = useRef<HTMLButtonElement>(null);
   const keyDown = useCallback((e: any) => {
     const key = e.key;
-    if (key === "Enter" && e.shiftKey && SubmitRef.current) {
+    const clickShift = e.shiftKey;
+    if (key === "Enter" && !clickShift && SubmitRef.current) {
       e.preventDefault();
       SubmitRef.current.click();
     }

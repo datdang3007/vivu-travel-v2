@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { POST_CATEGORY_TYPE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
 import { useMasterContext } from "src/context/MasterContext";
-import { CardTravelTeller } from "src/ui";
+import { BoxImage, CardTravelTeller } from "src/ui";
 
 type Props = {
   data: any[];
@@ -21,6 +21,8 @@ export const PostContent = (props: Props) => {
           return <TitleText>{content}</TitleText>;
         case POST_CATEGORY_TYPE.DETAIL:
           return <BasicText>{content}</BasicText>;
+        case POST_CATEGORY_TYPE.IMAGE:
+          return <BoxImage src={content} />;
         default:
           return content;
       }
