@@ -1,4 +1,4 @@
-import { Grid, Typography, styled } from "@mui/material";
+import { Box, Grid, Typography, styled } from "@mui/material";
 import { useCallback } from "react";
 import { POST_CATEGORY_TYPE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
@@ -23,7 +23,11 @@ export const PostContent = (props: Props) => {
         case POST_CATEGORY_TYPE.DETAIL:
           return <BasicText>{content}</BasicText>;
         case POST_CATEGORY_TYPE.IMAGE:
-          return <BoxImage src={content} />;
+          return (
+            <CustomBoxImage>
+              <BoxImage src={content} />
+            </CustomBoxImage>
+          );
         default:
           return content;
       }
@@ -96,4 +100,23 @@ const TitleText = styled(Typography)(({ theme }) => ({
 const BasicText = styled(Typography)(({ theme }) => ({
   fontSize: "16px",
   marginTop: "10px",
+}));
+
+const CustomBoxImage = styled(Box)(({ theme }) => ({
+  width: "65%",
+  margin: "20px auto",
+  borderRadius: "4px",
+  overflow: "hidden",
+  [theme.breakpoints.down("lg")]: {
+    width: "80%",
+    margin: "15px auto",
+  },
+  [theme.breakpoints.down("md")]: {
+    width: "85%",
+    margin: "15px auto",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    margin: "10px auto",
+  },
 }));

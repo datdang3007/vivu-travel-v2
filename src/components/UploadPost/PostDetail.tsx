@@ -1,5 +1,5 @@
+import { DeleteForever, InsertPhoto, Title } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Title, Label, InsertPhoto, DeleteForever } from "@mui/icons-material";
 import {
   Button,
   Grid,
@@ -86,17 +86,11 @@ export const PostDetail = (props: Props) => {
       },
       {
         id: 2,
-        icon: <Label />,
-        text: "Ghi chú",
-        onClick: () => handleChangeType(POST_CATEGORY_TYPE.NOTE),
-      },
-      {
-        id: 3,
         icon: <InsertPhoto />,
         text: "Hình ảnh",
         onClick: () => handleChangeType(POST_CATEGORY_TYPE.IMAGE),
       },
-      { id: 4, icon: <DeleteForever />, text: "Xóa", onClick: onDelete },
+      { id: 3, icon: <DeleteForever />, text: "Xóa", onClick: onDelete },
     ],
     [handleChangeType, onDelete]
   );

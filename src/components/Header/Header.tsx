@@ -29,8 +29,8 @@ export const Header = (props: HeaderProps) => {
   const theme = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
-  const { requestFilterAll } = useCallAPIFilter();
-  const [resultFilter, setResultFilter] = useState([]);
+  const { requestFilterAll, loadingForFilterAll } = useCallAPIFilter();
+  const [resultFilter, setResultFilter] = useState<any[] | undefined>([]);
   const { isMenu, user } = props;
 
   const isTransitionButton = useMemo(
@@ -174,7 +174,9 @@ export const Header = (props: HeaderProps) => {
   ]);
 
   useEffect(() => {
+    if (loadingForFilterAll) setResultFilter(undefined);
     requestFilterAll(search).then((res) => setResultFilter(res));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestFilterAll, search]);
 
   return (

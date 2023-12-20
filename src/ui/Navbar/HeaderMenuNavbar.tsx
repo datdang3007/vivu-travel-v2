@@ -22,7 +22,7 @@ import { listMenuOptionProps } from "../../types/Ui";
 
 type Props = {
   onClickOption: (option: string) => void;
-  options: any[];
+  options?: any[];
 };
 
 export const HeaderMenuNavbar = (props: Props) => {

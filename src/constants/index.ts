@@ -13,9 +13,9 @@ export enum HEADER_LIST_OPTION {
 }
 
 export enum BUTTON_VARIANT {
+  CONTAINED = "contained",
   OUTLINED = "outlined",
   TEXT = "text",
-  CONTAINED = "contained",
 }
 
 export enum FILTER_CODE {
@@ -43,11 +43,11 @@ export enum POST_TAG_TYPE {
 export enum HEADER_OPTIONS {
   SCROLL_TO_POST = "SCROLL_TO_POST",
   TERRITORY = "TERRITORY",
+  REGISTER = "REGISTER",
   REGION = "REGION",
   POSTS = "POSTS",
-  HOME = "HOME",
   LOGIN = "LOGIN",
-  REGISTER = "REGISTER",
+  HOME = "HOME",
 }
 
 export enum POST_CATEGORY_TYPE {
@@ -62,9 +62,9 @@ export enum LOCAL_STORAGE_TYPE {
 }
 
 export enum FORM_SIGN_UP_TYPE {
-  EMAIL = "email",
   PASSWORD = "password",
   USERNAME = "username",
+  EMAIL = "email",
 }
 
 export enum PLACE_CONTENT_TYPE {

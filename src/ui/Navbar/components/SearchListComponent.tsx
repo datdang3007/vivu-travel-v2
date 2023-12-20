@@ -11,8 +11,8 @@ export const SearchListComponent = (props: SearchListComponentProps) => {
   const { searchList } = props;
 
   let listResult = [];
-  if (searchList) {
-    const categorizedLists = searchList.reduce(
+  if (!!searchList && !!searchList?.length) {
+    const categorizedLists = searchList?.reduce(
       (result, val) => {
         result[val.category as FILTER_CODE]?.push(val);
         return result;
@@ -30,6 +30,7 @@ export const SearchListComponent = (props: SearchListComponentProps) => {
       listResult?.push(
         <ItemSearchListComponent
           title="Miền"
+          key={FILTER_CODE.REGION}
           category={FILTER_CODE.REGION}
           list={categorizedLists[FILTER_CODE.REGION]}
         />
@@ -39,6 +40,7 @@ export const SearchListComponent = (props: SearchListComponentProps) => {
       listResult?.push(
         <ItemSearchListComponent
           title="Vùng"
+          key={FILTER_CODE.TERRITORY}
           category={FILTER_CODE.TERRITORY}
           list={categorizedLists[FILTER_CODE.TERRITORY]}
         />
@@ -48,6 +50,7 @@ export const SearchListComponent = (props: SearchListComponentProps) => {
       listResult?.push(
         <ItemSearchListComponent
           title="Tỉnh"
+          key={FILTER_CODE.PROVINCE}
           category={FILTER_CODE.PROVINCE}
           list={categorizedLists[FILTER_CODE.PROVINCE]}
         />
@@ -57,6 +60,7 @@ export const SearchListComponent = (props: SearchListComponentProps) => {
       listResult?.push(
         <ItemSearchListComponent
           title="Địa Điểm"
+          key={FILTER_CODE.PLACE}
           category={FILTER_CODE.PLACE}
           list={categorizedLists[FILTER_CODE.PLACE]}
         />
@@ -66,13 +70,14 @@ export const SearchListComponent = (props: SearchListComponentProps) => {
       listResult?.push(
         <ItemSearchListComponent
           title="Bài Viết"
+          key={FILTER_CODE.POST}
           category={FILTER_CODE.POST}
           list={categorizedLists[FILTER_CODE.POST]}
         />
       );
   }
 
-  return !searchList ? (
+  return !searchList || !searchList?.length ? (
     <Grid
       item
       container

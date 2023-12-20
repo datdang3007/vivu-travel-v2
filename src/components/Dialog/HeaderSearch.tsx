@@ -6,7 +6,7 @@ import { HeaderMenuSearch } from "../../ui";
 interface HeaderSearchProps {
   open: boolean;
   handleShow: () => void;
-  options: any[];
+  options?: any[];
 }
 
 export const HeaderSearch = (props: HeaderSearchProps) => {

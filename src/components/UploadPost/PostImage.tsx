@@ -1,5 +1,5 @@
+import { DeleteForever, Subject, Title } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { DeleteForever, Label, Subject, Title } from "@mui/icons-material";
 import {
   Button,
   Grid,
@@ -10,8 +10,8 @@ import {
   styled,
 } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
-import { COLOR_PALLETTE } from "src/constants/color";
 import { POST_CATEGORY_TYPE } from "src/constants";
+import { COLOR_PALLETTE } from "src/constants/color";
 import { PostDataProps } from "src/types/Post";
 import { BoxImage } from "src/ui";
 import { UploadFileToDiscordWebhook } from "src/utils/common";
@@ -96,13 +96,7 @@ export const PostImage = (props: Props) => {
         text: "Nội dung",
         onClick: () => handleChangeType(POST_CATEGORY_TYPE.DETAIL),
       },
-      {
-        id: 3,
-        icon: <Label />,
-        text: "Ghi chú",
-        onClick: () => handleChangeType(POST_CATEGORY_TYPE.NOTE),
-      },
-      { id: 4, icon: <DeleteForever />, text: "Xóa", onClick: onDelete },
+      { id: 3, icon: <DeleteForever />, text: "Xóa", onClick: onDelete },
     ],
     [handleChangeType, onDelete]
   );

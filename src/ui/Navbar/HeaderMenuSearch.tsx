@@ -5,16 +5,14 @@ import {
   Grid,
   InputAdornment,
   TextField,
-  debounce,
   useTheme,
 } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import { useCallAPIFilter } from "src/hooks";
 import { SearchListProps } from "../../types/Ui";
 import { SearchListComponent } from "./components/SearchListComponent";
 
 type Props = {
-  options: any[];
+  options?: any[];
   methods: any;
 };
 
@@ -23,7 +21,6 @@ export const HeaderMenuSearch = (props: Props) => {
   const { options, methods } = props;
   const [searchList, setSearchList] = useState<SearchListProps[]>();
   const [openSearchList, setOpenSearchList] = useState(false);
-  const { loadingForFilterAll } = useCallAPIFilter();
 
   const handleClickAway = useCallback(() => {
     setOpenSearchList(false);
@@ -33,19 +30,20 @@ export const HeaderMenuSearch = (props: Props) => {
     setOpenSearchList(true);
   }, []);
 
-  const debouncedSearch = debounce((value: string) => {
-    methods.setValue("searchValue", value);
-  }, 1000);
+  const handleKeyDown = useCallback(
+    (e: any) => {
+      const key = e.key;
+      if (key === "Enter") {
+        e.preventDefault();
+        methods.setValue("searchValue", e.target.value);
+      }
+    },
+    [methods]
+  );
 
   useEffect(() => {
-    if (!openSearchList) {
-      setSearchList(undefined);
-    }
-
-    if (openSearchList && !loadingForFilterAll) {
-      setSearchList(options);
-    }
-  }, [loadingForFilterAll, openSearchList, options]);
+    setSearchList(openSearchList ? options : undefined);
+  }, [openSearchList, options]);
 
   return (
     <Grid item xs={12} sx={{ position: "relative" }}>
@@ -55,7 +53,7 @@ export const HeaderMenuSearch = (props: Props) => {
             variant="outlined"
             autoComplete="off"
             onFocus={handleFocusSearch}
-            onChange={(e) => debouncedSearch(e.target.value)}
+            onKeyDown={handleKeyDown}
             fullWidth
             placeholder="Tìm kiếm..."
             InputProps={{

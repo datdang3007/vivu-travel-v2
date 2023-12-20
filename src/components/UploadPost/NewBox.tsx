@@ -1,3 +1,4 @@
+import { Add, InsertPhoto, Subject, Title } from "@mui/icons-material";
 import {
   Button,
   Grid,
@@ -6,11 +7,10 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import { Title, Add, InsertPhoto, Label, Subject } from "@mui/icons-material";
 import { useCallback, useMemo, useState } from "react";
-import { PostDataProps } from "src/types/Post";
 import { POST_CATEGORY_TYPE } from "src/constants";
 import { COLOR_PALLETTE } from "src/constants/color";
+import { PostDataProps } from "src/types/Post";
 
 type NewBoxProps = {
   data: PostDataProps[];
@@ -61,12 +61,6 @@ export const NewBox = (props: NewBoxProps) => {
       },
       {
         id: 3,
-        icon: <Label />,
-        text: "Ghi chú",
-        onClick: () => handleAddNewData(POST_CATEGORY_TYPE.NOTE),
-      },
-      {
-        id: 4,
         icon: <InsertPhoto />,
         text: "Hình ảnh",
         onClick: () => handleAddNewData(POST_CATEGORY_TYPE.IMAGE),
