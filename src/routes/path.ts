@@ -15,4 +15,5 @@ export const PATH = {
   UPLOAD_POST: "/upload-post",
   PROFILE: "/profile",
   PROFILE_USER: "/profile/user",
+  DIRECTIONS_SERVICE: "/directions-service",
 };

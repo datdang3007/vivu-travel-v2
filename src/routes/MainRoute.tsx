@@ -12,6 +12,7 @@ import {
   PostDetailPreview,
   UploadPost,
   Profile,
+  DirectionsService,
 } from "src/pages";
 import ScrollToTop from "src/components/ScrollToTop";
 import { ProfileUser } from "src/pages/ProfileUser";
@@ -25,6 +26,10 @@ export const publicRoute: RouteObject = {
         {
           path: PATH.HOME,
           element: <Home />,
+        },
+        {
+          path: PATH.DIRECTIONS_SERVICE,
+          element: <DirectionsService />,
         },
         {
           path: `${PATH.REGION}/:id`,

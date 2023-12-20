@@ -90,6 +90,10 @@ export const Header = (props: HeaderProps) => {
           navigate(PATH.REGISTER);
           return;
         }
+        case HEADER_OPTIONS.DIRECTIONS_SERVICE: {
+          navigate(PATH.DIRECTIONS_SERVICE);
+          return;
+        }
         default: {
           navigate(PATH.HOME);
           return;
@@ -109,11 +113,25 @@ export const Header = (props: HeaderProps) => {
           title: "Bài viết",
           event: () => onClickOption(HEADER_OPTIONS.SCROLL_TO_POST),
         },
+        {
+          title: "Lịch trình",
+          event: () => onClickOption(HEADER_OPTIONS.DIRECTIONS_SERVICE),
+        },
+      ];
+    }
+    if (pathname === PATH.DIRECTIONS_SERVICE) {
+      return [
+        { title: "Trang chủ", event: () => onClickOption(HEADER_OPTIONS.HOME) },
+        { title: "Bài viết", event: () => onClickOption(HEADER_OPTIONS.POSTS) },
       ];
     }
     return [
       { title: "Trang chủ", event: () => onClickOption(HEADER_OPTIONS.HOME) },
       { title: "Bài viết", event: () => onClickOption(HEADER_OPTIONS.POSTS) },
+      {
+        title: "Lịch trình",
+        event: () => onClickOption(HEADER_OPTIONS.DIRECTIONS_SERVICE),
+      },
     ];
   }, [location, onClickOption]);
 
