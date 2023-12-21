@@ -58,7 +58,7 @@ export const SignUpContainer = () => {
           >
             <Grid container>
               <Grid item xs={12} textAlign={"center"} marginTop={"20px"}>
-                <Typography variant="tB30">Đăng Nhập</Typography>
+                <Typography variant="tB30">Đăng Ký</Typography>
               </Grid>
               <Grid
                 item

@@ -6,6 +6,8 @@ import theme from "./theme";
 import React from "react";
 import { LoadingProvider } from "./provider/loading.provider";
 import { LoadingModule } from "./components/Loading";
+import { APIProvider } from "@vis.gl/react-google-maps";
+import { PROCESS_ENV } from "./constants/env";
 
 export default function App() {
   const queryClient = new QueryClient();
@@ -15,12 +17,14 @@ export default function App() {
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <MasterProvider>
-            <LoadingProvider>
-              <LoadingModule />
-              {routeElements}
-            </LoadingProvider>
-          </MasterProvider>
+          <APIProvider apiKey={PROCESS_ENV.GOOGLE_KEY}>
+            <MasterProvider>
+              <LoadingProvider>
+                <LoadingModule />
+                {routeElements}
+              </LoadingProvider>
+            </MasterProvider>
+          </APIProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </React.StrictMode>

@@ -113,25 +113,25 @@ export const Header = (props: HeaderProps) => {
           title: "Bài viết",
           event: () => onClickOption(HEADER_OPTIONS.SCROLL_TO_POST),
         },
-        {
-          title: "Lịch trình",
-          event: () => onClickOption(HEADER_OPTIONS.DIRECTIONS_SERVICE),
-        },
+        // {
+        //   title: "Lịch trình",
+        //   event: () => onClickOption(HEADER_OPTIONS.DIRECTIONS_SERVICE),
+        // },
       ];
     }
-    if (pathname === PATH.DIRECTIONS_SERVICE) {
-      return [
-        { title: "Trang chủ", event: () => onClickOption(HEADER_OPTIONS.HOME) },
-        { title: "Bài viết", event: () => onClickOption(HEADER_OPTIONS.POSTS) },
-      ];
-    }
+    // if (pathname === PATH.DIRECTIONS_SERVICE) {
+    //   return [
+    //     { title: "Trang chủ", event: () => onClickOption(HEADER_OPTIONS.HOME) },
+    //     { title: "Bài viết", event: () => onClickOption(HEADER_OPTIONS.POSTS) },
+    //   ];
+    // }
     return [
       { title: "Trang chủ", event: () => onClickOption(HEADER_OPTIONS.HOME) },
       { title: "Bài viết", event: () => onClickOption(HEADER_OPTIONS.POSTS) },
-      {
-        title: "Lịch trình",
-        event: () => onClickOption(HEADER_OPTIONS.DIRECTIONS_SERVICE),
-      },
+      // {
+      //   title: "Lịch trình",
+      //   event: () => onClickOption(HEADER_OPTIONS.DIRECTIONS_SERVICE),
+      // },
     ];
   }, [location, onClickOption]);
 
